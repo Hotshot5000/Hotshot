@@ -21,6 +21,10 @@ Retrofit, OkHttp - Http and REST messaging
 
 How to build for Windows
 
+Download binaries from: 
+[copy to core/libs/](www.headwayentertainment.net/core_libs.7z)
+[copy to native_ogre_integration/build/debug/](www.headwayentertainment.net/native-client-lib.7z)
+
 Make sure you have java 11 for x64 and jdk 8 for x64.
 
 Make sure that you are using gradle with JDK 1.8 for 64 bits. Otherwise you get:
