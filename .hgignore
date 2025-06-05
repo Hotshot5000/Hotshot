@@ -36,3 +36,4 @@ HotshotFramework2/*
 HotshotFramework3/*
 patches/*
 misc/GetWavLen/.venv/*
+.git/*
