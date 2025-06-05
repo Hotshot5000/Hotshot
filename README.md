@@ -21,7 +21,7 @@ Retrofit, OkHttp - Http and REST messaging
 
 How to build for Windows
 
-Download binaries from: 
+Download binaries from link and: 
 [copy to core/libs/](http://www.headwayentertainment.net/core_libs.7z)
 [copy to native_ogre_integration/build/debug/](http://www.headwayentertainment.net/native-client-lib.7z)
 
