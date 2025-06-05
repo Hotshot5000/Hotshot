@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ~ Created by Sebastian Bugiu on 4/9/23, 10:06 PM
+  ~ sebastian.bugiu@headwayentertainment.net
+  ~ Last modified 4/25/16, 7:40 AM
+  ~ Copyright (c) 2023.
+  ~ All rights reserved.
+  -->
+
+<module rename-to="com.artemis">
+
+	<source path="artemis"/>
+	
+</module>
