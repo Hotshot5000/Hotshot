@@ -1,7 +1,7 @@
 Hotshot SDK
 
 WORK IN PROGRESS!
-YOU CAN TAKE A LOOK AN USE THE CODE BUT RIGHT NOW IT'S NOT BUILDABLE WITH ONLY WHAT IS IN THIS REPO!
+YOU CAN TAKE A LOOK AND USE THE CODE BUT RIGHT NOW IT'S NOT BUILDABLE WITH ONLY WHAT IS IN THIS REPO!
 COMING SOON!
 
 If you have questions, want to help, want to say hi, tell me how bad the code is, write an issue and I will get back to you.
