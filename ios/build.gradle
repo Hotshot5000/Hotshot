@@ -1,0 +1,28 @@
+sourceSets.main.java.srcDirs = [ "src/" ]
+
+sourceCompatibility = '1.8'
+targetCompatibility = '1.8'
+[compileJava, compileTestJava]*.options*.encoding = 'UTF-8'
+
+ext {
+	mainClassName = "com.headwayent.blackholedarksun.IOSLauncher"
+}
+
+launchIPhoneSimulator.dependsOn build
+launchIPadSimulator.dependsOn build
+launchIOSDevice.dependsOn build
+createIPA.dependsOn build
+
+robovm {
+	archs = "thumbv7:arm64"
+}
+
+eclipse.project {
+    name = appName + "-ios"
+    natures 'org.robovm.eclipse.RoboVMNature'
+}
+
+dependencies {
+    api project(path: ':core')
+//    compile files('libs/gdx-sqlite.jar')
+}

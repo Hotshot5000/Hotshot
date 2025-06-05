@@ -1,0 +1,9 @@
+{
+	"version" : 	{
+				"engine" : 2025.0,
+				"game" : 2025.0,
+				"gamedata" : 2025.0,
+				"editor" : 2025.0,
+				"sdk" : 2025.0
+			}
+}

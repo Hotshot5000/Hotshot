@@ -1,0 +1,264 @@
+import java_cup.runtime.*;
+import headwayent.blackholedarksun.parser.*;
+import headwayent.blackholedarksun.parser.ast.*;
+import java.util.HashMap;
+import java.util.ArrayList;
+import headwayent.hotshotengine.ENG_Vector2D;
+import headwayent.hotshotengine.ENG_Vector3D;
+import headwayent.hotshotengine.ENG_Vector4D;
+import headwayent.hotshotengine.ENG_Quaternion;
+import headwayent.hotshotengine.renderer.ENG_ColorValue;
+
+/* Preliminaries to set up and use the scanner.  */
+init with {: /*_scanner.init();*/              :};
+scan with {: return getScanner().next_token(); :};
+
+/* Terminals (tokens returned by the scanner). */
+terminal                        BRACE_OPEN, BRACE_CLOSE;
+//terminal           SEMICOLON;
+//terminal           UMINUS, LPAREN, RPAREN;
+terminal Integer                NUMBER;
+terminal String                 STRING;
+terminal String                 STRING_LITERAL;
+terminal Float                  FLOAT;
+terminal                        CUTSCENE;
+terminal InitialConds           INITIAL_CONDS;
+terminal                        COMMA;
+terminal UseSkyboxDataFromLevel                         use_skybox_data_from_level;
+terminal SetSpeed                                       set_speed;
+terminal ChangeSpeed                                    change_speed;
+terminal ChangePosition                                 change_position;
+terminal ChangeOrientation                              change_orientation;
+terminal CompletionTime                                 completion_time;
+
+terminal ObjDefinition                                  obj_def;
+
+non terminal HashMap<String, ArrayList<Param>>              initial_conds_param_list;
+
+terminal ParallelTask                                   parallel_task;
+terminal Skybox                                         skybox;
+terminal LightDir                                       light_dir;
+terminal LightType                                      light_type;
+terminal LightPowerScale                                light_power_scale;
+terminal LightDiffuseColor                              light_diffuse_color;
+terminal LightSpecularColor                             light_specular_color;
+terminal AmbientLight                                   ambient_light_upperhemi_lowerhemi_dir;
+
+terminal MeshName                                       mesh;
+terminal ObjType                                        type;
+terminal Position                                       position;
+terminal Orientation                                    orientation;
+terminal Speed                                          speed;
+terminal Ai                                             ai;
+terminal Team                                           friendly;
+terminal Health                                         health;
+terminal Behavior                                       behavior;
+terminal                                                start_delay;
+terminal                                                end_delay;
+terminal Position                                       pos;
+
+terminal GameObject                                     object;
+terminal ObjectEvent                                    obj_event;
+terminal                                                msecs;
+terminal                                                secs;
+terminal                                                ms;
+
+terminal CameraEvent                                    camera_event;
+terminal CameraLookAt                                   look_at;
+terminal CameraLookAt                                   look_at_pos;
+terminal CameraAttach                                   attach;
+terminal CameraDetach                                   detach;
+terminal CameraAttachEvent                              camera_attach_event;
+terminal CameraDetachEvent                              camera_detach_event;
+
+terminal PlaySound                                       play_sound;
+terminal PlaySound                                       play_sound_from_pos;
+terminal PlaySound                                       play_sound_from_obj_pos;
+terminal ShowText                                        show_text;
+terminal ShowText                                        show_text_pos;
+terminal Spawn                                           spawn;
+terminal Exit                                            exit;
+
+/* Non-terminals */
+non terminal ArrayList<Event>                               event_list;
+non terminal Cutscene                                       script_type;
+non terminal Event                                          event;
+
+non terminal Param                               initial_conds_param;
+
+non terminal Param                               obj_event_param;
+non terminal HashMap<String, ArrayList<Param>>   obj_event_param_list;
+
+non terminal HashMap<String, ObjectDefinitionParam>         obj_def_param_list;
+non terminal ObjectDefinitionParam                          obj_def_param;
+
+
+
+non terminal Param                               camera_event_param;
+non terminal HashMap<String, Param>              camera_event_param_list;
+non terminal Param                               camera_attach_event_param;
+non terminal HashMap<String, Param>              camera_attach_event_param_list;
+non terminal Param                               camera_detach_event_param;
+non terminal HashMap<String, Param>              camera_detach_event_param_list;
+
+non terminal ENG_Vector2D                                   vector2;
+non terminal ENG_Vector3D                                   vector3;
+non terminal ENG_Vector4D                                   vector4;
+non terminal ENG_Quaternion                                 quaternion;
+non terminal ENG_ColorValue                                 colour;
+
+//non terminal                                            look_at;
+//non terminal                                            attach;
+
+
+
+//non terminal CameraSetPosition                                        pos;
+
+
+//non terminal ParallelTask                                   parallel_task_list;
+
+non terminal ArrayList<DelayedEvent>                               parallel_event_param_list;
+non terminal DelayedEvent                                          parallel_event;
+
+non terminal String                                         time;
+
+
+non terminal            expr_list, expr_part;
+non terminal Integer    expr;
+
+/* Precedences */
+//precedence left PLUS, MINUS;
+//precedence left TIMES, DIVIDE, MOD;
+//precedence left UMINUS;
+
+/* The grammar */
+script_type ::= CUTSCENE STRING_LITERAL:cutsceneName BRACE_OPEN event_list:eventList BRACE_CLOSE {: RESULT = new Cutscene(cutsceneName, eventList); :}
+            ;
+event_list ::= event:e {: RESULT = new ArrayList<>(); RESULT.add(e); :}
+            | event_list:el event:e {: el.add(e); RESULT = el; :}
+            ;
+event ::= INITIAL_CONDS BRACE_OPEN initial_conds_param_list:pl BRACE_CLOSE {: InitialConds ic = new InitialConds(pl); RESULT = ic; :}
+            | obj_event:objEvent BRACE_OPEN obj_event_param_list:pl BRACE_CLOSE {: ObjectEvent oe = new ObjectEvent(pl); RESULT = oe; :}
+            | camera_event:cameraEvent BRACE_OPEN camera_event_param_list:pl BRACE_CLOSE {: CameraEvent ce = new CameraEvent(pl); RESULT = ce; :}
+            | camera_attach_event:cameraEvent BRACE_OPEN camera_attach_event_param_list:pl BRACE_CLOSE {: CameraAttachEvent ce = new CameraAttachEvent(pl); RESULT = ce; :}
+            | camera_detach_event:cameraEvent BRACE_OPEN camera_detach_event_param_list:pl BRACE_CLOSE {: CameraDetachEvent ce = new CameraDetachEvent(pl); RESULT = ce; :}
+            | parallel_task BRACE_OPEN parallel_event_param_list:pl BRACE_CLOSE {: ParallelTask parallelTask = new ParallelTask(pl); RESULT = parallelTask;; :}
+            ;
+parallel_event_param_list ::= parallel_event:e {: RESULT = new ArrayList<>(); RESULT.add(e); :}
+                          | parallel_event_param_list:el parallel_event:e {: el.add(e); RESULT = el; :}
+                          ;
+
+parallel_event ::= obj_event:objEvent BRACE_OPEN obj_event_param_list:pl BRACE_CLOSE {: ObjectEvent oe = new ObjectEvent(pl); RESULT = oe; :}
+            | camera_event:cameraEvent BRACE_OPEN camera_event_param_list:pl BRACE_CLOSE {: CameraEvent ce = new CameraEvent(pl); RESULT = ce; :}
+            | camera_attach_event:cameraEvent BRACE_OPEN camera_attach_event_param_list:pl BRACE_CLOSE {: CameraAttachEvent ce = new CameraAttachEvent(pl); RESULT = ce; :}
+            | camera_detach_event:cameraEvent BRACE_OPEN camera_detach_event_param_list:pl BRACE_CLOSE {: CameraDetachEvent ce = new CameraDetachEvent(pl); RESULT = ce; :}
+            ;
+
+camera_event_param_list ::= camera_event_param:cep {: RESULT = new HashMap<String, Param>(); RESULT.put(cep.name, cep); :}
+            | camera_event_param_list:paramList camera_event_param:p {: paramList.put(p.name, p); RESULT = paramList; :}
+            ;
+
+camera_event_param ::= show_text:o STRING_LITERAL:text NUMBER:n time:t  {: RESULT = new ShowText(text, n, t); :}
+                    | show_text_pos STRING_LITERAL:text vector2:pos NUMBER:n time:t {: RESULT = new ShowText(text, pos, n, t); :}
+                    | play_sound:ps STRING_LITERAL:filename {: RESULT = new PlaySound(filename); :}
+                    | play_sound_from_pos:cs STRING_LITERAL:filename vector3:pos {: RESULT = new PlaySound(filename, pos); :}
+                    | play_sound_from_obj_pos:ct STRING_LITERAL:filename STRING_LITERAL:objName {: RESULT = new PlaySound(filename, objName); :}
+                    | pos vector3:v {: RESULT = new Position(v); :}
+                    | position vector3:v {: RESULT = new Position(v); :}
+                    | orientation:o quaternion:q  {: RESULT = new Orientation(q); :}
+                    | look_at_pos:la vector3:v {: RESULT = new CameraLookAt(v); :}
+                    | look_at:la STRING_LITERAL:name {: RESULT = new CameraLookAt(name); :}
+                    | look_at_pos:la vector3:v NUMBER:n time:t {: RESULT = new CameraLookAt(v, n, t); :}
+                    | look_at:la STRING_LITERAL:name NUMBER:n time:t {: RESULT = new CameraLookAt(name, n, t); :}
+                    | start_delay NUMBER:n time:t {: RESULT = new DelayStart(n, t); :}
+                    | end_delay NUMBER:n time:t {: RESULT = new DelayEnd(n, t); :}
+                    ;
+                    
+camera_attach_event_param_list ::= camera_attach_event_param:cep {: RESULT = new HashMap<String, Param>(); RESULT.put(cep.name, cep); :}
+            | camera_attach_event_param_list:paramList camera_attach_event_param:p {: paramList.put(p.name, p); RESULT = paramList; :}
+            ;
+camera_attach_event_param ::= look_at_pos:la vector3:v {: RESULT = new CameraLookAt(v); :}
+                              | look_at:la STRING_LITERAL:name {: RESULT = new CameraLookAt(name); :}
+                              | look_at_pos:la vector3:v NUMBER:n time:t {: RESULT = new CameraLookAt(v, n, t); :}
+                              | look_at:la STRING_LITERAL:name NUMBER:n time:t {: RESULT = new CameraLookAt(name, n, t); :}
+                              | attach:a STRING_LITERAL:name {: RESULT = new CameraAttach(name); :}
+                              | start_delay NUMBER:n time:t {: RESULT = new DelayStart(n, t); :}
+                              | end_delay NUMBER:n time:t {: RESULT = new DelayEnd(n, t); :}
+                              | pos vector3:v {: RESULT = new Position(v); :}
+                              | position vector3:v {: RESULT = new Position(v); :}
+                              | orientation:o quaternion:q  {: RESULT = new Orientation(q); :}
+                              ;
+
+camera_detach_event_param_list ::= camera_detach_event_param:cep {: RESULT = new HashMap<String, Param>(); RESULT.put(cep.name, cep); :}
+            | camera_detach_event_param_list:paramList camera_detach_event_param:p {: paramList.put(p.name, p); RESULT = paramList; :}
+            ;
+camera_detach_event_param ::= detach:d {: RESULT = new CameraDetach(); :}
+                              | start_delay NUMBER:n time:t {: RESULT = new DelayStart(n, t); :}
+                              | end_delay NUMBER:n time:t {: RESULT = new DelayEnd(n, t); :}
+                              ;
+
+obj_event_param_list ::= obj_event_param:oep {: RESULT = new HashMap<String, ArrayList<Param>>(); ArrayList<Param> paramList = new ArrayList<>(); paramList.add(oep); RESULT.put(oep.name, paramList); :}
+            | obj_event_param_list:oepl obj_event_param:p {: ArrayList paramList = oepl.get(p.name); if (paramList == null) { paramList = new ArrayList<>(); } oepl.put(p.name, paramList); paramList.add(p); RESULT = oepl; :}
+            ;
+
+obj_event_param ::= object:o STRING_LITERAL:name  {: RESULT = new GameObject(name); :}
+                    | set_speed:ss FLOAT:speed {: RESULT = new SetSpeed(speed); :}
+                    | change_speed:cs FLOAT:speed {: RESULT = new ChangeSpeed(speed); :}
+                    | change_position vector3:vec {: RESULT = new ChangePosition(vec); :}
+                    | change_orientation quaternion:q {: RESULT = new ChangeOrientation(q); :}
+                    | completion_time:ct NUMBER:time time:timeType {: RESULT = new CompletionTime(time, timeType); :}
+                    | start_delay NUMBER:n time:t {: RESULT = new DelayStart(n, t); :}
+                    | end_delay NUMBER:n time:t {: RESULT = new DelayEnd(n, t); :}
+                    | obj_def STRING_LITERAL:name BRACE_OPEN obj_def_param_list:odpl BRACE_CLOSE {: RESULT = new ObjDefinition(name, odpl); :}
+                    | spawn STRING_LITERAL:name {: RESULT = new Spawn(name); :}
+                    | exit STRING_LITERAL:name {: RESULT = new Exit(name); :}
+                    | pos vector3:v {: RESULT = new Position(v); :}
+                    | position vector3:v {: RESULT = new Position(v); :}
+                    ;
+
+initial_conds_param_list ::= initial_conds_param:icp {: RESULT = new HashMap<String, ArrayList<Param>>(); ArrayList<Param> paramList = new ArrayList<>(); paramList.add(icp); RESULT.put(icp.name, paramList);  :}
+            | initial_conds_param_list:icpl initial_conds_param:icp {: ArrayList paramList = icpl.get(icp.name); if (paramList == null) { paramList = new ArrayList<>(); icpl.put(icp.name, paramList); } paramList.add(icp); RESULT = icpl;  :}
+            ;
+
+initial_conds_param ::= skybox:s STRING_LITERAL:name  {: RESULT = new Skybox(name); :}
+                                    | light_dir:ld vector3:vec  {: RESULT = new LightDir(vec); :}
+                                    | light_type:lt STRING_LITERAL:type  {: RESULT = new LightType(type); :}
+                                    | light_power_scale:lps FLOAT:f  {: RESULT = new LightPowerScale(f); :}
+                                    | light_diffuse_color:ldc colour:c  {: RESULT = new LightDiffuseColor(c); :}
+                                    | light_specular_color:lsc colour:c  {: RESULT = new LightSpecularColor(c); :}
+                                    | ambient_light_upperhemi_lowerhemi_dir:alul colour:upper colour:lower vector3:dir  {: RESULT = new AmbientLight(upper, lower, dir); :}
+                                    | obj_def STRING_LITERAL:name BRACE_OPEN obj_def_param_list:odpl BRACE_CLOSE {: RESULT = new ObjDefinition(name, odpl); :}
+                                    | use_skybox_data_from_level:ussfl NUMBER:n {: RESULT = new UseSkyboxDataFromLevel(n); :}
+                                    ;
+
+
+obj_def_param_list ::= obj_def_param:odp {: RESULT = new HashMap<String, ObjectDefinitionParam>(); RESULT.put(odp.name, odp); :}
+                    | obj_def_param_list:odpl obj_def_param:odp {: odpl.put(odp.name, odp); RESULT = odpl; :}
+                    ;
+
+obj_def_param ::= mesh:m STRING_LITERAL:name  {: RESULT = new MeshName(name); :}
+                 | type:t STRING_LITERAL:name  {: RESULT = new ObjType(name); :}
+                 | position vector3:pos  {: RESULT = new ObjPosition(pos); :}
+                 | pos vector3:pos  {: RESULT = new ObjPosition(pos); :}
+                 | orientation:o quaternion:q  {: RESULT = new Orientation(q); :}
+                 | speed:s vector3:vec  {: RESULT = new Speed(vec); :}
+                 | ai:a NUMBER:i  {: RESULT = new Ai(i); :}
+                 | friendly:f NUMBER:i  {: RESULT = new Team(i); :}
+                 | health:h NUMBER:i  {: RESULT = new Health(i); :}
+                 | behavior:b STRING_LITERAL:s  {: RESULT = new Behavior(s); :}
+                 // | {: RESULT = new HashMap<String, ObjectDefinitionList>(); :}
+                 ;
+vector2 ::= FLOAT:x FLOAT:y {: RESULT = new ENG_Vector2D(x, y); :}
+        ;
+vector3 ::= FLOAT:x FLOAT:y FLOAT:z {: RESULT = new ENG_Vector3D(x, y, z); :}
+        ;
+vector4 ::= FLOAT:x FLOAT:y FLOAT:z FLOAT:w {: RESULT = new ENG_Vector4D(x, y, z, w); :}
+        ;
+colour ::= FLOAT:x FLOAT:y FLOAT:z FLOAT:w {: RESULT = new ENG_ColorValue(x, y, z, w); :}
+        ;
+quaternion ::= FLOAT:x FLOAT:y FLOAT:z FLOAT:angle {: RESULT = new ENG_Quaternion(); ENG_Quaternion.fromAngleAxisDeg(angle, new ENG_Vector4D(x, y, z, 0.0f).normalizedCopy(), RESULT); :}
+        ;
+time ::= ms {: RESULT = "ms"; :}
+        | msecs {: RESULT = "ms"; :}
+        | secs {: RESULT = "secs"; :}
+        ;

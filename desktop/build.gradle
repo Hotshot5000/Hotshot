@@ -1,0 +1,101 @@
+apply plugin: "java"
+
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+sourceSets.main.java.srcDirs = [ "src/" ]
+
+project.ext.mainClassName = "com.headwayent.blackholedarksun.desktop.DesktopLauncher"
+project.ext.assetsDir = new File("../android/assets");
+
+task run(dependsOn: classes, type: JavaExec) {
+    main = project.mainClassName
+    classpath = sourceSets.main.runtimeClasspath
+    standardInput = System.in
+    workingDir = project.assetsDir
+    ignoreExitValue = true
+}
+
+task debug(dependsOn: classes, type: JavaExec) {
+    main = project.mainClassName
+    classpath = sourceSets.main.runtimeClasspath
+    standardInput = System.in
+    workingDir = project.assetsDir
+    ignoreExitValue = true
+    debug = true
+}
+
+task dist(type: Jar) {
+    from files(sourceSets.main.output.classesDirs)
+    from files(sourceSets.main.output.resourcesDir)
+    from {configurations.compile.collect {zipTree(it)}}
+    from files(project.assetsDir);
+ 
+    manifest {
+        attributes 'Main-Class': project.mainClassName
+    }
+}
+
+dist.dependsOn classes
+
+eclipse {
+    project {
+        name = appName + "-desktop"
+        linkedResource name: 'assets', type: '2', location: 'PARENT-1-PROJECT_LOC/android/assets'
+    }
+}
+
+task afterEclipseImport(description: "Post processing after project generation", group: "IDE") {
+  doLast {
+    def classpath = new XmlParser().parse(file(".classpath"))
+    new Node(classpath, "classpathentry", [ kind: 'src', path: 'assets' ]);
+    def writer = new FileWriter(file(".classpath"))
+    def printer = new XmlNodePrinter(new PrintWriter(writer))
+    printer.setPreserveWhitespace(true)
+    printer.print(classpath)
+  }
+}
+
+dependencies {
+    implementation project(path: ':core')
+    implementation files('libs/gdx-sqlite-desktop.jar')
+    implementation files('libs/sqlite-jdbc-3.7.2.jar')
+//    implementation files("C:/Users/sebas/iCloudDrive/backup/libgdx-backend-lwjgl-libs/gdx-backend-lwjgl-1.9.9-SNAPSHOT.jar")
+    implementation files('../core/libs/gdx-backend-lwjgl.jar')
+    implementation files('c:/Sebi/projects/libgdx/backends/gdx-backend-lwjgl/libs/gdx-backend-lwjgl-natives.jar')
+}
+
+task generateNative(type:Exec) {
+    workingDir '.'
+
+//    cppFlags "-frtti -fexceptions"
+//    arguments "-DANDROID_ARM_NEON=TRUE", "-DANDROID_TOOLCHAIN=gcc", "-DANDROID_STL=gnustl_static", "-DCMAKE_BUILD_TYPE=DEBUG"//, "-DCMAKE_CXX_FLAGS_RELWITHDEBINFO=\"-O2 -g -DNDEBUG\""
+
+    //on windows:
+    commandLine 'cmake.exe', '.', ' -DCMAKE_BUILD_TYPE=DEBUG'//, '-DANDROID_ARM_NEON=TRUE", -DANDROID_TOOLCHAIN=gcc, -DANDROID_STL=gnustl_static, -DCMAKE_BUILD_TYPE=DEBUG'
+
+//    //store the output instead of printing to the console:
+//    standardOutput = new ByteArrayOutputStream()
+//
+//    //extension method stopTomcat.output() can be used to obtain the output:
+//    ext.output = {
+//        return standardOutput.toString()
+//    }
+}
+
+task buildNative(type:Exec) {
+    workingDir '.'
+    commandLine 'MSBuild.exe', 'Project.sln'
+
+}
+
+task copyTask(type: Copy) {
+    from 'Debug/'
+    into 'lib'
+    include '*'
+}
+
+task copyTaskRelWithDebInfo(type: Copy) {
+    from 'RelWithDebInfo/'
+    into 'lib'
+    include '*'
+}
