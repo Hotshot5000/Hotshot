@@ -1,0 +1,1054 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+Copyright (c) 2010, 2014, Oracle and/or its affiliates.
+All rights reserved. Use is subject to license terms.
+
+This file is available and licensed under the following license:
+
+Redistribution and use in source and binary forms, with or without
+modification, are permitted provided that the following conditions
+are met:
+
+ - Redistributions of source code must retain the above copyright
+   notice, this list of conditions and the following disclaimer.
+ - Redistributions in binary form must reproduce the above copyright
+   notice, this list of conditions and the following disclaimer in
+   the documentation and/or other materials provided with the distribution.
+ - Neither the name of Oracle Corporation nor the names of its
+   contributors may be used to endorse or promote products derived
+   from this software without specific prior written permission.
+
+THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+"AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
+OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+(INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+-->
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Accordion?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.ColorPicker?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.RadioButton?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.Slider?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.TitledPane?>
+<?import javafx.scene.control.ToggleButton?>
+<?import javafx.scene.control.ToggleGroup?>
+<?import javafx.scene.control.Tooltip?>
+<?import javafx.scene.control.TreeTableColumn?>
+<?import javafx.scene.control.TreeTableView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+<?scenebuilder-stylesheet viewer.css?>
+
+<!--suppress JavaFxUnresolvedStyleClassReference -->
+
+<Accordion fx:id="settings" minWidth="0.0" prefHeight="798.0" prefWidth="279.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.javafx.experiments.jfx3dviewer.SettingsController">
+    <panes>
+        <TitledPane animated="false" expanded="false" text="Options" fx:id="x4">
+            <content>
+                <GridPane hgap="5.0" styleClass="settings" vgap="5.0">
+                    <children>
+                        <Label text="Show Axis:" GridPane.columnIndex="0" GridPane.rowIndex="0" />
+                        <Label text="Y Up:" GridPane.columnIndex="0" GridPane.rowIndex="1" />
+                        <CheckBox fx:id="showAxisCheckBox" mnemonicParsing="false" text="" GridPane.columnIndex="1" GridPane.rowIndex="0" />
+                        <CheckBox fx:id="yUpCheckBox" mnemonicParsing="false" selected="true" text="" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                        <Label text="MSAA Antialiasing" GridPane.columnIndex="0" GridPane.rowIndex="2" />
+                        <CheckBox id="msaaCheckBox" fx:id="msaaCheckBox" mnemonicParsing="false" selected="true" text="" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                        <Label text="Background Color" GridPane.columnIndex="0" GridPane.rowIndex="3" />
+                        <ColorPicker fx:id="backgroundColorPicker" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                        <Label text="Wireframe" GridPane.columnIndex="0" GridPane.rowIndex="4" />
+                        <CheckBox fx:id="wireFrameCheckbox" mnemonicParsing="false" text="" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                        <Label text="Subdivision level" GridPane.columnIndex="0" GridPane.rowIndex="5" />
+                        <HBox prefHeight="-1.0" prefWidth="-1.0" GridPane.columnIndex="1" GridPane.rowIndex="5">
+                            <children>
+                                <ToggleButton mnemonicParsing="false" selected="true" styleClass="left-pill" text="None" userData="0">
+                                    <toggleGroup>
+                                        <ToggleGroup fx:id="subdivisionLevelGroup" />
+                                    </toggleGroup>
+                                </ToggleButton>
+                                <ToggleButton mnemonicParsing="false" styleClass="center-pill" text="1" toggleGroup="$subdivisionLevelGroup" userData="1" />
+                                <ToggleButton mnemonicParsing="false" styleClass="center-pill" text="2" toggleGroup="$subdivisionLevelGroup" userData="2" />
+                                <ToggleButton mnemonicParsing="false" styleClass="right-pill" text="3" toggleGroup="$subdivisionLevelGroup" userData="3" />
+                            </children>
+                        </HBox>
+                        <Label text="Creases (Boundary Rules)" GridPane.columnIndex="0" GridPane.rowIndex="6" />
+                        <HBox prefHeight="-1.0" prefWidth="-1.0" GridPane.columnIndex="1" GridPane.rowIndex="6">
+                            <children>
+                                <ToggleButton mnemonicParsing="false" selected="true" styleClass="left-pill" text="Edges">
+                                    <toggleGroup>
+                                        <ToggleGroup fx:id="subdivisionBoundaryGroup" />
+                                    </toggleGroup>
+
+                                    <tooltip>
+                                        <Tooltip text="Only edges at the boundary are treated as creases" />
+                                    </tooltip>
+                                </ToggleButton>
+                                <ToggleButton mnemonicParsing="false" styleClass="right-pill" text="All" toggleGroup="$subdivisionBoundaryGroup">
+
+                                    <tooltip>
+                                        <Tooltip text="Edges and points at the boundary are treated as creases" />
+                                    </tooltip>
+                                </ToggleButton>
+                            </children>
+                        </HBox>
+                        <Label text="Smooth Texture Map" GridPane.columnIndex="0" GridPane.rowIndex="7" />
+                        <HBox prefHeight="-1.0" prefWidth="-1.0" GridPane.columnIndex="1" GridPane.rowIndex="7">
+                            <children>
+                                <ToggleButton mnemonicParsing="false" selected="true" styleClass="left-pill" text="None">
+                                    <toggleGroup>
+                                        <ToggleGroup fx:id="subdivisionSmoothGroup" />
+                                    </toggleGroup>
+
+                                    <tooltip>
+                                        <Tooltip text="Keeps the same uvs for all control points" />
+                                    </tooltip>
+                                </ToggleButton>
+                                <ToggleButton mnemonicParsing="false" styleClass="center-pill" text="Internal" toggleGroup="$subdivisionSmoothGroup">
+
+                                    <tooltip>
+                                        <Tooltip text="Smooths uvs of points at corners" />
+                                    </tooltip>
+                                </ToggleButton>
+                                <ToggleButton mnemonicParsing="false" styleClass="right-pill" text="All" toggleGroup="$subdivisionSmoothGroup">
+
+                                    <tooltip>
+                                        <Tooltip text="Smooths uvs of points at boundaries" />
+                                    </tooltip>
+                                </ToggleButton>
+                            </children>
+                        </HBox>
+                        <Region maxHeight="1.7976931348623157E308" prefHeight="-1.0" prefWidth="-1.0" GridPane.columnIndex="0" GridPane.rowIndex="8" />
+                    </children>
+                    <columnConstraints>
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                    </columnConstraints>
+                    <padding>
+                        <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" fx:id="x3" />
+                    </padding>
+                    <rowConstraints>
+                        <RowConstraints minHeight="10.0" prefHeight="-1.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="-1.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="-1.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" vgrow="ALWAYS" />
+                    </rowConstraints>
+                </GridPane>
+            </content>
+        </TitledPane>
+        <TitledPane animated="false" text="Lights" fx:id="x2">
+            <content>
+                <ScrollPane fitToWidth="true" prefHeight="200.0" prefWidth="200.0">
+                    <content>
+                        <GridPane hgap="5.0" padding="$x3" styleClass="settings" vgap="5.0">
+                            <children>
+                                <Label text="Color:" GridPane.columnIndex="0" GridPane.rowIndex="2" />
+                                <Label maxWidth="1.7976931348623157E308" styleClass="settings-header" text="Ambient" GridPane.columnIndex="0" GridPane.columnSpan="2147483647" GridPane.hgrow="ALWAYS" GridPane.rowIndex="0" />
+                                <ColorPicker fx:id="ambientColorPicker" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                                <Label text="Enabled" GridPane.columnIndex="0" GridPane.rowIndex="1" />
+                                <CheckBox fx:id="ambientEnableCheckbox" mnemonicParsing="false" text="" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                <Label text="Color:" GridPane.columnIndex="0" GridPane.rowIndex="5" />
+                                <ColorPicker id="ambientColorPicker" fx:id="light1ColorPicker" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+                                <Label maxWidth="1.7976931348623157E308" styleClass="settings-header" text="Light 1 (Camera)" GridPane.columnIndex="0" GridPane.columnSpan="2" GridPane.hgrow="ALWAYS" GridPane.rowIndex="3" />
+                                <Label text="Enabled" GridPane.columnIndex="0" GridPane.rowIndex="4" />
+                                <CheckBox fx:id="light1EnabledCheckBox" mnemonicParsing="false" text="" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                                <Label text="Lock to Camera" GridPane.columnIndex="0" GridPane.rowIndex="6" />
+                                <CheckBox fx:id="light1followCameraCheckBox" mnemonicParsing="false" selected="true" text="" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+                                <Label text="X" GridPane.columnIndex="0" GridPane.rowIndex="7" />
+                                <Slider fx:id="light1x" majorTickUnit="20.0" max="100.0" min="-100.0" minorTickCount="5" showTickLabels="true" showTickMarks="false" value="0.0" GridPane.columnIndex="1" GridPane.rowIndex="7" />
+                                <Label text="Y" GridPane.columnIndex="0" GridPane.rowIndex="8" />
+                                <Slider fx:id="light1y" majorTickUnit="20.0" max="100.0" min="-100.0" minorTickCount="5" showTickLabels="true" showTickMarks="false" value="0.0" GridPane.columnIndex="1" GridPane.rowIndex="8" />
+                                <Label text="Z" GridPane.columnIndex="0" GridPane.rowIndex="9" />
+                                <Slider fx:id="light1z" majorTickUnit="20.0" max="100.0" min="-100.0" minorTickCount="5" showTickLabels="true" showTickMarks="false" value="0.0" GridPane.columnIndex="1" GridPane.rowIndex="9" />
+                                <Label maxWidth="1.7976931348623157E308" styleClass="settings-header" text="Light 2" GridPane.columnIndex="0" GridPane.columnSpan="2" GridPane.hgrow="ALWAYS" GridPane.rowIndex="10" />
+                                <Label text="Enabled" GridPane.columnIndex="0" GridPane.rowIndex="11" />
+                                <CheckBox fx:id="light2EnabledCheckBox" mnemonicParsing="false" text="" GridPane.columnIndex="1" GridPane.rowIndex="11" />
+                                <Label text="X" GridPane.columnIndex="0" GridPane.rowIndex="13" />
+                                <Slider fx:id="light2x" majorTickUnit="20.0" max="100.0" min="-100.0" minorTickCount="5" showTickLabels="true" showTickMarks="false" value="0.0" GridPane.columnIndex="1" GridPane.rowIndex="13" />
+                                <Label text="Y" GridPane.columnIndex="0" GridPane.rowIndex="14" />
+                                <Slider fx:id="light2y" majorTickUnit="20.0" max="100.0" min="-100.0" minorTickCount="5" showTickLabels="true" showTickMarks="false" value="0.0" GridPane.columnIndex="1" GridPane.rowIndex="14" />
+                                <Label text="Z" GridPane.columnIndex="0" GridPane.rowIndex="15" />
+                                <Slider fx:id="light2z" majorTickUnit="20.0" max="100.0" min="-100.0" minorTickCount="5" showTickLabels="true" showTickMarks="false" value="0.0" GridPane.columnIndex="1" GridPane.rowIndex="15" />
+                                <Label maxWidth="1.7976931348623157E308" styleClass="settings-header" text="Light 3" GridPane.columnIndex="0" GridPane.columnSpan="2" GridPane.hgrow="ALWAYS" GridPane.rowIndex="16" />
+                                <Label text="Enabled" GridPane.columnIndex="0" GridPane.rowIndex="17" />
+                                <CheckBox fx:id="light3EnabledCheckBox" mnemonicParsing="false" text="" GridPane.columnIndex="1" GridPane.rowIndex="17" />
+                                <Label text="Lock to Camera" GridPane.columnIndex="0" GridPane.rowIndex="19" />
+                                <Slider fx:id="light3x" majorTickUnit="20.0" max="100.0" min="-100.0" minorTickCount="5" showTickLabels="true" showTickMarks="false" value="0.0" GridPane.columnIndex="1" GridPane.rowIndex="19" />
+                                <Label text="Y" GridPane.columnIndex="0" GridPane.rowIndex="20" />
+                                <Slider fx:id="light3y" majorTickUnit="20.0" max="100.0" min="-100.0" minorTickCount="5" showTickLabels="true" showTickMarks="false" value="0.0" GridPane.columnIndex="1" GridPane.rowIndex="20" />
+                                <Label text="Z" GridPane.columnIndex="0" GridPane.rowIndex="21" />
+                                <Slider fx:id="light3z" majorTickUnit="20.0" max="100.0" min="-100.0" minorTickCount="5" showTickLabels="true" showTickMarks="false" value="0.0" GridPane.columnIndex="1" GridPane.rowIndex="21" />
+                                <Label text="Color:" GridPane.columnIndex="0" GridPane.rowIndex="12" />
+                                <ColorPicker fx:id="light2ColorPicker" GridPane.columnIndex="1" GridPane.rowIndex="12" />
+                                <Label text="Color" GridPane.columnIndex="0" GridPane.rowIndex="18" />
+                                <ColorPicker fx:id="light3ColorPicker" GridPane.columnIndex="1" GridPane.rowIndex="18" />
+                            </children>
+                            <columnConstraints>
+                                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                            </columnConstraints>
+                            <rowConstraints>
+                                <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+                                <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+                                <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+                                <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+                                <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+                                <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+                                <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+                                <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+                                <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+                                <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+                                <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+                                <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+                                <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+                                <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+                                <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+                                <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+                                <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+                                <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+                                <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+                                <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+                                <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+                                <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+                            </rowConstraints>
+                        </GridPane>
+                    </content>
+                </ScrollPane>
+            </content>
+        </TitledPane>
+        <TitledPane animated="false" text="Camera" fx:id="x1">
+            <content>
+                <GridPane hgap="5.0" padding="$x3" styleClass="settings" vgap="5.0">
+                    <children>
+                        <Label text="Field of view:" GridPane.columnIndex="0" GridPane.rowIndex="0" />
+                        <Slider fx:id="fovSlider" majorTickUnit="40.0" max="180.0" min="0.0" minorTickCount="4" showTickLabels="true" showTickMarks="true" value="90" GridPane.columnIndex="1" GridPane.rowIndex="0" />
+                        <Label fx:id="nearClipLabel" text="Near clipping pane: &#10;   %.5f" GridPane.columnIndex="0" GridPane.rowIndex="1" />
+                        <Slider fx:id="nearClipSlider" majorTickUnit="1" max="5" min="-5" minorTickCount="4" showTickLabels="true" showTickMarks="true" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                        <Label fx:id="farClipLabel" text="Far clipping pane: &#10;   %.5f" GridPane.columnIndex="0" GridPane.rowIndex="2" />
+                        <Slider fx:id="farClipSlider" majorTickUnit="1" max="5" min="-5" minorTickCount="4" showTickLabels="true" showTickMarks="true" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                    </children>
+                    <columnConstraints>
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                    </columnConstraints>
+                    <rowConstraints>
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints />
+                        <RowConstraints />
+                    </rowConstraints>
+                </GridPane>
+            </content>
+        </TitledPane>
+        <TitledPane animated="false" expanded="true" text="Hierarchy" fx:id="x5">
+            <content>
+                <TreeTableView fx:id="hierarachyTreeTable" editable="true" prefHeight="200.0" prefWidth="200.0">
+                    <columns>
+                        <TreeTableColumn fx:id="nodeColumn" editable="false" prefWidth="75.0" sortable="false" text="Node" />
+                        <TreeTableColumn fx:id="idColumn" editable="false" prefWidth="75.0" text="Id" />
+                        <TreeTableColumn fx:id="visibilityColumn" editable="true" text="Visibility" />
+                        <TreeTableColumn fx:id="widthColumn" editable="false" text="W" />
+                        <TreeTableColumn fx:id="heightColumn" editable="false" text="H" />
+                        <TreeTableColumn fx:id="depthColumn" editable="false" text="D" />
+                    </columns>
+                </TreeTableView>
+            </content>
+        </TitledPane>
+        <TitledPane animated="false" expanded="false" text="Transforms" fx:id="x6">
+            <content>
+                <VBox>
+                    <children>
+                        <Label fx:id="selectedNodeLabel" />
+                        <ListView fx:id="transformsList" prefHeight="200.0" prefWidth="200.0">
+                            <VBox.vgrow>ALWAYS</VBox.vgrow>
+                        </ListView>
+                    </children>
+                </VBox>
+            </content>
+        </TitledPane>
+      <TitledPane animated="false" text="Level">
+        <content>
+            <ScrollPane>
+               <content>
+                  <VBox prefHeight="410.0" prefWidth="279.0">
+                     <children>
+                        <HBox prefHeight="100.0" prefWidth="200.0">
+                           <children>
+                              <Label text="Title:" />
+                              <TextField fx:id="levelTitle" text="level_default" />
+                           </children>
+                        </HBox>
+                        <HBox prefHeight="100.0" prefWidth="200.0">
+                           <children>
+                              <Button fx:id="levelNewLevel" mnemonicParsing="false" onAction="#onNewLevel" text="New Level" />
+                              <Button fx:id="levelResetLevel" mnemonicParsing="false" onAction="#onResetLevel" text="Reset Level" />
+                           </children>
+                        </HBox>
+                     </children>
+                  </VBox>
+               </content>
+            </ScrollPane>
+        </content>
+      </TitledPane>
+      <TitledPane animated="false" text="PlayerShip">
+        <content>
+            <ScrollPane>
+               <content>
+                  <VBox prefHeight="434.0" prefWidth="273.0">
+                     <children>
+                        <ComboBox fx:id="playerShipTeamSelection" onAction="#onPlayerShipTeamSelection" prefWidth="150.0" promptText="Team" />
+                        <TableView fx:id="playerShipSelectionTable" prefHeight="200.0" prefWidth="200.0">
+                          <columns>
+                            <TableColumn fx:id="playerShipShipSelectionColumn" prefWidth="75.0" text="Ships" />
+                            <TableColumn fx:id="playerShipSelectedShipsColumn" prefWidth="75.0" text="Selected" />
+                          </columns>
+                        </TableView>
+                        <Button fx:id="playerShipAddSelectedShip" mnemonicParsing="false" onAction="#onPlayerShipAdded" text="Add" />
+                        <Button fx:id="playerShipRemoveSelectedShip" mnemonicParsing="false" onAction="#onPlayerShipRemoved" text="Remove" />
+                        <HBox prefHeight="100.0" prefWidth="200.0">
+                           <children>
+                              <Label prefHeight="17.0" prefWidth="88.0" text="Position" />
+                              <TextField fx:id="playerShipPositionX" prefHeight="26.0" prefWidth="78.0" text="0" />
+                              <TextField fx:id="playerShipPositionY" prefHeight="26.0" prefWidth="67.0" text="0" />
+                              <TextField fx:id="playerShipPositionZ" prefHeight="26.0" prefWidth="82.0" text="0" />
+                           </children>
+                        </HBox>
+                        <HBox prefHeight="100.0" prefWidth="200.0">
+                           <children>
+                              <Label prefHeight="17.0" prefWidth="127.0" text="Orientation" />
+                              <TextField fx:id="playerShipOrientationX" prefHeight="26.0" prefWidth="96.0" text="0" />
+                              <TextField fx:id="playerShipOrientationY" prefHeight="26.0" prefWidth="88.0" text="1" />
+                              <TextField fx:id="playerShipOrientationZ" prefHeight="26.0" prefWidth="95.0" text="0" />
+                              <TextField fx:id="playerShipOrientationAngle" prefHeight="26.0" prefWidth="113.0" text="0" />
+                           </children>
+                        </HBox>
+                        <HBox prefHeight="100.0" prefWidth="200.0">
+                           <children>
+                              <CheckBox fx:id="playerSHipAIEnabled" mnemonicParsing="false" onAction="#onPlayerShipAIEnabled" text="AI" />
+                              <CheckBox fx:id="playerShipInvincibilityEnabled" mnemonicParsing="false" onAction="#onPlayerShipInvincibilityEnabled" text="Invincible" />
+                           </children>
+                        </HBox>
+                     </children>
+                  </VBox>
+               </content>
+            </ScrollPane>
+        </content>
+      </TitledPane>
+      <TitledPane animated="false" text="Start event">
+        <content>
+            <ScrollPane>
+               <content>
+                  <VBox prefHeight="423.0" prefWidth="279.0">
+                     <children>
+                        <HBox prefHeight="100.0" prefWidth="200.0">
+                           <children>
+                              <ComboBox fx:id="startEventSkyboxSelection" onAction="#onSkyboxSelected" prefWidth="150.0" promptText="Skybox" />
+                           </children>
+                        </HBox>
+                        <HBox prefHeight="100.0" prefWidth="200.0">
+                           <children>
+                              <Label prefHeight="17.0" prefWidth="90.0" text="LightDir:" />
+                              <TextField fx:id="startEventLightDirX" prefHeight="26.0" prefWidth="98.0" text="-1" />
+                              <TextField fx:id="startEventLightDirY" prefHeight="26.0" prefWidth="85.0" text="0" />
+                              <TextField fx:id="startEventLightDirZ" prefHeight="26.0" prefWidth="76.0" text="0" />
+                           </children>
+                        </HBox>
+                        <HBox prefHeight="100.0" prefWidth="200.0">
+                           <children>
+                              <Label text="LightType:" />
+                              <ComboBox fx:id="startEventLightTypeSelection" onAction="#onLightTypeSelected" prefWidth="150.0" />
+                           </children>
+                        </HBox>
+                        <HBox prefHeight="100.0" prefWidth="200.0">
+                           <children>
+                              <Label text="LightPwrScl:" />
+                              <TextField fx:id="startEventLightPowerScale" text="3.14" />
+                           </children>
+                        </HBox>
+                        <HBox prefHeight="100.0" prefWidth="200.0">
+                           <children>
+                              <Label prefHeight="17.0" prefWidth="78.0" text="LightDiffCol:" />
+                              <TextField fx:id="startEventLightDiffuseColorX" prefHeight="26.0" prefWidth="68.0" text="0.8" />
+                              <TextField fx:id="startEventLightDiffuseColorY" prefHeight="26.0" prefWidth="68.0" text="0.4" />
+                              <TextField fx:id="startEventLightDiffuseColorZ" prefHeight="26.0" prefWidth="76.0" text="0.2" />
+                              <TextField fx:id="startEventLightDiffuseColorW" prefHeight="26.0" prefWidth="70.0" text="1.0" />
+                           </children>
+                        </HBox>
+                        <HBox prefHeight="100.0" prefWidth="200.0">
+                           <children>
+                              <Label text="LightSpecCol:" />
+                              <TextField fx:id="startEventLightSpecularColorX1" prefHeight="26.0" prefWidth="68.0" text="0.8" />
+                              <TextField fx:id="startEventLightSpecularColorY1" prefHeight="26.0" prefWidth="68.0" text="0.4" />
+                              <TextField fx:id="startEventLightSpecularColorZ1" prefHeight="26.0" prefWidth="76.0" text="0.2" />
+                              <TextField fx:id="startEventLightSpecularColorW" prefHeight="26.0" prefWidth="72.0" text="1.0" />
+                           </children>
+                        </HBox>
+                        <VBox>
+                           <children>
+                              <HBox prefHeight="100.0" prefWidth="200.0">
+                                 <children>
+                                    <Label text="AmbLight:" />
+                                    <TextField fx:id="startEventAmbientUpperHemiR" prefHeight="26.0" prefWidth="80.0" text="0.3" />
+                                    <TextField fx:id="startEventAmbientUpperHemiG" prefHeight="26.0" prefWidth="75.0" text="0.5" />
+                                    <TextField fx:id="startEventAmbientUpperHemiB" prefHeight="26.0" prefWidth="78.0" text="0.7" />
+                                    <TextField fx:id="startEventAmbientUpperHemiA" prefHeight="26.0" prefWidth="65.0" text="0.1" />
+                                 </children>
+                              </HBox>
+                              <HBox prefHeight="100.0" prefWidth="200.0">
+                                 <children>
+                                    <TextField fx:id="startEventAmbientLowerHemiR1" prefHeight="26.0" prefWidth="80.0" text="0.6" />
+                                    <TextField fx:id="startEventAmbientLowerHemiG1" prefHeight="26.0" prefWidth="75.0" text="0.45" />
+                                    <TextField fx:id="startEventAmbientLowerHemiB1" prefHeight="26.0" prefWidth="78.0" text="0.3" />
+                                    <TextField fx:id="startEventAmbientLowerHemiA1" prefHeight="26.0" prefWidth="65.0" text="0.1" />
+                                 </children>
+                              </HBox>
+                              <HBox prefHeight="100.0" prefWidth="200.0">
+                                 <children>
+                                    <Label text="HemiDir:" />
+                                    <TextField fx:id="startEventHemiDirX" prefHeight="26.0" prefWidth="78.0" text="-1.0" />
+                                    <TextField fx:id="startEventHemiDirY" prefHeight="26.0" prefWidth="73.0" text="0.0" />
+                                    <TextField fx:id="startEventHemiDirZ" prefHeight="26.0" prefWidth="81.0" text="0.0" />
+                                 </children>
+                              </HBox>
+                           </children>
+                        </VBox>
+                     </children>
+                  </VBox>
+               </content>
+            </ScrollPane>
+        </content>
+      </TitledPane>
+        <TitledPane animated="false" text="Events">
+            <content>
+            <ScrollPane>
+               <content>
+                  <VBox prefHeight="393.0" prefWidth="279.0">
+                     <children>
+                        <ComboBox fx:id="eventsSelectionComboBox" onAction="#onEventSelected" prefWidth="150.0" promptText="Events" />
+                        <HBox prefHeight="100.0" prefWidth="200.0">
+                           <children>
+                              <Label text="Title:" />
+                              <TextField fx:id="eventsEventTitle" prefHeight="25.0" prefWidth="249.0" />
+                           </children>
+                        </HBox>
+                        <HBox prefHeight="100.0" prefWidth="200.0">
+                           <children>
+                              <Label text="Previous end cond:" />
+                              <TextField fx:id="eventsPreviousEndCond" prefHeight="25.0" prefWidth="171.0" />
+                           </children>
+                        </HBox>
+                        <HBox prefHeight="100.0" prefWidth="200.0">
+                           <children>
+                              <Label text="Delay:" />
+                              <TextField fx:id="eventsDelay" promptText="in ms" />
+                           </children>
+                        </HBox>
+                        <HBox prefHeight="100.0" prefWidth="200.0">
+                           <children>
+                              <Button fx:id="eventsAddSelected" mnemonicParsing="false" onAction="#onAddSelected" prefHeight="25.0" prefWidth="102.0" text="Add selected" />
+                              <Separator orientation="VERTICAL" prefHeight="59.0" prefWidth="86.0" />
+                              <Button fx:id="eventsUndoAddSelected" mnemonicParsing="false" onAction="#onUndoAddSelected" prefHeight="25.0" prefWidth="91.0" text="Undo" />
+                           </children>
+                        </HBox>
+                        <HBox prefHeight="100.0" prefWidth="279.0">
+                           <children>
+                              <ComboBox fx:id="eventsWinCondTypeCombo" onAction="#onWinCondTypeCombo" prefWidth="150.0" promptText="Win end cond type" />
+                              <Separator orientation="VERTICAL" prefHeight="53.0" prefWidth="59.0" />
+                              <Button fx:id="eventsAddWinCond" mnemonicParsing="false" onAction="#onAddWinCond" text="Add cond" />
+                           </children>
+                        </HBox>
+                        <HBox>
+                           <children>
+                              <ComboBox fx:id="eventsWinCondEventSelected" onAction="#onWinCondEventSelected" prefWidth="150.0" promptText="Win cond event" />
+                              <Separator orientation="VERTICAL" prefHeight="26.0" prefWidth="61.0" />
+                              <Button fx:id="eventsRemoveWinCond" mnemonicParsing="false" onAction="#onRemoveWinCond" prefHeight="26.0" prefWidth="77.0" text="Remove cond" />
+                           </children>
+                        </HBox>
+                        <HBox layoutX="10.0" layoutY="322.0" prefHeight="100.0" prefWidth="200.0">
+                           <children>
+                              <ComboBox fx:id="eventsMeshSelectionWinCond" prefWidth="150.0" promptText="Mesh" />
+                              <Separator orientation="VERTICAL" prefHeight="26.0" prefWidth="44.0" />
+                              <Button fx:id="eventsMeshAddWinButton" mnemonicParsing="false" onAction="#onMeshAddToWinCond" text="Add Mesh" />
+                           </children>
+                        </HBox>
+                        <HBox prefHeight="20.0" prefWidth="279.0">
+                           <children>
+                              <ComboBox fx:id="eventsWinComparatorCombo" onAction="#onWinComparatorSelected" prefHeight="26.0" prefWidth="93.0" promptText="Comparator" />
+                              <Label text="End cond:" />
+                              <TextField fx:id="eventsWinEndCond" onAction="#onWinCond" prefHeight="26.0" prefWidth="131.0" />
+                           </children>
+                        </HBox>
+                        <HBox prefHeight="100.0" prefWidth="200.0">
+                           <children>
+                              <Label text="Delay:" />
+                              <TextField fx:id="eventsEndCondWinDelay" promptText="in ms" />
+                           </children>
+                        </HBox>
+                        <HBox prefHeight="100.0" prefWidth="200.0">
+                           <children>
+                              <Label text="ObjAchievedDelay:" />
+                              <TextField fx:id="eventsEndCondWinObjectiveAchievedDelay" promptText="in ms" />
+                           </children>
+                        </HBox>
+                        <HBox prefHeight="100.0" prefWidth="279.0">
+                           <children>
+                              <ComboBox fx:id="eventsLoseCondTypeCombo" onAction="#onLoseCondTypeCombo" prefHeight="26.0" prefWidth="168.0" promptText="Lose end cond type" />
+                              <Separator orientation="VERTICAL" prefHeight="29.0" prefWidth="39.0" />
+                              <Button fx:id="eventsAddLoseCond" mnemonicParsing="false" onAction="#onAddLoseCond" text="Add cond" />
+                           </children>
+                        </HBox>
+                        <HBox>
+                           <children>
+                              <ComboBox fx:id="eventsLoseCondEventSelected" onAction="#onLoseCondEventSelected" prefWidth="150.0" promptText="Lose cond event" />
+                              <Separator orientation="VERTICAL" prefHeight="26.0" prefWidth="61.0" />
+                              <Button fx:id="eventsRemoveLoseCond" mnemonicParsing="false" onAction="#onRemoveLoseCond" prefHeight="26.0" prefWidth="77.0" text="Remove cond" />
+                           </children>
+                        </HBox>
+                        <HBox prefHeight="100.0" prefWidth="200.0">
+                           <children>
+                              <ComboBox fx:id="eventsMeshSelectionLoseCond" prefWidth="150.0" promptText="Mesh" />
+                              <Separator orientation="VERTICAL" prefHeight="26.0" prefWidth="44.0" />
+                              <Button fx:id="eventsMeshAddLoseButton" mnemonicParsing="false" onAction="#onMeshAddToLoseCond" text="Add Mesh" />
+                           </children>
+                        </HBox>
+                        <HBox prefHeight="20.0" prefWidth="279.0">
+                           <children>
+                              <ComboBox fx:id="eventsLoseComparatorCombo" onAction="#onLoseComparatorSelected" prefHeight="26.0" prefWidth="93.0" promptText="Comparator" />
+                              <Label prefHeight="17.0" prefWidth="59.0" text="End cond:" />
+                              <TextField fx:id="eventsLoseEndCond" onAction="#onLoseCond" prefHeight="26.0" prefWidth="131.0" />
+                           </children>
+                        </HBox>
+                        <HBox prefHeight="100.0" prefWidth="200.0">
+                           <children>
+                              <Label text="Delay:" />
+                              <TextField fx:id="eventsEndCondLossDelay" promptText="in ms" />
+                           </children>
+                        </HBox>
+                        <HBox prefHeight="100.0" prefWidth="200.0">
+                           <children>
+                              <Label text="ObjAchievedDelay:" />
+                              <TextField fx:id="eventsEndCondLoseObjectiveAchievedDelay" promptText="in ms" />
+                           </children>
+                        </HBox>
+                        <Label text="Delay:" />
+                        <TextField fx:id="eventsEndCondWinDelay1" promptText="in ms" />
+                        <HBox prefHeight="100.0" prefWidth="279.0">
+                           <children>
+                              <Button fx:id="eventsCreateEvent" mnemonicParsing="false" onAction="#onCreateEvent" prefHeight="25.0" prefWidth="100.0" text="Create Event" />
+                              <Separator orientation="VERTICAL" prefHeight="100.0" prefWidth="95.0" />
+                              <Button fx:id="eventsUndoCreateEvent" mnemonicParsing="false" onAction="#onUndoCreateEvent" prefHeight="25.0" prefWidth="84.0" text="Undo" />
+                           </children>
+                        </HBox>
+                        <HBox prefHeight="100.0" prefWidth="200.0">
+                           <children>
+                              <Label text="Final end:" />
+                              <TextField fx:id="eventsFinalEnd" />
+                           </children>
+                        </HBox>
+                        <HBox layoutX="10.0" layoutY="502.0" prefHeight="100.0" prefWidth="200.0">
+                           <children>
+                              <Label text="Ignore loss event:" />
+                              <TextField fx:id="eventsFinalEndIgnoreLossEvent" />
+                              <Button fx:id="eventsFinalEndAddignoreLossEvent" mnemonicParsing="false" onAction="#onAddFinalEndIgnoreLossEvent" text="Add" />
+                           </children>
+                        </HBox>
+                     </children>
+                  </VBox>
+               </content>
+            </ScrollPane>
+            </content>
+        </TitledPane>
+      <TitledPane animated="false" text="Exit Events">
+        <content>
+            <ScrollPane>
+               <content>
+                  <VBox prefHeight="382.0" prefWidth="277.0">
+                     <children>
+                        <HBox>
+                           <children>
+                              <ComboBox fx:id="exitEventMeshSelection" prefWidth="150.0" promptText="Mesh" />
+                              <Button fx:id="exitEventAddToExitList" mnemonicParsing="false" onAction="#onExitEventAddToList" text="Add to list" />
+                           </children>
+                        </HBox>
+                        <HBox prefHeight="100.0" prefWidth="200.0">
+                           <children>
+                              <Label text="exit:" />
+                              <TextField fx:id="exitEventText" prefHeight="26.0" prefWidth="185.0" />
+                              <Button fx:id="exitEventAddButton" mnemonicParsing="false" onAction="#onExitEventAdd" prefHeight="26.0" prefWidth="52.0" text="Add" />
+                           </children>
+                        </HBox>
+                     </children>
+                  </VBox>
+               </content>
+            </ScrollPane>
+        </content>
+      </TitledPane>
+        <TitledPane animated="false" text="Selection">
+            <content>
+            <ScrollPane>
+               <content>
+                        <VBox prefHeight="200.0" prefWidth="279.0">
+                            <children>
+                                <VBox prefHeight="200.0" prefWidth="100.0">
+                                    <children>
+                              <ComboBox fx:id="selectedMesh" onAction="#onMeshSelected" prefWidth="150.0" promptText="Selection" />
+                                        <Label text="Position:" />
+                                        <HBox prefHeight="100.0" prefWidth="200.0">
+                                            <children>
+                                                <TextField fx:id="selectionXPos" />
+                                                <TextField fx:id="selectionYPos" />
+                                                <TextField fx:id="selectionZPos" />
+                                            </children>
+                                        </HBox>
+                                        <Label text="Rotation:" />
+                                        <HBox prefHeight="100.0" prefWidth="200.0">
+                                            <children>
+                                                <TextField fx:id="selectionXRot" />
+                                                <TextField fx:id="selectionYRot" />
+                                                <TextField fx:id="selectionZRot" />
+                                    <TextField fx:id="selectionAngleRot" />
+                                            </children>
+                                        </HBox>
+                                    </children>
+                                </VBox>
+                                <HBox prefHeight="100.0" prefWidth="200.0">
+                                    <children>
+                                        <Label text="Mesh Name:" />
+                                        <TextField fx:id="selectedMeshNameText" editable="false" />
+                                    </children>
+                                </HBox>
+                                <HBox prefHeight="100.0" prefWidth="200.0">
+                                    <children>
+                                        <Label text="Mesh Level Name:" />
+                                        <TextField fx:id="selectedMeshLevelNameText" />
+                                    </children>
+                                </HBox>
+                        <HBox prefHeight="100.0" prefWidth="200.0">
+                           <children>
+                              <Button fx:id="selectionSetPosition" mnemonicParsing="false" onAction="#onSelectionSetPosition" text="Set Position" />
+                              <Separator orientation="VERTICAL" prefHeight="25.0" prefWidth="139.0" />
+                              <Button fx:id="selectionUndoPosition" mnemonicParsing="false" onAction="#onSelectionUndoPosition" text="Undo" />
+                           </children>
+                        </HBox>
+                        <HBox prefHeight="100.0" prefWidth="200.0">
+                           <children>
+                              <Button fx:id="selectionSetRotation" mnemonicParsing="false" onAction="#onSelectionSetOrientation" text="Set Rotation" />
+                              <Separator orientation="VERTICAL" prefHeight="25.0" prefWidth="135.0" />
+                              <Button fx:id="selectionUndoOrientation" mnemonicParsing="false" onAction="#onSelectionUndoOrientation" text="Undo" />
+                           </children>
+                        </HBox>
+                        <HBox prefHeight="100.0" prefWidth="200.0">
+                           <children>
+                              <Separator orientation="VERTICAL" prefHeight="25.0" prefWidth="142.0" />
+                              <Button fx:id="selectionDespawn" mnemonicParsing="false" onAction="#onSelectionOnDespawn" text="Despawn" />
+                              <Separator orientation="VERTICAL" prefHeight="25.0" prefWidth="8.0" />
+                              <Button fx:id="selectionUndoDespawn" mnemonicParsing="false" onAction="#onSelectionUndoDespawn" text="Undo" />
+                           </children>
+                        </HBox>
+                            </children>
+                        </VBox>
+               </content>
+            </ScrollPane>
+            </content>
+        </TitledPane>
+        <TitledPane animated="false" text="Mesh">
+            <content>
+            <ScrollPane>
+               <content>
+                        <VBox prefHeight="200.0" prefWidth="279.0">
+                            <children>
+                        <ComboBox fx:id="meshShipTypeSelection" onAction="#onShipTypeSelection" prefWidth="150.0" promptText="Ship type" />
+                                <ComboBox fx:id="meshComboBox" onAction="#onMeshSelection" prefWidth="150.0" promptText="Select ship" />
+                        <TextField fx:id="meshShipName" promptText="Shiip name" text="DefaultShip" />
+                                <HBox prefHeight="62.0" prefWidth="97.0">
+                                    <children>
+                                        <TextField fx:id="meshXPosText" promptText="X" text="0" />
+                                        <TextField fx:id="meshYPosText" promptText="Y" text="0" />
+                                        <TextField fx:id="meshZPosText" promptText="Z" text="0" />
+                                    </children>
+                                </HBox>
+                                <HBox prefHeight="100.0" prefWidth="200.0">
+                                    <children>
+                                        <TextField fx:id="meshXRotText" promptText="XAxis" text="0" />
+                                        <TextField fx:id="meshYRotText" promptText="YAxis" text="1" />
+                                        <TextField fx:id="meshZRotText" promptText="ZAxis" text="0" />
+                              <TextField fx:id="meshRotAngleText" promptText="Angle" text="0" />
+                                    </children>
+                                </HBox>
+                        <HBox prefHeight="100.0" prefWidth="200.0">
+                           <children>
+                              <Label text="scan radius:" />
+                              <TextField fx:id="meshScanRadius" />
+                           </children>
+                        </HBox>
+                        <HBox prefHeight="100.0" prefWidth="200.0">
+                           <children>
+                              <Label text="beacon radius:" />
+                              <TextField fx:id="meshRadius" />
+                           </children>
+                        </HBox>
+                        <HBox prefHeight="100.0" prefWidth="200.0">
+                           <children>
+                              <CheckBox fx:id="meshAIEnabled" mnemonicParsing="false" prefHeight="18.0" prefWidth="61.0" selected="true" text="AI" />
+                              <CheckBox fx:id="meshFriendlyEnabled" mnemonicParsing="false" prefHeight="18.0" prefWidth="89.0" text="Friendly" />
+                              <CheckBox fx:id="meshInvincibilityEnabled" mnemonicParsing="false" text="Invincible" />
+                              <Label text="Prioritize:" />
+                              <TextField fx:id="meshPrioritize" prefHeight="26.0" prefWidth="73.0" />
+                           </children>
+                        </HBox>
+                        <HBox prefHeight="100.0" prefWidth="200.0">
+                           <children>
+                              <Label text="Attack:" />
+                              <TextField fx:id="meshAttack" />
+                           </children>
+                        </HBox>
+                        <HBox prefHeight="100.0" prefWidth="200.0">
+                           <children>
+                              <CheckBox fx:id="meshDestinationEnabled" mnemonicParsing="false" onAction="#onMeshDestinationEnabled" text="Destination" />
+                              <TextField fx:id="meshDestinationXPos" prefHeight="26.0" prefWidth="66.0" />
+                              <TextField fx:id="meshDestinationYPos" prefHeight="26.0" prefWidth="55.0" />
+                              <TextField fx:id="meshDestinationZPos" prefHeight="26.0" prefWidth="72.0" />
+                           </children>
+                        </HBox>
+                        <HBox prefHeight="100.0" prefWidth="200.0">
+                           <children>
+                              <Label text="Health:" />
+                              <TextField fx:id="meshHealth" text="100" />
+                           </children>
+                        </HBox>
+                        <ComboBox fx:id="meshBehaviorSelection" onAction="#onMeshBehaviorSelection" prefWidth="150.0" promptText="Behavior" />
+                        <ComboBox fx:id="meshEventSelection" onAction="#onMeshEventSelection" prefWidth="150.0" promptText="Event" />
+                        <Button fx:id="meshSpawn" mnemonicParsing="false" onAction="#createMesh" prefHeight="25.0" prefWidth="135.0" text="Spawn" />
+                        <CheckBox fx:id="meshGridAttached" mnemonicParsing="false" onAction="#onAttachToGrid" text="Grid attached" />
+                            </children>
+                        </VBox>
+               </content>
+            </ScrollPane>
+            </content>
+        </TitledPane>
+        <TitledPane animated="false" text="Grid">
+            <content>
+            <ScrollPane>
+               <content>
+                      <VBox prefHeight="200.0" prefWidth="279.0">
+                          <children>
+                              <CheckBox fx:id="gridEnabledCheckBox" mnemonicParsing="false" onAction="#onGridEnabled" selected="true" text="Grid enabled" />
+                              <RadioButton fx:id="gridXZ" mnemonicParsing="false" onAction="#onGridXZSelected" selected="true" text="XZ">
+                                  <toggleGroup>
+                                      <ToggleGroup fx:id="gridGroup" />
+                                  </toggleGroup>
+                              </RadioButton>
+                              <RadioButton fx:id="gridYZ" mnemonicParsing="false" onAction="#onGridYZSelected" text="YZ" toggleGroup="$gridGroup" />
+                        <RadioButton fx:id="gridXY" mnemonicParsing="false" onAction="#onGridXYSelected" text="XY" toggleGroup="$gridGroup" />
+                        <Label text="Position:" />
+                        <HBox prefHeight="100.0" prefWidth="200.0">
+                           <children>
+                              <TextField fx:id="gridXPos" text="0" />
+                              <TextField fx:id="gridYPos" text="0" />
+                              <TextField fx:id="gridZPos" text="0" />
+                           </children>
+                        </HBox>
+                        <HBox>
+                           <children>
+                              <Button fx:id="gridSetPositionButton" mnemonicParsing="false" onAction="#onGridSetPosition" text="Set position" />
+                           </children>
+                        </HBox>
+                          </children>
+                      </VBox>
+               </content>
+            </ScrollPane>
+            </content>
+        </TitledPane>
+      <TitledPane animated="false" text="Waypoints">
+        <content>
+            <ScrollPane>
+               <content>
+                  <VBox prefHeight="404.0" prefWidth="279.0">
+                     <children>
+                        <HBox prefHeight="100.0" prefWidth="200.0">
+                           <children>
+                              <Label prefHeight="17.0" prefWidth="107.0" text="WaypointSector:" />
+                              <ComboBox fx:id="waypointsWaypointSectorSelection" onAction="#onWaypointSectorSelected" prefWidth="150.0" />
+                              <Button fx:id="waypointsWaypointSectorAdd" mnemonicParsing="false" onAction="#onWaypointSectorAdd" prefHeight="26.0" prefWidth="70.0" text="Add" />
+                           </children>
+                        </HBox>
+                        <HBox prefHeight="100.0" prefWidth="200.0">
+                           <children>
+                              <Label prefHeight="17.0" prefWidth="71.0" text="extents min:" />
+                              <TextField fx:id="waypointsWaypointsSectorXMin" prefHeight="25.0" prefWidth="68.0" />
+                              <TextField fx:id="waypointsWaypointsSectorYMin" prefHeight="25.0" prefWidth="61.0" />
+                              <TextField fx:id="waypointsWaypointsSectorZMin" prefHeight="25.0" prefWidth="58.0" />
+                           </children>
+                        </HBox>
+                        <HBox layoutX="10.0" layoutY="77.0" prefHeight="100.0" prefWidth="200.0">
+                           <children>
+                              <Label text="extents max:" />
+                              <TextField fx:id="waypointsWaypointsSectorXMax1" prefHeight="25.0" prefWidth="65.0" />
+                              <TextField fx:id="waypointsWaypointsSectorYMax1" prefHeight="25.0" prefWidth="64.0" />
+                              <TextField fx:id="waypointsWaypointsSectorZMax1" prefHeight="25.0" prefWidth="65.0" />
+                           </children>
+                        </HBox>
+                        <HBox prefHeight="100.0" prefWidth="200.0">
+                           <children>
+                              <Label text="Max users:" />
+                              <TextField fx:id="waypointWaypointsSectorMaxUsers" text="10" />
+                           </children>
+                        </HBox>
+                        <HBox prefHeight="100.0" prefWidth="200.0">
+                           <children>
+                              <Label text="Waypoint:" />
+                              <ComboBox fx:id="waypointsWaypointSelection" onAction="#onWaypointSelected" prefWidth="150.0" />
+                              <Button fx:id="waypointsWaypointAdd" mnemonicParsing="false" onAction="#onWaypointAdd" text="Add" />
+                           </children>
+                        </HBox>
+                        <HBox prefHeight="100.0" prefWidth="200.0">
+                           <children>
+                              <Label text="nextId:" />
+                              <TextField fx:id="waypointsNextId" prefHeight="26.0" prefWidth="44.0" />
+                              <ComboBox fx:id="waypointsNextIdSelection" onAction="#onNextIdSelected" prefWidth="150.0" />
+                              <Button fx:id="waypointsnextIdAdd" mnemonicParsing="false" onAction="#onNextIdAdd" text="Add" />
+                           </children>
+                        </HBox>
+                        <HBox prefHeight="100.0" prefWidth="200.0">
+                           <children>
+                              <Label prefHeight="17.0" prefWidth="35.0" text="Pos:" />
+                              <TextField fx:id="waypointsWaypointXPos" prefHeight="26.0" prefWidth="42.0" />
+                              <TextField fx:id="waypointsWaypointYPos" prefHeight="26.0" prefWidth="44.0" />
+                              <TextField fx:id="waypointsWaypointZPos" prefHeight="26.0" prefWidth="43.0" />
+                              <CheckBox fx:id="waypointsGridAttached" mnemonicParsing="false" onAction="#onWaypointGridAttached" text="Grid attached" />
+                           </children>
+                        </HBox>
+                        <HBox prefHeight="18.0" prefWidth="279.0">
+                           <children>
+                              <VBox prefHeight="78.0" prefWidth="278.0">
+                                 <children>
+                                    <HBox prefHeight="17.0" prefWidth="216.0">
+                                       <children>
+                                          <Label text="entranceDir:" />
+                                          <Separator orientation="VERTICAL" prefHeight="17.0" prefWidth="89.0" />
+                                          <CheckBox fx:id="waypointEntraceDirActive" mnemonicParsing="false" text="Entrance active" />
+                                       </children>
+                                    </HBox>
+                                    <HBox prefHeight="26.0" prefWidth="184.0">
+                                       <children>
+                                          <TextField fx:id="waypointsEntranceDirX" text="-1" />
+                                          <TextField fx:id="waypointsEntranceDirY" text="0" />
+                                          <TextField fx:id="waypointsEntranceDirZ" text="0" />
+                                       </children>
+                                    </HBox>
+                                    <HBox prefHeight="100.0" prefWidth="200.0">
+                                       <children>
+                                          <Label text="Angle:" />
+                                          <TextField fx:id="waypointsEntranceAngle" prefHeight="26.0" prefWidth="63.0" text="30" />
+                                          <Label text="MinDist:" />
+                                          <TextField fx:id="waypointsEntranceMinDistance" prefHeight="26.0" prefWidth="71.0" text="20" />
+                                       </children>
+                                    </HBox>
+                                 </children>
+                              </VBox>
+                           </children>
+                        </HBox>
+                        <HBox prefHeight="100.0" prefWidth="200.0">
+                           <children>
+                              <Label text="Radius:" />
+                              <TextField fx:id="waypointsWaypointRadius" text="50" />
+                           </children>
+                        </HBox>
+                        <HBox prefHeight="100.0" prefWidth="200.0">
+                           <children>
+                              <Label text="Max users:" />
+                              <TextField fx:id="waypointsWaypointMaxUsers" text="3" />
+                              <CheckBox fx:id="waypointsWaypointActive" mnemonicParsing="false" selected="true" text="Active" />
+                           </children>
+                        </HBox>
+                        <HBox>
+                           <children>
+                              <Button fx:id="waypointsAddToCurrentWaypoint" mnemonicParsing="false" onAction="#onWaypointAddToSelectedWaypoint" text="Add to current waypoint" />
+                           </children>
+                        </HBox>
+                        <HBox>
+                           <children>
+                              <CheckBox fx:id="waypointGridAttached" mnemonicParsing="false" onAction="#onWaypointAttachToGrid" text="Grid attached" />
+                           </children>
+                        </HBox>
+                        <HBox prefHeight="100.0" prefWidth="200.0">
+                           <children>
+                              <Button fx:id="waypointsRemoveWaypoint" mnemonicParsing="false" onAction="#onRemoveWaypoint" text="Remove waypoint" />
+                              <Button fx:id="waypointsRemoveSector" mnemonicParsing="false" onAction="#onRemoveSector" text="Remove sector" />
+                              <Button fx:id="waypointsRemoveNextId" mnemonicParsing="false" onAction="#onRemoveNextId" text="Remove nextid" />
+                           </children>
+                        </HBox>
+                        <HBox prefHeight="100.0" prefWidth="200.0">
+                           <children>
+                              <Button fx:id="waypointsCreateWaypointTable" mnemonicParsing="false" onAction="#onCreateWaypointTable" text="CreateWaypointTable" />
+                              <Separator orientation="VERTICAL" prefHeight="33.0" prefWidth="36.0" />
+                              <CheckBox fx:id="waypointsVisibilityCheckBox" mnemonicParsing="false" selected="true" text="Visible" />
+                           </children>
+                        </HBox>
+                     </children>
+                  </VBox>
+               </content>
+            </ScrollPane>
+        </content>
+      </TitledPane>
+        <TitledPane animated="false" text="Asteroid">
+            <content>
+                <GridPane>
+                    <columnConstraints>
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                    </columnConstraints>
+                    <rowConstraints>
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                    </rowConstraints>
+                    <children>
+                        <Label text="Asteroid" />
+                        <HBox prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1">
+                            <children>
+                                <ToggleButton fx:id="asteroid1Toggle" mnemonicParsing="false" selected="true" text="1">
+                                    <toggleGroup>
+                                        <ToggleGroup fx:id="asteroidGroup" />
+                                    </toggleGroup>
+                                </ToggleButton>
+                                <ToggleButton fx:id="asteroid2Toggle" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" text="2" toggleGroup="$asteroidGroup" />
+                                <ToggleButton fx:id="ateroid3Toggle" layoutX="74.0" layoutY="10.0" mnemonicParsing="false" text="3" toggleGroup="$asteroidGroup" />
+                                <ToggleButton fx:id="asteroid4Toggle" layoutX="96.0" layoutY="10.0" mnemonicParsing="false" text="4" toggleGroup="$asteroidGroup" />
+                                <ToggleButton fx:id="asteroid5Toggle" layoutX="106.0" layoutY="10.0" mnemonicParsing="false" text="5" toggleGroup="$asteroidGroup" />
+                            </children>
+                        </HBox>
+                        <Button fx:id="loadAsteroidBtn" mnemonicParsing="false" onAction="#loadAsteroid" text="Add" GridPane.rowIndex="1" />
+                        <VBox prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                            <children>
+                                <Button fx:id="asteroidAddClusterButton" mnemonicParsing="false" onAction="#createAsteroidCluster" text="Add cluster" />
+                        <Button fx:id="asteroidRemoveClusterButton" mnemonicParsing="false" onAction="#removeAsteroidCluster" text="Remove cluster" />
+                                <Label text="Asteroid count" />
+                                <TextField fx:id="asteroidCount" text="200" />
+                                <Label text="Area min" />
+                                <HBox prefHeight="100.0" prefWidth="200.0">
+                                    <children>
+                                        <TextField fx:id="asteroidClusterXMin" text="-100" />
+                                        <TextField fx:id="asteroidClusterYMin" text="-100" />
+                                        <TextField fx:id="asteroidClusterZMin" text="-300" />
+                                    </children>
+                                </HBox>
+                                <Label text="Area max" />
+                                <HBox prefHeight="100.0" prefWidth="200.0">
+                                    <children>
+                                        <TextField fx:id="asteroidClusterXMax" text="100" />
+                                        <TextField fx:id="asteroidClusterYMax" text="100" />
+                                        <TextField fx:id="asteroidClusterZMax" text="-100" />
+                                    </children>
+                                </HBox>
+                        <Label text="Radius centre" />
+                        <HBox prefHeight="100.0" prefWidth="200.0">
+                           <children>
+                              <TextField fx:id="asteroidRadiusCentreX" text="0" />
+                              <TextField fx:id="asteroidRadiusCentreY" layoutX="10.0" layoutY="10.0" text="0" />
+                              <TextField fx:id="asteroidRadiusCentreZ" layoutX="74.0" layoutY="10.0" text="0" />
+                           </children>
+                        </HBox>
+                        <Label layoutX="10.0" layoutY="186.0" text="Radius" />
+                        <HBox prefHeight="100.0" prefWidth="200.0">
+                           <children>
+                              <TextField fx:id="asteroidRadius" text="200" />
+                           </children>
+                        </HBox>
+                        <CheckBox fx:id="asteroidUseRadiusCheckBox" mnemonicParsing="false" selected="true" text="Use radius" />
+                            </children>
+                        </VBox>
+                    </children>
+                </GridPane>
+            </content>
+        </TitledPane>
+        <TitledPane animated="false" text="Modifiers">
+            <content>
+            <ScrollPane>
+               <content>
+                      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                          <children>
+                              <GridPane layoutX="24.0" layoutY="17.0" prefHeight="73.0" prefWidth="220.0">
+                                  <columnConstraints>
+                                      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                  </columnConstraints>
+                                  <rowConstraints>
+                                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                  </rowConstraints>
+                                  <children>
+                                      <HBox prefHeight="100.0" prefWidth="200.0">
+                                          <children>
+                                              <ToggleButton fx:id="translationButton" mnemonicParsing="false" selected="true" text="Translation">
+                                                  <toggleGroup>
+                                                      <ToggleGroup fx:id="modifiersGroup" />
+                                                  </toggleGroup>
+                                              </ToggleButton>
+                                              <ToggleButton fx:id="rotationButton" mnemonicParsing="false" text="Rotation" toggleGroup="$modifiersGroup" />
+                                              <ToggleButton fx:id="scalingButton" mnemonicParsing="false" text="Scaling" toggleGroup="$modifiersGroup" />
+                                          </children>
+                                      </HBox>
+                                  </children>
+                              </GridPane>
+                              <VBox layoutX="24.0" layoutY="43.0" prefHeight="200.0" prefWidth="234.0">
+                                  <children>
+                                      <HBox prefHeight="100.0" prefWidth="200.0">
+                                          <children>
+                                              <Label text="Pos" />
+                                              <TextField prefHeight="26.0" prefWidth="58.0" fx:id="xPosTextField" />
+                                              <TextField fx:id="yPosTextField" layoutX="31.0" layoutY="10.0" prefHeight="26.0" prefWidth="58.0" />
+                                              <TextField fx:id="zPosTextField" layoutX="89.0" layoutY="10.0" prefHeight="26.0" prefWidth="58.0" />
+                                          </children>
+                                      </HBox>
+                                      <HBox prefHeight="100.0" prefWidth="200.0">
+                                          <children>
+                                              <Label text="Rot" />
+                                              <TextField prefHeight="26.0" prefWidth="60.0" fx:id="xRotTextField" />
+                                              <TextField fx:id="yRotTextField" layoutX="29.0" layoutY="10.0" prefHeight="26.0" prefWidth="60.0" />
+                                              <TextField fx:id="zRotTextField" layoutX="89.0" layoutY="10.0" prefHeight="26.0" prefWidth="60.0" />
+                                          </children>
+                                      </HBox>
+                                      <HBox prefHeight="100.0" prefWidth="200.0">
+                                          <children>
+                                              <Label text="Scl" />
+                                              <TextField prefHeight="26.0" prefWidth="62.0" fx:id="xSclTextField" />
+                                              <TextField fx:id="ySclTextField" layoutX="27.0" layoutY="10.0" prefHeight="26.0" prefWidth="62.0" />
+                                              <TextField fx:id="zSclTextField" layoutX="89.0" layoutY="10.0" prefHeight="26.0" prefWidth="62.0" />
+                                          </children>
+                                      </HBox>
+                                  </children>
+                              </VBox>
+                          </children>
+                      </AnchorPane>
+               </content>
+            </ScrollPane>
+            </content>
+        </TitledPane>
+    </panes>
+</Accordion>

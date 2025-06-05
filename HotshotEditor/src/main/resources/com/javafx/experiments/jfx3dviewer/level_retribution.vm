@@ -1,0 +1,434 @@
+level retribution
+{
+start
+{
+skybox SkyboxWorkspace1
+light_dir -1.0 0.0 0.0
+light_type directional
+light_power_scale 1.0
+light_diffuse_color 0.8 0.4 0.2 1.0
+light_specular_color 0.8 0.4 0.2 1.0
+ambient_light_upperhemi_lowerhemi_dir 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 -1.0 0.0 0.0
+
+player_ship_selection
+{
+team human
+{
+cd raw
+name ship_human0
+name ship_human1
+}
+}
+obj PlayerShip
+{
+type player_ship
+position -9500.0 -9500.0 -9500.0
+ai 0
+invincible 0
+}
+obj Defender0
+{
+mesh ship_human0
+type fighter_ship
+position -9800.0 -9800.0 -9700.0
+orientation 0.0 1.0 0.0 45.0
+speed 0.0 0.0 0.0
+ai 1
+friendly 1
+behavior defensive
+health 100
+}
+obj Defender1
+{
+mesh ship_human0
+type fighter_ship
+position 300.0 0.0 -300.0
+orientation 0.0 0.0 0.0 0.0
+speed 0.0 0.0 0.0
+ai 1
+friendly 1
+behavior aggresive
+health 100
+}
+obj Defender2
+{
+mesh ship_human0
+type fighter_ship
+position -300.0 0.0 -300.0
+orientation 0.0 0.0 0.0 0.0
+speed 0.0 0.0 0.0
+ai 1
+friendly 1
+behavior aggresive
+health 100
+}
+obj Defender3
+{
+mesh ship_human0
+type fighter_ship
+position 300.0 0.0 300.0
+orientation 0.0 0.0 0.0 0.0
+speed 0.0 0.0 0.0
+ai 1
+friendly 1
+behavior aggresive
+health 100
+}
+obj Defender4
+{
+mesh ship_human0
+type fighter_ship
+position 300.0 -200.0 300.0
+orientation 0.0 0.0 0.0 0.0
+speed 0.0 0.0 0.0
+ai 1
+friendly 1
+behavior aggresive
+health 100
+}
+#foreach ($asteroid in $asteroids)
+obj Asteroid$foreach.index
+{
+mesh $asteroid.meshName
+type asteroid
+position $asteroid.position
+orientation $asteroid.orientation
+speed 0.0 0.0 0.0
+ai 0
+health $asteroid.health
+}
+#end
+}
+event invasion0
+{
+previous_end_cond
+{
+none
+}
+delay secs 5
+spawn
+{
+obj Attacker0
+{
+mesh ship_alien1
+type fighter_ship
+position -300.0 3000.0 -300.0
+orientation 0.0 0.0 0.0 0.0
+speed 0.0 0.0 0.0
+ai 1
+friendly 0
+behavior aggresive
+health 100
+prioritize 1 player_ship
+}
+obj Attacker1
+{
+mesh ship_alien2
+type fighter_ship
+position -300.0 3000.0 -500.0
+orientation 0.0 0.0 0.0 0.0
+speed 0.0 0.0 0.0
+ai 1
+friendly 0
+behavior aggresive
+health 100
+prioritize 1 player_ship
+}
+obj Attacker2
+{
+mesh ship_alien0
+type fighter_ship
+position -300.0 4000.0 -700.0
+orientation 0.0 0.0 0.0 0.0
+speed 0.0 0.0 0.0
+ai 1
+friendly 0
+behavior aggresive
+health 100
+prioritize 1 player_ship
+}
+obj Attacker3
+{
+mesh ship_alien0
+type fighter_ship
+position -300.0 -4000.0 -300.0
+orientation 0.0 0.0 0.0 0.0
+speed 0.0 0.0 0.0
+ai 1
+friendly 0
+behavior aggresive
+health 100
+prioritize 1 player_ship
+}
+obj Attacker4
+{
+mesh ship_alien0
+type fighter_ship
+position -300.0 -4000.0 -500.0
+orientation 0.0 0.0 0.0 0.0
+speed 0.0 0.0 0.0
+ai 1
+friendly 0
+behavior aggresive
+health 100
+prioritize 1 player_ship
+}
+obj Attacker5
+{
+mesh ship_alien0
+type fighter_ship
+position -300.0 -4000.0 -700.0
+orientation 0.0 0.0 0.0 0.0
+speed 0.0 0.0 0.0
+ai 1
+friendly 0
+behavior aggresive
+health 100
+prioritize 1 player_ship
+}
+}
+end_cond invasion0_end
+{
+type win
+{
+cond win_cond
+{
+type destroyed
+objs 6 Attacker0 Attacker1 Attacker2 Attacker3 Attacker4 Attacker5
+}
+}
+type loss
+{
+cond loss_cond0
+{
+type time_elapsed
+secs 20
+}
+}
+}
+}
+event reinforcements0
+{
+previous_end_cond
+{
+none
+}
+delay secs 120
+spawn
+{
+obj Defender5
+{
+mesh ship_human1
+type fighter_ship
+position -300.0 400.0 300.0
+orientation 0.0 0.0 0.0 0.0
+speed 0.0 0.0 0.0
+ai 1
+friendly 1
+behavior defensive
+health 100
+}
+obj Defender6
+{
+mesh ship_human2
+type fighter_ship
+position 300.0 500.0 -300.0
+orientation 0.0 0.0 0.0 0.0
+speed 0.0 0.0 0.0
+ai 1
+friendly 1
+behavior aggresive
+health 100
+}
+obj Defender7
+{
+mesh ship_human2
+type fighter_ship
+position -300.0 600.0 -300.0
+orientation 0.0 0.0 0.0 0.0
+speed 0.0 0.0 0.0
+ai 1
+friendly 1
+behavior aggresive
+health 100
+}
+obj Defender8
+{
+mesh ship_human1
+type fighter_ship
+position 300.0 700.0 300.0
+orientation 0.0 0.0 0.0 0.0
+speed 0.0 0.0 0.0
+ai 1
+friendly 1
+behavior aggresive
+health 100
+}
+}
+end_cond reinforcements0_end
+{
+type win
+{
+cond win_cond
+{
+type destroyed
+objs 3 Attacker0 Attacker1 Attacker2 Attacker3 Attacker4 Attacker5
+}
+}
+type loss
+{
+cond loss_cond0
+{
+type time_elapsed
+secs 600
+}
+}
+}
+}
+event invasion1
+{
+previous_end_cond
+{
+prev_conds 1 invasion0
+}
+delay secs 5
+spawn
+{
+obj Attacker6
+{
+mesh ship_alien1
+type fighter_ship
+position -300.0 300.0 -300.0
+orientation 0.0 0.0 0.0 0.0
+speed 0.0 0.0 0.0
+ai 1
+friendly 0
+behavior aggresive
+health 100
+prioritize 1 player_ship
+}
+obj Attacker7
+{
+mesh ship_alien2
+type fighter_ship
+position -300.0 400.0 -300.0
+orientation 0.0 0.0 0.0 0.0
+speed 0.0 0.0 0.0
+ai 1
+friendly 0
+behavior aggresive
+health 100
+prioritize 1 player_ship
+}
+obj Attacker8
+{
+mesh ship_alien0
+type fighter_ship
+position -300.0 500.0 -300.0
+orientation 0.0 0.0 0.0 0.0
+speed 0.0 0.0 0.0
+ai 1
+friendly 0
+behavior aggresive
+health 100
+prioritize 1 player_ship
+}
+obj Attacker9
+{
+mesh ship_alien0
+type fighter_ship
+position -300.0 -500.0 -300.0
+orientation 0.0 0.0 0.0 0.0
+speed 0.0 0.0 0.0
+ai 1
+friendly 0
+behavior aggresive
+health 100
+prioritize 1 player_ship
+}
+obj Attacker10
+{
+mesh ship_alien0
+type fighter_ship
+position -300.0 -600.0 -300.0
+orientation 0.0 0.0 0.0 0.0
+speed 0.0 0.0 0.0
+ai 1
+friendly 0
+behavior aggresive
+health 100
+prioritize 1 player_ship
+}
+obj Attacker11
+{
+mesh ship_alien0
+type fighter_ship
+position -300.0 -700.0 -300.0
+orientation 0.0 0.0 0.0 0.0
+speed 0.0 0.0 0.0
+ai 1
+friendly 0
+behavior aggresive
+health 100
+prioritize 1 player_ship
+}
+}
+end_cond invasion1_end
+{
+type win
+{
+cond win_cond
+{
+type destroyed
+objs 6 Attacker6 Attacker7 Attacker8 Attacker9 Attacker10 Attacker11
+}
+}
+type loss
+{
+cond loss_cond0
+{
+type time_elapsed
+secs 600
+}
+}
+}
+}
+event friendly_ship_exit
+{
+previous_end_cond
+{
+prev_conds 2 invasion0 invasion1
+comparator ( and invasion0 invasion1 )
+}
+delay secs 5
+exit
+{
+objs 9 Defender0 Defender1 Defender2 Defender3 Defender4 Defender5 Defender6 Defender7 Defender8
+}
+
+end_cond ship_exit
+{
+type win
+{
+cond win_cond0
+{
+type exited_or_destroyed
+objs 9 Defender0 Defender1 Defender2 Defender3 Defender4 Defender5 Defender6 Defender7 Defender8
+}
+}
+type loss
+{
+cond loss_cond0
+{
+type time_elapsed
+secs 600
+}
+}
+}
+}
+end
+{
+events 3 invasion0 invasion1 friendly_ship_exit
+comparator ( and invasion0 invasion1 friendly_ship_exit )
+}
+}

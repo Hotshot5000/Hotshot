@@ -1,0 +1,19 @@
+cd raw
+
+model flag_red
+{
+	model_file flag_red.mesh
+	material_file material_flag_red.txt
+}
+
+model flag_blue
+{
+	model_file flag_blue.mesh
+	material_file material_flag_blue.txt
+}
+
+model cargo
+{
+	model_file cargo.mesh
+	material_file mat_cargo.txt
+}

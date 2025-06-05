@@ -1,0 +1,93 @@
+level level_patrol
+{
+	start
+	{
+		skybox SkyboxWorkspace0
+		
+		light_dir -1.0 0.0 0.0 0.0
+		light_type directional
+		light_power_scale 3.14
+		light_diffuse_color 0.8 0.4 0.2 1.0
+		light_specular_color 0.8 0.4 0.2 1.0
+		ambient_light_upperhemi_lowerhemi_dir 0.3 0.5 0.7 0.1 0.6 0.45 0.3 0.1 -1.0 0.0 0.0 0.0
+	//	play_cutscene sl_level_patrol_begin
+	//	use_skybox_data_from_level 1
+		player_ship_selection
+		{
+			team human
+			{
+				cd raw
+				name ship_human0
+				name ship_human1
+			}
+		}
+
+						obj PlayerShip
+                {
+                    type PLAYER_SHIP
+                    position 0.0 0.0 0.0 0.0
+                    orientation 0.0 0.0 0.0 1.0
+                    speed 0.0 0.0 0.0
+                    ai 1
+                    friendly 0
+                    behavior AGGRESSIVE
+                    health 100
+                }
+	}
+
+	event invasion
+	{
+		delay msecs 0
+			spawn
+			{
+						obj Attacker0
+				{
+				mesh ship_alien0
+				type FIGHTER_SHIP
+				position 0.0 100.0 0.0 0.0
+				orientation 0.0 0.0 0.0 1.0
+				speed 0.0 0.0 0.0
+				ai 1
+				friendly 0
+				behavior AGGRESSIVE
+				health 100
+				}
+						obj Attacker1
+				{
+				mesh ship_alien1
+				type FIGHTER_SHIP
+				position 0.0 200.0 0.0 0.0
+				orientation 0.0 0.0 0.0 1.0
+				speed 0.0 0.0 0.0
+				ai 1
+				friendly 0
+				behavior AGGRESSIVE
+				health 100
+				}
+			}
+
+		end_cond $event.name_end
+		{
+			type win
+			{
+					cond win_cond0
+					{
+						type DESTROYED
+						objs 2 Attacker0 Attacker1 
+					}
+			}
+			type loss
+			{
+				cond loss_cond0
+				{
+				type TIME_ELAPSED
+				}
+			}
+		}
+	}
+
+	end
+	{
+		events 1 invasion 
+	}
+}

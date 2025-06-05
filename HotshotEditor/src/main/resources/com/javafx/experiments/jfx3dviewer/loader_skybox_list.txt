@@ -1,0 +1,55 @@
+cd raw
+
+model SkyboxWorkspace0
+{
+	model_file skybox0.mesh
+	material_file mat_skybox0.txt
+}
+
+model SkyboxWorkspace1
+{
+	model_file skybox1.mesh
+	material_file mat_skybox1.txt
+}
+
+model SkyboxWorkspace2
+{
+	model_file skybox2.mesh
+	material_file mat_skybox2.txt
+}
+
+model SkyboxWorkspace3
+{
+	model_file skybox3.mesh
+	material_file mat_skybox3.txt
+}
+
+model SkyboxWorkspace4
+{
+	model_file skybox4.mesh
+	material_file mat_skybox4.txt
+}
+
+model SkyboxWorkspace5
+{
+	model_file skybox5.mesh
+	material_file mat_skybox5.txt
+}
+
+model SkyboxWorkspace6
+{
+	model_file skybox6.mesh
+	material_file mat_skybox6.txt
+}
+
+model SkyboxWorkspace7
+{
+	model_file skybox7.mesh
+	material_file mat_skybox7.txt
+}
+
+model SkyboxWorkspace8
+{
+	model_file skybox8.mesh
+	material_file mat_skybox8.txt
+}

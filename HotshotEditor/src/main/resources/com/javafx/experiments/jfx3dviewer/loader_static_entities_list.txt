@@ -1,0 +1,6 @@
+cd raw
+
+model tunnel
+{
+	model_file tunnel.mesh
+}

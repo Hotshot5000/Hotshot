@@ -1,0 +1,31 @@
+cd raw
+
+model asteroid0
+{
+	model_file asteroid0.mesh
+	material_file mat_asteroid0.txt
+}
+
+model asteroid1
+{
+	model_file asteroid1.mesh
+	material_file mat_asteroid1.txt
+}
+
+model asteroid2
+{
+	model_file asteroid2.mesh
+	material_file mat_asteroid2.txt
+}
+
+model asteroid3
+{
+	model_file asteroid3.mesh
+	material_file mat_asteroid3.txt
+}
+
+model asteroid4
+{
+	model_file asteroid4.mesh
+	material_file mat_asteroid4.txt
+}

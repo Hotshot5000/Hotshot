@@ -1,0 +1,250 @@
+level $level.name
+{
+	start
+	{
+		skybox $level.levelStart.skyboxName
+		#foreach ($waypointSector in $level.levelStart.waypointSectors)
+		waypoint_sector
+		{
+			 extents_min_max $waypointSector.box.min $waypointSector.box.max
+			 max_attachment_count $waypointSector.maxTotalWaypointAttachmentCount
+			 #if ($waypointSector.waypointTable && $waypointSector.waypointTable.size() > 0)
+			 waypoint_table
+			 {
+				   size $waypointSector.waypointTableList.size()
+				   table
+				   {
+				 		#foreach($row in $waypointSector.waypointTableList)
+						[ #foreach($col in $row)$col #end]
+						#end
+				   }
+			 }
+			 #end
+			 #foreach ($waypoint in $waypointSector.waypoints)
+			 waypoint
+			 {
+				id $waypoint.id
+				position $waypoint.position
+				#foreach ($next_id in $waypoint.nextIds)
+				next_id $next_id
+				#end
+				 #if ($waypoint.entranceOrExitActive)
+				entrance_or_exit $waypoint.entranceOrExitDirection $waypoint.entranceOrExitAngle $waypoint.entranceOrExitMinDistance
+				 #end
+				radius $waypoint.radius
+			 	max_attachment_count $waypoint.maxWaypointAttachmentCount
+			 	active $waypoint.active
+			 }
+			 #end
+		}
+		#end
+		
+		light_dir $level.levelStart.lightDir
+		light_type $level.levelStart.lightType.toString()
+		light_power_scale $level.levelStart.lightPowerScale
+		light_diffuse_color $level.levelStart.lightDiffuseColor
+		light_specular_color $level.levelStart.lightSpecularColor
+		ambient_light_upperhemi_lowerhemi_dir $level.levelStart.ambientLightUpperHemisphere $level.levelStart.ambientLightLowerHemisphere $level.levelStart.ambientLighthemisphereDir
+	//	play_cutscene sl_level_patrol_begin
+	//	use_skybox_data_from_level 1
+		player_ship_selection
+		{
+			#if ($level.levelStart.alienPlayerShipSelectionList.size() > 0)
+			team alien
+			{
+				cd raw
+				#foreach($selection in $level.levelStart.alienPlayerShipSelectionList)
+				name $selection
+				#end
+			}
+			#end
+			#if ($level.levelStart.humanPlayerShipSelectionList.size() > 0)
+			team human
+			{
+				cd raw
+				#foreach($selection in $level.levelStart.humanPlayerShipSelectionList)
+				name $selection
+				#end
+			}
+			#end
+		}
+
+                #foreach ($ship in $level.levelStart.startObjects)
+					#if ($ship.type.toString() == "PLAYER_SHIP")
+						obj PlayerShip
+					#elseif ($ship.type.toString() == "FIGHTER_SHIP")
+##						#if ($ship.friendly)
+##						obj Defender$foreach.index
+##						#else
+##						obj Attacker$foreach.index
+##						#end
+						obj $ship.name
+					#elseif ($ship.type.toString() == "CARGO_SHIP")
+##						#if ($ship.friendly)
+##						obj CargoShip$foreach.index
+##						#else
+##						obj AttackerCargoShip$foreach.index
+##						#end
+						obj $ship.name
+					#elseif ($ship.type.toString() == "CARGO")
+						#if ($ship.friendly)
+						obj Cargo$foreach.index
+						#else
+						obj AttackerCargo$foreach.index
+						#end
+					#elseif ($ship.type.toString() == "FLAG_RED" || $ship.type.toString() == "FLAG_BLUE")
+						obj Beacon$foreach.index
+					#elseif ($ship.type.toString() == "ASTEROID")
+						obj Asteroid$foreach.index
+					#elseif ($ship.type.toString() == "STATIC")
+						obj Static$foreach.index
+					#end
+                {
+					#if ($ship.type.toString() != "PLAYER_SHIP" && $ship.type.toString() != "FLAG_RED" && $ship.type.toString() != "FLAG_BLUE")
+                    mesh $ship.meshInGameName
+					#end
+					#if ($ship.type.toString() == "FLAG_RED")
+					mesh flag_red
+					#end
+					#if ($ship.type.toString() == "FLAG_BLUE")
+					mesh flag_blue
+					#end
+                    type $ship.type
+                    position $ship.position
+                    orientation $ship.orientation.toAngleAxisDeg()
+                    speed 0.0 0.0 0.0
+                    ai $ship.aiAsInt
+                    friendly $ship.friendlyAsInt
+                    behavior $ship.behavior
+                    health $ship.health
+					invincible $ship.invincible
+					#if ($ship.reachDestination)
+					destination $ship.destination
+					reach_destination 1
+					#end
+                }
+                #end
+	}
+
+	#foreach ($event in $level.levelEventList)
+	event $event.name
+	{
+		#if ($event.prevCondList.size() > 0)
+		previous_end_cond
+		{
+			prev_conds $event.prevCondList.size() #foreach($prev in $event.prevCondlist)$prev #end
+		}
+		#end
+		delay msecs $event.delay
+		#if ($event.exitObjects.size() > 0)
+			exit
+			{
+				objs $event.exitObjects.size() #foreach($exitObject in $event.exitObjects)$exitObject #end
+			}
+		#end
+		#if ($event.spawn.size() > 0)
+			spawn
+			{
+				#foreach ($ship in $event.spawn)
+					#if ($ship.type.toString() == "PLAYER_SHIP")
+						obj PlayerShip
+					#elseif ($ship.type.toString() == "FIGHTER_SHIP")
+##						#if ($ship.friendly)
+##						obj Defender$foreach.index
+##						#else
+##						obj Attacker$foreach.index
+##						#end
+						obj $ship.name
+					#elseif ($ship.type.toString() == "CARGO_SHIP")
+##						#if ($ship.friendly)
+##						obj CargoShip$foreach.index
+##						#else
+##						obj AttackerCargoShip$foreach.index
+##						#end
+						obj $ship.name
+					#elseif ($ship.type.toString() == "CARGO")
+						#if ($ship.friendly)
+						obj Cargo$foreach.index
+						#else
+						obj AttackerCargo$foreach.index
+						#end
+					#elseif ($ship.type.toString() == "FLAG_RED" || $ship.type.toString() == "FLAG_BLUE")
+						obj Beacon$foreach.index
+					#end
+				{
+				#if ($ship.type.toString() != "PLAYER_SHIP" && $ship.type.toString() != "FLAG_RED" && $ship.type.toString() != "FLAG_BLUE")
+				mesh $ship.meshInGameName
+				#end
+				#if ($ship.type.toString() == "FLAG_RED")
+				mesh flag_red
+				#end
+				#if ($ship.type.toString() == "FLAG_BLUE")
+				mesh flag_blue
+				#end
+				type $ship.type
+				position $ship.position
+				orientation $ship.orientation.toAngleAxisDeg()
+				speed 0.0 0.0 0.0
+				ai $ship.aiAsInt
+				friendly $ship.friendlyAsInt
+				behavior $ship.behavior
+				health $ship.health
+				invincible $ship.invincible
+				}
+				#end
+			}
+		#end
+
+		end_cond $event.endCond.name
+		{
+			type win
+			{
+				#foreach($winEndCond in $event.endCond.winList)
+				cond win_cond$foreach.index
+				{
+					type $winEndCond.type
+					#if ($winEndCond.type.toString() != "TIME_ELAPSED")
+					objs $winEndCond.objects.size() #foreach($object in $winEndCond.objects)$object #end
+					#end
+					#if ($winEndCond.secs > 0)
+					msecs $winEndCond.secs
+					#end
+				}
+				#end
+				#if ($event.endCond.winList.size() > 1)
+				comparator ( $event.endCond.winNode.op.toString() #foreach($winEndCond in $event.endCond.winList)win_cond$foreach.index #end )
+				#end
+			}
+			type loss
+			{
+				#foreach($lossEndCond in $event.endCond.lossList)
+				cond loss_cond$foreach.index
+				{
+					type $lossEndCond.type
+					#if ($lossEndCond.type.toString() != "TIME_ELAPSED")
+					objs $lossEndCond.objects.size() #foreach($object in $lossEndCond.objects)$object #end
+					#end
+					#if ($lossEndCond.secs > 0)
+					msecs $lossEndCond.secs
+					#end
+				}
+				#end
+				#if ($event.endCond.lossList.size() > 1)
+				comparator ( $event.endCond.lossNode.op.toString() #foreach($lossEndCond in $event.endCond.lossList)loss_cond$foreach.index #end )
+				#end
+			}
+		}
+	}
+	#end
+
+	end
+	{
+		events $level.levelEventList.size() #foreach($event in $level.levelEventList)$event.name #end
+		#if ($level.levelEventList.size() > 1)
+		comparator ( and #foreach($event in $level.levelEventList)$event.name #end )
+		#end
+		#if ($level.levelEnd.endEventIgnoreLossList.size() > 0)
+		ignore_loss_events $level.levelEnd.endEventIgnoreLossList.size() #foreach($event in $level.levelEnd.endEventIgnoreLossList)$event #end
+		#end
+	}
+}

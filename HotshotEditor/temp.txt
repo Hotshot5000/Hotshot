@@ -1,0 +1,4051 @@
+level patrol
+{
+	start
+	{
+		skybox SkyboxWorkspace0
+		waypoint_sector
+		{
+			 extents_min_max -100.0 -100.0 -100.0 100.0 100.0 100.0
+			 max_attachment_count 10
+			 waypoint
+			 {
+				id 1
+				position 0.0 0.0 0.0
+				next_id 1
+				next_id 3
+				radius 50.0
+			 	max_attachment_count 3
+			 	active true
+			 }
+		}
+		
+		light_dir -1.0 0.0 0.0
+		light_type directional
+		light_power_scale 3.14
+		light_diffuse_color 0.8 0.4 0.2 1.0
+		light_specular_color 0.8 0.4 0.2 1.0
+		ambient_light_upperhemi_lowerhemi_dir 0.3 0.5 0.7 0.1 0.6 0.45 0.3 0.1 -1.0 0.0 0.0
+	//	play_cutscene sl_level_patrol_begin
+	//	use_skybox_data_from_level 1
+		player_ship_selection
+		{
+			team human
+			{
+				cd raw
+				name ship_human0
+				name ship_human1
+			}
+		}
+
+						obj PlayerShip
+                {
+                    type PLAYER_SHIP
+                    position 0.0 200.0 0.0
+                    orientation 1.0 0.0 0.0 0.0
+                    speed 0.0 0.0 0.0
+                    ai 0
+                    friendly 0
+                    behavior AGGRESSIVE
+                    health 100
+					invincible false
+                }
+						obj Defender0
+                {
+                    mesh ship_human0
+                    type FIGHTER_SHIP
+                    position -300.0 200.0 0.0
+                    orientation 1.0 0.0 0.0 0.0
+                    speed 0.0 0.0 0.0
+                    ai 1
+                    friendly 0
+                    behavior AGGRESSIVE
+                    health 100
+					invincible false
+                }
+						obj Defender1
+                {
+                    mesh ship_human0
+                    type FIGHTER_SHIP
+                    position 300.0 200.0 0.0
+                    orientation 1.0 0.0 0.0 0.0
+                    speed 0.0 0.0 0.0
+                    ai 1
+                    friendly 0
+                    behavior AGGRESSIVE
+                    health 100
+					invincible false
+                }
+						obj Asteroid3
+                {
+                    mesh asteroid4
+                    type ASTEROID
+                    position -139.24420166015625 -438.1749267578125 -111.04285430908203
+                    orientation 1.0 0.0 0.0 0.0
+                    speed 0.0 0.0 0.0
+                    ai 0
+                    friendly 0
+                    behavior NEUTRAL
+                    health 50
+					invincible false
+                }
+						obj Asteroid4
+                {
+                    mesh asteroid3
+                    type ASTEROID
+                    position 99.83053588867188 -442.33251953125 -1.1672515869140625
+                    orientation 1.0 0.0 0.0 0.0
+                    speed 0.0 0.0 0.0
+                    ai 0
+                    friendly 0
+                    behavior NEUTRAL
+                    health 50
+					invincible false
+                }
+						obj Asteroid5
+                {
+                    mesh asteroid1
+                    type ASTEROID
+                    position -69.08697509765625 -479.6307373046875 -88.57491302490234
+                    orientation 1.0 0.0 0.0 0.0
+                    speed 0.0 0.0 0.0
+                    ai 0
+                    friendly 0
+                    behavior NEUTRAL
+                    health 50
+					invincible false
+                }
+						obj Asteroid6
+                {
+                    mesh asteroid2
+                    type ASTEROID
+                    position 20.417098999023438 -658.5873413085938 -4.797027587890625
+                    orientation 1.0 0.0 0.0 0.0
+                    speed 0.0 0.0 0.0
+                    ai 0
+                    friendly 0
+                    behavior NEUTRAL
+                    health 50
+					invincible false
+                }
+						obj Asteroid7
+                {
+                    mesh asteroid0
+                    type ASTEROID
+                    position 1.6374053955078125 -507.3828125 -60.86091613769531
+                    orientation 1.0 0.0 0.0 0.0
+                    speed 0.0 0.0 0.0
+                    ai 0
+                    friendly 0
+                    behavior NEUTRAL
+                    health 50
+					invincible false
+                }
+						obj Asteroid8
+                {
+                    mesh asteroid3
+                    type ASTEROID
+                    position -103.9876480102539 -626.1432495117188 171.09320068359375
+                    orientation 1.0 0.0 0.0 0.0
+                    speed 0.0 0.0 0.0
+                    ai 0
+                    friendly 0
+                    behavior NEUTRAL
+                    health 50
+					invincible false
+                }
+						obj Asteroid9
+                {
+                    mesh asteroid4
+                    type ASTEROID
+                    position -105.22183243725244 -17.116603183929453 10.938984913128806
+                    orientation 1.0 0.0 0.0 0.0
+                    speed 0.0 0.0 0.0
+                    ai 0
+                    friendly 0
+                    behavior NEUTRAL
+                    health 50
+					invincible false
+                }
+						obj Asteroid10
+                {
+                    mesh asteroid4
+                    type ASTEROID
+                    position -156.3184814453125 -673.580078125 -82.01119995117188
+                    orientation 1.0 0.0 0.0 0.0
+                    speed 0.0 0.0 0.0
+                    ai 0
+                    friendly 0
+                    behavior NEUTRAL
+                    health 50
+					invincible false
+                }
+						obj Asteroid11
+                {
+                    mesh asteroid2
+                    type ASTEROID
+                    position 13.31195068359375 -640.20947265625 -35.339324951171875
+                    orientation 1.0 0.0 0.0 0.0
+                    speed 0.0 0.0 0.0
+                    ai 0
+                    friendly 0
+                    behavior NEUTRAL
+                    health 50
+					invincible false
+                }
+						obj Asteroid12
+                {
+                    mesh asteroid1
+                    type ASTEROID
+                    position -189.2910919189453 -494.589111328125 -130.62478637695312
+                    orientation 1.0 0.0 0.0 0.0
+                    speed 0.0 0.0 0.0
+                    ai 0
+                    friendly 0
+                    behavior NEUTRAL
+                    health 50
+					invincible false
+                }
+						obj Asteroid13
+                {
+                    mesh asteroid1
+                    type ASTEROID
+                    position 161.860595703125 -494.2682189941406 19.839950561523438
+                    orientation 1.0 0.0 0.0 0.0
+                    speed 0.0 0.0 0.0
+                    ai 0
+                    friendly 0
+                    behavior NEUTRAL
+                    health 50
+					invincible false
+                }
+						obj Asteroid14
+                {
+                    mesh asteroid0
+                    type ASTEROID
+                    position 43.32926940917969 -447.51123046875 -16.60687255859375
+                    orientation 1.0 0.0 0.0 0.0
+                    speed 0.0 0.0 0.0
+                    ai 0
+                    friendly 0
+                    behavior NEUTRAL
+                    health 50
+					invincible false
+                }
+						obj Asteroid15
+                {
+                    mesh asteroid3
+                    type ASTEROID
+                    position 162.41668701171875 -388.992919921875 -107.24716186523438
+                    orientation 1.0 0.0 0.0 0.0
+                    speed 0.0 0.0 0.0
+                    ai 0
+                    friendly 0
+                    behavior NEUTRAL
+                    health 50
+					invincible false
+                }
+						obj Asteroid16
+                {
+                    mesh asteroid1
+                    type ASTEROID
+                    position 7.43438720703125 -490.04412841796875 181.22552490234375
+                    orientation 1.0 0.0 0.0 0.0
+                    speed 0.0 0.0 0.0
+                    ai 0
+                    friendly 0
+                    behavior NEUTRAL
+                    health 50
+					invincible false
+                }
+						obj Asteroid17
+                {
+                    mesh asteroid4
+                    type ASTEROID
+                    position -75.38623809814453 -592.0895385742188 -94.57225799560547
+                    orientation 1.0 0.0 0.0 0.0
+                    speed 0.0 0.0 0.0
+                    ai 0
+                    friendly 0
+                    behavior NEUTRAL
+                    health 50
+					invincible false
+                }
+						obj Asteroid18
+                {
+                    mesh asteroid1
+                    type ASTEROID
+                    position 197.52987670898438 -332.1397705078125 25.195724487304688
+                    orientation 1.0 0.0 0.0 0.0
+                    speed 0.0 0.0 0.0
+                    ai 0
+                    friendly 0
+                    behavior NEUTRAL
+                    health 50
+					invincible false
+                }
+						obj Asteroid19
+                {
+                    mesh asteroid4
+                    type ASTEROID
+                    position -110.26289367675781 -601.8077392578125 -5.9704742431640625
+                    orientation 1.0 0.0 0.0 0.0
+                    speed 0.0 0.0 0.0
+                    ai 0
+                    friendly 0
+                    behavior NEUTRAL
+                    health 50
+					invincible false
+                }
+						obj Asteroid20
+                {
+                    mesh asteroid4
+                    type ASTEROID
+                    position 124.75399780273438 -534.0361328125 -50.85923767089844
+                    orientation 1.0 0.0 0.0 0.0
+                    speed 0.0 0.0 0.0
+                    ai 0
+                    friendly 0
+                    behavior NEUTRAL
+                    health 50
+					invincible false
+                }
+						obj Asteroid21
+                {
+                    mesh asteroid3
+                    type ASTEROID
+                    position -103.7606201171875 -587.17236328125 -147.5638427734375
+                    orientation 1.0 0.0 0.0 0.0
+                    speed 0.0 0.0 0.0
+                    ai 0
+                    friendly 0
+                    behavior NEUTRAL
+                    health 50
+					invincible false
+                }
+						obj Asteroid22
+                {
+                    mesh asteroid1
+                    type ASTEROID
+                    position -43.27571105957031 -685.28173828125 46.07841491699219
+                    orientation 1.0 0.0 0.0 0.0
+                    speed 0.0 0.0 0.0
+                    ai 0
+                    friendly 0
+                    behavior NEUTRAL
+                    health 50
+					invincible false
+                }
+						obj Asteroid23
+                {
+                    mesh asteroid0
+                    type ASTEROID
+                    position 60.174102783203125 -386.0281677246094 106.87759399414062
+                    orientation 1.0 0.0 0.0 0.0
+                    speed 0.0 0.0 0.0
+                    ai 0
+                    friendly 0
+                    behavior NEUTRAL
+                    health 50
+					invincible false
+                }
+						obj Asteroid24
+                {
+                    mesh asteroid2
+                    type ASTEROID
+                    position 52.62358093261719 -437.58160400390625 -119.21353149414062
+                    orientation 1.0 0.0 0.0 0.0
+                    speed 0.0 0.0 0.0
+                    ai 0
+                    friendly 0
+                    behavior NEUTRAL
+                    health 50
+					invincible false
+                }
+						obj Asteroid25
+                {
+                    mesh asteroid0
+                    type ASTEROID
+                    position 191.39892578125 -523.6565551757812 172.87362670898438
+                    orientation 1.0 0.0 0.0 0.0
+                    speed 0.0 0.0 0.0
+                    ai 0
+                    friendly 0
+                    behavior NEUTRAL
+                    health 50
+					invincible false
+                }
+						obj Asteroid26
+                {
+                    mesh asteroid2
+                    type ASTEROID
+                    position -0.2144317626953125 -553.682861328125 -30.648849487304688
+                    orientation 1.0 0.0 0.0 0.0
+                    speed 0.0 0.0 0.0
+                    ai 0
+                    friendly 0
+                    behavior NEUTRAL
+                    health 50
+					invincible false
+                }
+						obj Asteroid27
+                {
+                    mesh asteroid4
+                    type ASTEROID
+                    position -182.45849609375 -512.1610107421875 -128.10792541503906
+                    orientation 1.0 0.0 0.0 0.0
+                    speed 0.0 0.0 0.0
+                    ai 0
+                    friendly 0
+                    behavior NEUTRAL
+                    health 50
+					invincible false
+                }
+						obj Asteroid28
+                {
+                    mesh asteroid1
+                    type ASTEROID
+                    position 43.90046691894531 -500.4472961425781 -122.65868377685547
+                    orientation 1.0 0.0 0.0 0.0
+                    speed 0.0 0.0 0.0
+                    ai 0
+                    friendly 0
+                    behavior NEUTRAL
+                    health 50
+					invincible false
+                }
+						obj Asteroid29
+                {
+                    mesh asteroid0
+                    type ASTEROID
+                    position -29.876205444335938 -676.6038208007812 27.272933959960938
+                    orientation 1.0 0.0 0.0 0.0
+                    speed 0.0 0.0 0.0
+                    ai 0
+                    friendly 0
+                    behavior NEUTRAL
+                    health 50
+					invincible false
+                }
+						obj Asteroid30
+                {
+                    mesh asteroid2
+                    type ASTEROID
+                    position -34.16242980957031 -361.0393981933594 7.048492431640625
+                    orientation 1.0 0.0 0.0 0.0
+                    speed 0.0 0.0 0.0
+                    ai 0
+                    friendly 0
+                    behavior NEUTRAL
+                    health 50
+					invincible false
+                }
+						obj Asteroid31
+                {
+                    mesh asteroid3
+                    type ASTEROID
+                    position -108.47998046875 -547.4676513671875 101.14315795898438
+                    orientation 1.0 0.0 0.0 0.0
+                    speed 0.0 0.0 0.0
+                    ai 0
+                    friendly 0
+                    behavior NEUTRAL
+                    health 50
+					invincible false
+                }
+						obj Asteroid32
+                {
+                    mesh asteroid4
+                    type ASTEROID
+                    position -34.87870788574219 -386.67694091796875 96.6524658203125
+                    orientation 1.0 0.0 0.0 0.0
+                    speed 0.0 0.0 0.0
+                    ai 0
+                    friendly 0
+                    behavior NEUTRAL
+                    health 50
+					invincible false
+                }
+						obj Asteroid33
+                {
+                    mesh asteroid1
+                    type ASTEROID
+                    position 156.701171875 -457.7082214355469 186.6326904296875
+                    orientation 1.0 0.0 0.0 0.0
+                    speed 0.0 0.0 0.0
+                    ai 0
+                    friendly 0
+                    behavior NEUTRAL
+                    health 50
+					invincible false
+                }
+						obj Asteroid34
+                {
+                    mesh asteroid2
+                    type ASTEROID
+                    position 113.50350952148438 -468.8504638671875 115.81948852539062
+                    orientation 1.0 0.0 0.0 0.0
+                    speed 0.0 0.0 0.0
+                    ai 0
+                    friendly 0
+                    behavior NEUTRAL
+                    health 50
+					invincible false
+                }
+						obj Asteroid35
+                {
+                    mesh asteroid3
+                    type ASTEROID
+                    position 150.77554321289062 -630.8009643554688 112.4959716796875
+                    orientation 1.0 0.0 0.0 0.0
+                    speed 0.0 0.0 0.0
+                    ai 0
+                    friendly 0
+                    behavior NEUTRAL
+                    health 50
+					invincible false
+                }
+						obj Asteroid36
+                {
+                    mesh asteroid3
+                    type ASTEROID
+                    position 13.197708129882812 -624.866943359375 74.3404541015625
+                    orientation 1.0 0.0 0.0 0.0
+                    speed 0.0 0.0 0.0
+                    ai 0
+                    friendly 0
+                    behavior NEUTRAL
+                    health 50
+					invincible false
+                }
+						obj Asteroid37
+                {
+                    mesh asteroid2
+                    type ASTEROID
+                    position -176.42202758789062 -379.97650146484375 103.79159545898438
+                    orientation 1.0 0.0 0.0 0.0
+                    speed 0.0 0.0 0.0
+                    ai 0
+                    friendly 0
+                    behavior NEUTRAL
+                    health 50
+					invincible false
+                }
+						obj Asteroid38
+                {
+                    mesh asteroid2
+                    type ASTEROID
+                    position -167.1501922607422 -642.7222290039062 -26.569793701171875
+                    orientation 1.0 0.0 0.0 0.0
+                    speed 0.0 0.0 0.0
+                    ai 0
+                    friendly 0
+                    behavior NEUTRAL
+                    health 50
+					invincible false
+                }
+						obj Asteroid39
+                {
+                    mesh asteroid4
+                    type ASTEROID
+                    position 54.38063049316406 -486.41546630859375 -20.592666625976562
+                    orientation 1.0 0.0 0.0 0.0
+                    speed 0.0 0.0 0.0
+                    ai 0
+                    friendly 0
+                    behavior NEUTRAL
+                    health 50
+					invincible false
+                }
+						obj Asteroid40
+                {
+                    mesh asteroid3
+                    type ASTEROID
+                    position 145.69580078125 -472.96734619140625 -66.55409240722656
+                    orientation 1.0 0.0 0.0 0.0
+                    speed 0.0 0.0 0.0
+                    ai 0
+                    friendly 0
+                    behavior NEUTRAL
+                    health 50
+					invincible false
+                }
+						obj Asteroid41
+                {
+                    mesh asteroid2
+                    type ASTEROID
+                    position -153.63848876953125 -678.1278076171875 96.3118896484375
+                    orientation 1.0 0.0 0.0 0.0
+                    speed 0.0 0.0 0.0
+                    ai 0
+                    friendly 0
+                    behavior NEUTRAL
+                    health 50
+					invincible false
+                }
+						obj Asteroid42
+                {
+                    mesh asteroid0
+                    type ASTEROID
+                    position -14.432876586914062 -314.9252624511719 -105.27140808105469
+                    orientation 1.0 0.0 0.0 0.0
+                    speed 0.0 0.0 0.0
+                    ai 0
+                    friendly 0
+                    behavior NEUTRAL
+                    health 50
+					invincible false
+                }
+						obj Asteroid43
+                {
+                    mesh asteroid1
+                    type ASTEROID
+                    position -4.474822998046875 -448.31463623046875 -130.5102081298828
+                    orientation 1.0 0.0 0.0 0.0
+                    speed 0.0 0.0 0.0
+                    ai 0
+                    friendly 0
+                    behavior NEUTRAL
+                    health 50
+					invincible false
+                }
+						obj Asteroid44
+                {
+                    mesh asteroid2
+                    type ASTEROID
+                    position -99.9532699584961 -614.6932373046875 -117.00598907470703
+                    orientation 1.0 0.0 0.0 0.0
+                    speed 0.0 0.0 0.0
+                    ai 0
+                    friendly 0
+                    behavior NEUTRAL
+                    health 50
+					invincible false
+                }
+						obj Asteroid45
+                {
+                    mesh asteroid3
+                    type ASTEROID
+                    position 199.5364990234375 -572.104736328125 -125.28758239746094
+                    orientation 1.0 0.0 0.0 0.0
+                    speed 0.0 0.0 0.0
+                    ai 0
+                    friendly 0
+                    behavior NEUTRAL
+                    health 50
+					invincible false
+                }
+						obj Asteroid46
+                {
+                    mesh asteroid4
+                    type ASTEROID
+                    position 199.81674194335938 -488.15118408203125 18.540054321289062
+                    orientation 1.0 0.0 0.0 0.0
+                    speed 0.0 0.0 0.0
+                    ai 0
+                    friendly 0
+                    behavior NEUTRAL
+                    health 50
+					invincible false
+                }
+						obj Asteroid47
+                {
+                    mesh asteroid1
+                    type ASTEROID
+                    position 10.581634521484375 -494.7842102050781 189.79977416992188
+                    orientation 1.0 0.0 0.0 0.0
+                    speed 0.0 0.0 0.0
+                    ai 0
+                    friendly 0
+                    behavior NEUTRAL
+                    health 50
+					invincible false
+                }
+						obj Asteroid48
+                {
+                    mesh asteroid0
+                    type ASTEROID
+                    position 75.834716796875 -592.5534057617188 5.54156494140625
+                    orientation 1.0 0.0 0.0 0.0
+                    speed 0.0 0.0 0.0
+                    ai 0
+                    friendly 0
+                    behavior NEUTRAL
+                    health 50
+					invincible false
+                }
+						obj Asteroid49
+                {
+                    mesh asteroid0
+                    type ASTEROID
+                    position 64.26348876953125 -699.5553588867188 105.99777221679688
+                    orientation 1.0 0.0 0.0 0.0
+                    speed 0.0 0.0 0.0
+                    ai 0
+                    friendly 0
+                    behavior NEUTRAL
+                    health 50
+					invincible false
+                }
+						obj Asteroid50
+                {
+                    mesh asteroid0
+                    type ASTEROID
+                    position -72.25405883789062 -497.0232238769531 94.3680419921875
+                    orientation 1.0 0.0 0.0 0.0
+                    speed 0.0 0.0 0.0
+                    ai 0
+                    friendly 0
+                    behavior NEUTRAL
+                    health 50
+					invincible false
+                }
+						obj Asteroid51
+                {
+                    mesh asteroid3
+                    type ASTEROID
+                    position 177.66510009765625 -585.6567993164062 173.666259765625
+                    orientation 1.0 0.0 0.0 0.0
+                    speed 0.0 0.0 0.0
+                    ai 0
+                    friendly 0
+                    behavior NEUTRAL
+                    health 50
+					invincible false
+                }
+						obj Asteroid52
+                {
+                    mesh asteroid0
+                    type ASTEROID
+                    position 44.92938232421875 -674.4120483398438 37.19914245605469
+                    orientation 1.0 0.0 0.0 0.0
+                    speed 0.0 0.0 0.0
+                    ai 0
+                    friendly 0
+                    behavior NEUTRAL
+                    health 50
+					invincible false
+                }
+						obj Asteroid53
+                {
+                    mesh asteroid1
+                    type ASTEROID
+                    position -77.52938079833984 -574.3659057617188 86.38943481445312
+                    orientation 1.0 0.0 0.0 0.0
+                    speed 0.0 0.0 0.0
+                    ai 0
+                    friendly 0
+                    behavior NEUTRAL
+                    health 50
+					invincible false
+                }
+						obj Asteroid54
+                {
+                    mesh asteroid0
+                    type ASTEROID
+                    position -177.73324584960938 -373.2078857421875 194.42572021484375
+                    orientation 1.0 0.0 0.0 0.0
+                    speed 0.0 0.0 0.0
+                    ai 0
+                    friendly 0
+                    behavior NEUTRAL
+                    health 50
+					invincible false
+                }
+						obj Asteroid55
+                {
+                    mesh asteroid0
+                    type ASTEROID
+                    position 167.91738891601562 -306.871337890625 -185.43060302734375
+                    orientation 1.0 0.0 0.0 0.0
+                    speed 0.0 0.0 0.0
+                    ai 0
+                    friendly 0
+                    behavior NEUTRAL
+                    health 50
+					invincible false
+                }
+						obj Asteroid56
+                {
+                    mesh asteroid1
+                    type ASTEROID
+                    position 113.62420654296875 -608.4915161132812 -69.14250183105469
+                    orientation 1.0 0.0 0.0 0.0
+                    speed 0.0 0.0 0.0
+                    ai 0
+                    friendly 0
+                    behavior NEUTRAL
+                    health 50
+					invincible false
+                }
+						obj Asteroid57
+                {
+                    mesh asteroid1
+                    type ASTEROID
+                    position -90.46442413330078 -390.96051025390625 193.7509765625
+                    orientation 1.0 0.0 0.0 0.0
+                    speed 0.0 0.0 0.0
+                    ai 0
+                    friendly 0
+                    behavior NEUTRAL
+                    health 50
+					invincible false
+                }
+						obj Asteroid58
+                {
+                    mesh asteroid4
+                    type ASTEROID
+                    position 147.880126953125 -305.9471130371094 -156.8784942626953
+                    orientation 1.0 0.0 0.0 0.0
+                    speed 0.0 0.0 0.0
+                    ai 0
+                    friendly 0
+                    behavior NEUTRAL
+                    health 50
+					invincible false
+                }
+						obj Asteroid59
+                {
+                    mesh asteroid0
+                    type ASTEROID
+                    position -62.888916015625 -356.07000732421875 -110.00697326660156
+                    orientation 1.0 0.0 0.0 0.0
+                    speed 0.0 0.0 0.0
+                    ai 0
+                    friendly 0
+                    behavior NEUTRAL
+                    health 50
+					invincible false
+                }
+						obj Asteroid60
+                {
+                    mesh asteroid4
+                    type ASTEROID
+                    position 122.31423950195312 -526.66552734375 50.73020935058594
+                    orientation 1.0 0.0 0.0 0.0
+                    speed 0.0 0.0 0.0
+                    ai 0
+                    friendly 0
+                    behavior NEUTRAL
+                    health 50
+					invincible false
+                }
+						obj Asteroid61
+                {
+                    mesh asteroid3
+                    type ASTEROID
+                    position 16.56878662109375 -420.5670166015625 165.41851806640625
+                    orientation 1.0 0.0 0.0 0.0
+                    speed 0.0 0.0 0.0
+                    ai 0
+                    friendly 0
+                    behavior NEUTRAL
+                    health 50
+					invincible false
+                }
+						obj Asteroid62
+                {
+                    mesh asteroid1
+                    type ASTEROID
+                    position 156.93533325195312 -530.2081298828125 119.61737060546875
+                    orientation 1.0 0.0 0.0 0.0
+                    speed 0.0 0.0 0.0
+                    ai 0
+                    friendly 0
+                    behavior NEUTRAL
+                    health 50
+					invincible false
+                }
+						obj Asteroid63
+                {
+                    mesh asteroid0
+                    type ASTEROID
+                    position -166.67013549804688 -491.1138000488281 -33.5426025390625
+                    orientation 1.0 0.0 0.0 0.0
+                    speed 0.0 0.0 0.0
+                    ai 0
+                    friendly 0
+                    behavior NEUTRAL
+                    health 50
+					invincible false
+                }
+						obj Asteroid64
+                {
+                    mesh asteroid4
+                    type ASTEROID
+                    position 21.051544189453125 -357.3956604003906 -133.5764617919922
+                    orientation 1.0 0.0 0.0 0.0
+                    speed 0.0 0.0 0.0
+                    ai 0
+                    friendly 0
+                    behavior NEUTRAL
+                    health 50
+					invincible false
+                }
+						obj Asteroid65
+                {
+                    mesh asteroid2
+                    type ASTEROID
+                    position 129.294921875 -462.1446533203125 -51.72688293457031
+                    orientation 1.0 0.0 0.0 0.0
+                    speed 0.0 0.0 0.0
+                    ai 0
+                    friendly 0
+                    behavior NEUTRAL
+                    health 50
+					invincible false
+                }
+						obj Asteroid66
+                {
+                    mesh asteroid4
+                    type ASTEROID
+                    position 92.82550048828125 -305.9220886230469 32.678436279296875
+                    orientation 1.0 0.0 0.0 0.0
+                    speed 0.0 0.0 0.0
+                    ai 0
+                    friendly 0
+                    behavior NEUTRAL
+                    health 50
+					invincible false
+                }
+						obj Asteroid67
+                {
+                    mesh asteroid4
+                    type ASTEROID
+                    position 8.2022705078125 -396.04559326171875 -88.52774810791016
+                    orientation 1.0 0.0 0.0 0.0
+                    speed 0.0 0.0 0.0
+                    ai 0
+                    friendly 0
+                    behavior NEUTRAL
+                    health 50
+					invincible false
+                }
+						obj Asteroid68
+                {
+                    mesh asteroid2
+                    type ASTEROID
+                    position -150.74913024902344 -426.0758972167969 96.393310546875
+                    orientation 1.0 0.0 0.0 0.0
+                    speed 0.0 0.0 0.0
+                    ai 0
+                    friendly 0
+                    behavior NEUTRAL
+                    health 50
+					invincible false
+                }
+						obj Asteroid69
+                {
+                    mesh asteroid4
+                    type ASTEROID
+                    position 51.67668151855469 -337.1009216308594 123.43536376953125
+                    orientation 1.0 0.0 0.0 0.0
+                    speed 0.0 0.0 0.0
+                    ai 0
+                    friendly 0
+                    behavior NEUTRAL
+                    health 50
+					invincible false
+                }
+						obj Asteroid70
+                {
+                    mesh asteroid4
+                    type ASTEROID
+                    position 86.559326171875 -689.1831665039062 -169.81390380859375
+                    orientation 1.0 0.0 0.0 0.0
+                    speed 0.0 0.0 0.0
+                    ai 0
+                    friendly 0
+                    behavior NEUTRAL
+                    health 50
+					invincible false
+                }
+						obj Asteroid71
+                {
+                    mesh asteroid0
+                    type ASTEROID
+                    position -4.539154052734375 -425.4773254394531 -134.41864013671875
+                    orientation 1.0 0.0 0.0 0.0
+                    speed 0.0 0.0 0.0
+                    ai 0
+                    friendly 0
+                    behavior NEUTRAL
+                    health 50
+					invincible false
+                }
+						obj Asteroid72
+                {
+                    mesh asteroid1
+                    type ASTEROID
+                    position -123.15614318847656 -538.9981689453125 -101.07705688476562
+                    orientation 1.0 0.0 0.0 0.0
+                    speed 0.0 0.0 0.0
+                    ai 0
+                    friendly 0
+                    behavior NEUTRAL
+                    health 50
+					invincible false
+                }
+						obj Asteroid73
+                {
+                    mesh asteroid2
+                    type ASTEROID
+                    position -192.128173828125 -566.96728515625 127.69033813476562
+                    orientation 1.0 0.0 0.0 0.0
+                    speed 0.0 0.0 0.0
+                    ai 0
+                    friendly 0
+                    behavior NEUTRAL
+                    health 50
+					invincible false
+                }
+						obj Asteroid74
+                {
+                    mesh asteroid1
+                    type ASTEROID
+                    position -139.50485229492188 -473.79241943359375 84.10089111328125
+                    orientation 1.0 0.0 0.0 0.0
+                    speed 0.0 0.0 0.0
+                    ai 0
+                    friendly 0
+                    behavior NEUTRAL
+                    health 50
+					invincible false
+                }
+						obj Asteroid75
+                {
+                    mesh asteroid2
+                    type ASTEROID
+                    position -116.26448822021484 -341.68096923828125 -14.113265991210938
+                    orientation 1.0 0.0 0.0 0.0
+                    speed 0.0 0.0 0.0
+                    ai 0
+                    friendly 0
+                    behavior NEUTRAL
+                    health 50
+					invincible false
+                }
+						obj Asteroid76
+                {
+                    mesh asteroid2
+                    type ASTEROID
+                    position 190.49337768554688 -523.4776000976562 134.98452758789062
+                    orientation 1.0 0.0 0.0 0.0
+                    speed 0.0 0.0 0.0
+                    ai 0
+                    friendly 0
+                    behavior NEUTRAL
+                    health 50
+					invincible false
+                }
+						obj Asteroid77
+                {
+                    mesh asteroid0
+                    type ASTEROID
+                    position 96.25656127929688 -654.274169921875 -31.320907592773438
+                    orientation 1.0 0.0 0.0 0.0
+                    speed 0.0 0.0 0.0
+                    ai 0
+                    friendly 0
+                    behavior NEUTRAL
+                    health 50
+					invincible false
+                }
+						obj Asteroid78
+                {
+                    mesh asteroid1
+                    type ASTEROID
+                    position -83.3942642211914 -551.8909912109375 -62.71331787109375
+                    orientation 1.0 0.0 0.0 0.0
+                    speed 0.0 0.0 0.0
+                    ai 0
+                    friendly 0
+                    behavior NEUTRAL
+                    health 50
+					invincible false
+                }
+						obj Asteroid79
+                {
+                    mesh asteroid2
+                    type ASTEROID
+                    position -36.017486572265625 -475.60845947265625 30.58441162109375
+                    orientation 1.0 0.0 0.0 0.0
+                    speed 0.0 0.0 0.0
+                    ai 0
+                    friendly 0
+                    behavior NEUTRAL
+                    health 50
+					invincible false
+                }
+						obj Asteroid80
+                {
+                    mesh asteroid4
+                    type ASTEROID
+                    position -153.464599609375 -655.501708984375 -50.89375305175781
+                    orientation 1.0 0.0 0.0 0.0
+                    speed 0.0 0.0 0.0
+                    ai 0
+                    friendly 0
+                    behavior NEUTRAL
+                    health 50
+					invincible false
+                }
+						obj Asteroid81
+                {
+                    mesh asteroid4
+                    type ASTEROID
+                    position 165.72125244140625 -600.14013671875 -66.71226501464844
+                    orientation 1.0 0.0 0.0 0.0
+                    speed 0.0 0.0 0.0
+                    ai 0
+                    friendly 0
+                    behavior NEUTRAL
+                    health 50
+					invincible false
+                }
+						obj Asteroid82
+                {
+                    mesh asteroid1
+                    type ASTEROID
+                    position 46.53742980957031 -477.11859130859375 -180.35235595703125
+                    orientation 1.0 0.0 0.0 0.0
+                    speed 0.0 0.0 0.0
+                    ai 0
+                    friendly 0
+                    behavior NEUTRAL
+                    health 50
+					invincible false
+                }
+						obj Asteroid83
+                {
+                    mesh asteroid3
+                    type ASTEROID
+                    position 160.56460571289062 -584.2095947265625 -87.49563598632812
+                    orientation 1.0 0.0 0.0 0.0
+                    speed 0.0 0.0 0.0
+                    ai 0
+                    friendly 0
+                    behavior NEUTRAL
+                    health 50
+					invincible false
+                }
+						obj Asteroid84
+                {
+                    mesh asteroid1
+                    type ASTEROID
+                    position 32.82127380371094 -640.9461669921875 55.48948669433594
+                    orientation 1.0 0.0 0.0 0.0
+                    speed 0.0 0.0 0.0
+                    ai 0
+                    friendly 0
+                    behavior NEUTRAL
+                    health 50
+					invincible false
+                }
+						obj Asteroid85
+                {
+                    mesh asteroid1
+                    type ASTEROID
+                    position -189.8582000732422 -432.4859313964844 -127.96037292480469
+                    orientation 1.0 0.0 0.0 0.0
+                    speed 0.0 0.0 0.0
+                    ai 0
+                    friendly 0
+                    behavior NEUTRAL
+                    health 50
+					invincible false
+                }
+						obj Asteroid86
+                {
+                    mesh asteroid3
+                    type ASTEROID
+                    position -56.73594665527344 -502.9878845214844 -198.06175231933594
+                    orientation 1.0 0.0 0.0 0.0
+                    speed 0.0 0.0 0.0
+                    ai 0
+                    friendly 0
+                    behavior NEUTRAL
+                    health 50
+					invincible false
+                }
+						obj Asteroid87
+                {
+                    mesh asteroid4
+                    type ASTEROID
+                    position 124.751953125 -346.0500793457031 140.06622314453125
+                    orientation 1.0 0.0 0.0 0.0
+                    speed 0.0 0.0 0.0
+                    ai 0
+                    friendly 0
+                    behavior NEUTRAL
+                    health 50
+					invincible false
+                }
+						obj Asteroid88
+                {
+                    mesh asteroid2
+                    type ASTEROID
+                    position 11.533401489257812 -389.04229736328125 107.17919921875
+                    orientation 1.0 0.0 0.0 0.0
+                    speed 0.0 0.0 0.0
+                    ai 0
+                    friendly 0
+                    behavior NEUTRAL
+                    health 50
+					invincible false
+                }
+						obj Asteroid89
+                {
+                    mesh asteroid3
+                    type ASTEROID
+                    position 175.99197387695312 -674.98046875 -58.58006286621094
+                    orientation 1.0 0.0 0.0 0.0
+                    speed 0.0 0.0 0.0
+                    ai 0
+                    friendly 0
+                    behavior NEUTRAL
+                    health 50
+					invincible false
+                }
+						obj Asteroid90
+                {
+                    mesh asteroid4
+                    type ASTEROID
+                    position -188.10711669921875 -621.973388671875 -22.913223266601562
+                    orientation 1.0 0.0 0.0 0.0
+                    speed 0.0 0.0 0.0
+                    ai 0
+                    friendly 0
+                    behavior NEUTRAL
+                    health 50
+					invincible false
+                }
+						obj Asteroid91
+                {
+                    mesh asteroid1
+                    type ASTEROID
+                    position -72.43273162841797 -683.4027099609375 -150.66969299316406
+                    orientation 1.0 0.0 0.0 0.0
+                    speed 0.0 0.0 0.0
+                    ai 0
+                    friendly 0
+                    behavior NEUTRAL
+                    health 50
+					invincible false
+                }
+						obj Asteroid92
+                {
+                    mesh asteroid2
+                    type ASTEROID
+                    position 137.55447387695312 -358.246826171875 -197.5841522216797
+                    orientation 1.0 0.0 0.0 0.0
+                    speed 0.0 0.0 0.0
+                    ai 0
+                    friendly 0
+                    behavior NEUTRAL
+                    health 50
+					invincible false
+                }
+						obj Asteroid93
+                {
+                    mesh asteroid4
+                    type ASTEROID
+                    position 25.87823486328125 -541.2340698242188 16.94622802734375
+                    orientation 1.0 0.0 0.0 0.0
+                    speed 0.0 0.0 0.0
+                    ai 0
+                    friendly 0
+                    behavior NEUTRAL
+                    health 50
+					invincible false
+                }
+						obj Asteroid94
+                {
+                    mesh asteroid2
+                    type ASTEROID
+                    position 68.98410034179688 -374.9021911621094 -182.12425231933594
+                    orientation 1.0 0.0 0.0 0.0
+                    speed 0.0 0.0 0.0
+                    ai 0
+                    friendly 0
+                    behavior NEUTRAL
+                    health 50
+					invincible false
+                }
+						obj Asteroid95
+                {
+                    mesh asteroid3
+                    type ASTEROID
+                    position 63.975250244140625 -613.4923706054688 105.08026123046875
+                    orientation 1.0 0.0 0.0 0.0
+                    speed 0.0 0.0 0.0
+                    ai 0
+                    friendly 0
+                    behavior NEUTRAL
+                    health 50
+					invincible false
+                }
+						obj Asteroid96
+                {
+                    mesh asteroid3
+                    type ASTEROID
+                    position 101.530517578125 -564.5639038085938 186.97015380859375
+                    orientation 1.0 0.0 0.0 0.0
+                    speed 0.0 0.0 0.0
+                    ai 0
+                    friendly 0
+                    behavior NEUTRAL
+                    health 50
+					invincible false
+                }
+						obj Asteroid97
+                {
+                    mesh asteroid1
+                    type ASTEROID
+                    position -96.00963592529297 -567.558349609375 149.713134765625
+                    orientation 1.0 0.0 0.0 0.0
+                    speed 0.0 0.0 0.0
+                    ai 0
+                    friendly 0
+                    behavior NEUTRAL
+                    health 50
+					invincible false
+                }
+						obj Asteroid98
+                {
+                    mesh asteroid3
+                    type ASTEROID
+                    position -9.323883056640625 -382.0940856933594 -10.44390869140625
+                    orientation 1.0 0.0 0.0 0.0
+                    speed 0.0 0.0 0.0
+                    ai 0
+                    friendly 0
+                    behavior NEUTRAL
+                    health 50
+					invincible false
+                }
+						obj Asteroid99
+                {
+                    mesh asteroid4
+                    type ASTEROID
+                    position 182.17410278320312 -649.963134765625 -62.4898681640625
+                    orientation 1.0 0.0 0.0 0.0
+                    speed 0.0 0.0 0.0
+                    ai 0
+                    friendly 0
+                    behavior NEUTRAL
+                    health 50
+					invincible false
+                }
+						obj Asteroid100
+                {
+                    mesh asteroid2
+                    type ASTEROID
+                    position -70.91307067871094 -489.058349609375 -106.89771270751953
+                    orientation 1.0 0.0 0.0 0.0
+                    speed 0.0 0.0 0.0
+                    ai 0
+                    friendly 0
+                    behavior NEUTRAL
+                    health 50
+					invincible false
+                }
+						obj Asteroid101
+                {
+                    mesh asteroid3
+                    type ASTEROID
+                    position 45.959716796875 -370.7210693359375 106.59588623046875
+                    orientation 1.0 0.0 0.0 0.0
+                    speed 0.0 0.0 0.0
+                    ai 0
+                    friendly 0
+                    behavior NEUTRAL
+                    health 50
+					invincible false
+                }
+						obj Asteroid102
+                {
+                    mesh asteroid0
+                    type ASTEROID
+                    position -68.70643615722656 -432.5587158203125 -14.117080688476562
+                    orientation 1.0 0.0 0.0 0.0
+                    speed 0.0 0.0 0.0
+                    ai 0
+                    friendly 0
+                    behavior NEUTRAL
+                    health 50
+					invincible false
+                }
+						obj Asteroid103
+                {
+                    mesh asteroid4
+                    type ASTEROID
+                    position 178.02020263671875 -1093.007568359375 351.86614990234375
+                    orientation 1.0 0.0 0.0 0.0
+                    speed 0.0 0.0 0.0
+                    ai 0
+                    friendly 0
+                    behavior NEUTRAL
+                    health 50
+					invincible false
+                }
+						obj Asteroid104
+                {
+                    mesh asteroid4
+                    type ASTEROID
+                    position -175.77462768554688 -504.72943115234375 424.71295166015625
+                    orientation 1.0 0.0 0.0 0.0
+                    speed 0.0 0.0 0.0
+                    ai 0
+                    friendly 0
+                    behavior NEUTRAL
+                    health 50
+					invincible false
+                }
+						obj Asteroid105
+                {
+                    mesh asteroid2
+                    type ASTEROID
+                    position 336.35382080078125 -895.5601196289062 172.66412353515625
+                    orientation 1.0 0.0 0.0 0.0
+                    speed 0.0 0.0 0.0
+                    ai 0
+                    friendly 0
+                    behavior NEUTRAL
+                    health 50
+					invincible false
+                }
+						obj Asteroid106
+                {
+                    mesh asteroid3
+                    type ASTEROID
+                    position -241.1722412109375 -748.5208740234375 132.144775390625
+                    orientation 1.0 0.0 0.0 0.0
+                    speed 0.0 0.0 0.0
+                    ai 0
+                    friendly 0
+                    behavior NEUTRAL
+                    health 50
+					invincible false
+                }
+						obj Asteroid107
+                {
+                    mesh asteroid4
+                    type ASTEROID
+                    position 123.859130859375 -1219.885498046875 445.01007080078125
+                    orientation 1.0 0.0 0.0 0.0
+                    speed 0.0 0.0 0.0
+                    ai 0
+                    friendly 0
+                    behavior NEUTRAL
+                    health 50
+					invincible false
+                }
+						obj Asteroid108
+                {
+                    mesh asteroid0
+                    type ASTEROID
+                    position 346.47967529296875 -501.4136962890625 -81.74465942382812
+                    orientation 1.0 0.0 0.0 0.0
+                    speed 0.0 0.0 0.0
+                    ai 0
+                    friendly 0
+                    behavior NEUTRAL
+                    health 50
+					invincible false
+                }
+						obj Asteroid109
+                {
+                    mesh asteroid1
+                    type ASTEROID
+                    position -439.29998779296875 -612.8248291015625 271.6522216796875
+                    orientation 1.0 0.0 0.0 0.0
+                    speed 0.0 0.0 0.0
+                    ai 0
+                    friendly 0
+                    behavior NEUTRAL
+                    health 50
+					invincible false
+                }
+						obj Asteroid110
+                {
+                    mesh asteroid0
+                    type ASTEROID
+                    position -468.5397644042969 -478.034912109375 420.238525390625
+                    orientation 1.0 0.0 0.0 0.0
+                    speed 0.0 0.0 0.0
+                    ai 0
+                    friendly 0
+                    behavior NEUTRAL
+                    health 50
+					invincible false
+                }
+						obj Asteroid111
+                {
+                    mesh asteroid1
+                    type ASTEROID
+                    position 375.40032958984375 -588.6328735351562 -163.0146484375
+                    orientation 1.0 0.0 0.0 0.0
+                    speed 0.0 0.0 0.0
+                    ai 0
+                    friendly 0
+                    behavior NEUTRAL
+                    health 50
+					invincible false
+                }
+						obj Asteroid112
+                {
+                    mesh asteroid3
+                    type ASTEROID
+                    position 494.02301025390625 -936.9405517578125 263.40545654296875
+                    orientation 1.0 0.0 0.0 0.0
+                    speed 0.0 0.0 0.0
+                    ai 0
+                    friendly 0
+                    behavior NEUTRAL
+                    health 50
+					invincible false
+                }
+						obj Asteroid113
+                {
+                    mesh asteroid2
+                    type ASTEROID
+                    position 436.2882080078125 -636.361083984375 77.10809326171875
+                    orientation 1.0 0.0 0.0 0.0
+                    speed 0.0 0.0 0.0
+                    ai 0
+                    friendly 0
+                    behavior NEUTRAL
+                    health 50
+					invincible false
+                }
+						obj Asteroid114
+                {
+                    mesh asteroid0
+                    type ASTEROID
+                    position -0.468841552734375 -1204.525390625 -466.48944091796875
+                    orientation 1.0 0.0 0.0 0.0
+                    speed 0.0 0.0 0.0
+                    ai 0
+                    friendly 0
+                    behavior NEUTRAL
+                    health 50
+					invincible false
+                }
+						obj Asteroid115
+                {
+                    mesh asteroid0
+                    type ASTEROID
+                    position -177.85305786132812 -439.31768798828125 -283.332275390625
+                    orientation 1.0 0.0 0.0 0.0
+                    speed 0.0 0.0 0.0
+                    ai 0
+                    friendly 0
+                    behavior NEUTRAL
+                    health 50
+					invincible false
+                }
+						obj Asteroid116
+                {
+                    mesh asteroid0
+                    type ASTEROID
+                    position -260.30059814453125 -1156.860107421875 158.22845458984375
+                    orientation 1.0 0.0 0.0 0.0
+                    speed 0.0 0.0 0.0
+                    ai 0
+                    friendly 0
+                    behavior NEUTRAL
+                    health 50
+					invincible false
+                }
+						obj Asteroid117
+                {
+                    mesh asteroid3
+                    type ASTEROID
+                    position -490.90020751953125 -1008.5912475585938 -33.112701416015625
+                    orientation 1.0 0.0 0.0 0.0
+                    speed 0.0 0.0 0.0
+                    ai 0
+                    friendly 0
+                    behavior NEUTRAL
+                    health 50
+					invincible false
+                }
+						obj Asteroid118
+                {
+                    mesh asteroid0
+                    type ASTEROID
+                    position 32.51531982421875 -1213.1771240234375 320.8521728515625
+                    orientation 1.0 0.0 0.0 0.0
+                    speed 0.0 0.0 0.0
+                    ai 0
+                    friendly 0
+                    behavior NEUTRAL
+                    health 50
+					invincible false
+                }
+						obj Asteroid119
+                {
+                    mesh asteroid2
+                    type ASTEROID
+                    position 369.7772216796875 -694.8157348632812 -42.210693359375
+                    orientation 1.0 0.0 0.0 0.0
+                    speed 0.0 0.0 0.0
+                    ai 0
+                    friendly 0
+                    behavior NEUTRAL
+                    health 50
+					invincible false
+                }
+						obj Asteroid120
+                {
+                    mesh asteroid4
+                    type ASTEROID
+                    position 292.85107421875 -565.40234375 356.84649658203125
+                    orientation 1.0 0.0 0.0 0.0
+                    speed 0.0 0.0 0.0
+                    ai 0
+                    friendly 0
+                    behavior NEUTRAL
+                    health 50
+					invincible false
+                }
+						obj Asteroid121
+                {
+                    mesh asteroid0
+                    type ASTEROID
+                    position 256.37823486328125 -1250.56884765625 -302.3568420410156
+                    orientation 1.0 0.0 0.0 0.0
+                    speed 0.0 0.0 0.0
+                    ai 0
+                    friendly 0
+                    behavior NEUTRAL
+                    health 50
+					invincible false
+                }
+						obj Asteroid122
+                {
+                    mesh asteroid1
+                    type ASTEROID
+                    position -193.38082885742188 -693.5530395507812 -415.361328125
+                    orientation 1.0 0.0 0.0 0.0
+                    speed 0.0 0.0 0.0
+                    ai 0
+                    friendly 0
+                    behavior NEUTRAL
+                    health 50
+					invincible false
+                }
+						obj Asteroid123
+                {
+                    mesh asteroid3
+                    type ASTEROID
+                    position -489.723876953125 -1046.8349609375 268.46630859375
+                    orientation 1.0 0.0 0.0 0.0
+                    speed 0.0 0.0 0.0
+                    ai 0
+                    friendly 0
+                    behavior NEUTRAL
+                    health 50
+					invincible false
+                }
+						obj Asteroid124
+                {
+                    mesh asteroid3
+                    type ASTEROID
+                    position 371.79425048828125 -909.7486572265625 448.01348876953125
+                    orientation 1.0 0.0 0.0 0.0
+                    speed 0.0 0.0 0.0
+                    ai 0
+                    friendly 0
+                    behavior NEUTRAL
+                    health 50
+					invincible false
+                }
+						obj Asteroid125
+                {
+                    mesh asteroid1
+                    type ASTEROID
+                    position 117.90887451171875 -694.805419921875 248.94677734375
+                    orientation 1.0 0.0 0.0 0.0
+                    speed 0.0 0.0 0.0
+                    ai 0
+                    friendly 0
+                    behavior NEUTRAL
+                    health 50
+					invincible false
+                }
+						obj Asteroid126
+                {
+                    mesh asteroid3
+                    type ASTEROID
+                    position -11.08099365234375 -1320.125 236.65289306640625
+                    orientation 1.0 0.0 0.0 0.0
+                    speed 0.0 0.0 0.0
+                    ai 0
+                    friendly 0
+                    behavior NEUTRAL
+                    health 50
+					invincible false
+                }
+						obj Asteroid127
+                {
+                    mesh asteroid4
+                    type ASTEROID
+                    position -356.7849426269531 -1081.92529296875 492.94415283203125
+                    orientation 1.0 0.0 0.0 0.0
+                    speed 0.0 0.0 0.0
+                    ai 0
+                    friendly 0
+                    behavior NEUTRAL
+                    health 50
+					invincible false
+                }
+						obj Asteroid128
+                {
+                    mesh asteroid3
+                    type ASTEROID
+                    position 471.83831787109375 -1244.791748046875 -274.62310791015625
+                    orientation 1.0 0.0 0.0 0.0
+                    speed 0.0 0.0 0.0
+                    ai 0
+                    friendly 0
+                    behavior NEUTRAL
+                    health 50
+					invincible false
+                }
+						obj Asteroid129
+                {
+                    mesh asteroid4
+                    type ASTEROID
+                    position -36.79443359375 -1056.6461181640625 450.5093994140625
+                    orientation 1.0 0.0 0.0 0.0
+                    speed 0.0 0.0 0.0
+                    ai 0
+                    friendly 0
+                    behavior NEUTRAL
+                    health 50
+					invincible false
+                }
+						obj Asteroid130
+                {
+                    mesh asteroid1
+                    type ASTEROID
+                    position -314.654052734375 -838.5850219726562 -175.43978881835938
+                    orientation 1.0 0.0 0.0 0.0
+                    speed 0.0 0.0 0.0
+                    ai 0
+                    friendly 0
+                    behavior NEUTRAL
+                    health 50
+					invincible false
+                }
+						obj Asteroid131
+                {
+                    mesh asteroid3
+                    type ASTEROID
+                    position -419.6889343261719 -475.08685302734375 197.3564453125
+                    orientation 1.0 0.0 0.0 0.0
+                    speed 0.0 0.0 0.0
+                    ai 0
+                    friendly 0
+                    behavior NEUTRAL
+                    health 50
+					invincible false
+                }
+						obj Asteroid132
+                {
+                    mesh asteroid0
+                    type ASTEROID
+                    position -280.6309509277344 -641.88232421875 -111.8489990234375
+                    orientation 1.0 0.0 0.0 0.0
+                    speed 0.0 0.0 0.0
+                    ai 0
+                    friendly 0
+                    behavior NEUTRAL
+                    health 50
+					invincible false
+                }
+						obj Asteroid133
+                {
+                    mesh asteroid3
+                    type ASTEROID
+                    position 74.98297119140625 -1230.866943359375 107.0140380859375
+                    orientation 1.0 0.0 0.0 0.0
+                    speed 0.0 0.0 0.0
+                    ai 0
+                    friendly 0
+                    behavior NEUTRAL
+                    health 50
+					invincible false
+                }
+						obj Asteroid134
+                {
+                    mesh asteroid4
+                    type ASTEROID
+                    position 129.95782470703125 -755.2666015625 -193.15017700195312
+                    orientation 1.0 0.0 0.0 0.0
+                    speed 0.0 0.0 0.0
+                    ai 0
+                    friendly 0
+                    behavior NEUTRAL
+                    health 50
+					invincible false
+                }
+						obj Asteroid135
+                {
+                    mesh asteroid0
+                    type ASTEROID
+                    position 384.45660400390625 -707.807373046875 -36.49932861328125
+                    orientation 1.0 0.0 0.0 0.0
+                    speed 0.0 0.0 0.0
+                    ai 0
+                    friendly 0
+                    behavior NEUTRAL
+                    health 50
+					invincible false
+                }
+						obj Asteroid136
+                {
+                    mesh asteroid3
+                    type ASTEROID
+                    position -297.38397216796875 -1199.41015625 73.21221923828125
+                    orientation 1.0 0.0 0.0 0.0
+                    speed 0.0 0.0 0.0
+                    ai 0
+                    friendly 0
+                    behavior NEUTRAL
+                    health 50
+					invincible false
+                }
+						obj Asteroid137
+                {
+                    mesh asteroid0
+                    type ASTEROID
+                    position -277.19964599609375 -518.048095703125 22.08013916015625
+                    orientation 1.0 0.0 0.0 0.0
+                    speed 0.0 0.0 0.0
+                    ai 0
+                    friendly 0
+                    behavior NEUTRAL
+                    health 50
+					invincible false
+                }
+						obj Asteroid138
+                {
+                    mesh asteroid1
+                    type ASTEROID
+                    position -365.8438720703125 -1329.974609375 299.60845947265625
+                    orientation 1.0 0.0 0.0 0.0
+                    speed 0.0 0.0 0.0
+                    ai 0
+                    friendly 0
+                    behavior NEUTRAL
+                    health 50
+					invincible false
+                }
+						obj Asteroid139
+                {
+                    mesh asteroid1
+                    type ASTEROID
+                    position -103.80303955078125 -610.5653076171875 -425.5623779296875
+                    orientation 1.0 0.0 0.0 0.0
+                    speed 0.0 0.0 0.0
+                    ai 0
+                    friendly 0
+                    behavior NEUTRAL
+                    health 50
+					invincible false
+                }
+						obj Asteroid140
+                {
+                    mesh asteroid2
+                    type ASTEROID
+                    position -83.82791137695312 -661.51025390625 4.925262451171875
+                    orientation 1.0 0.0 0.0 0.0
+                    speed 0.0 0.0 0.0
+                    ai 0
+                    friendly 0
+                    behavior NEUTRAL
+                    health 50
+					invincible false
+                }
+						obj Asteroid141
+                {
+                    mesh asteroid1
+                    type ASTEROID
+                    position -378.37994384765625 -1202.5992431640625 -86.4766845703125
+                    orientation 1.0 0.0 0.0 0.0
+                    speed 0.0 0.0 0.0
+                    ai 0
+                    friendly 0
+                    behavior NEUTRAL
+                    health 50
+					invincible false
+                }
+						obj Asteroid142
+                {
+                    mesh asteroid4
+                    type ASTEROID
+                    position -275.56329345703125 -641.9699096679688 485.091064453125
+                    orientation 1.0 0.0 0.0 0.0
+                    speed 0.0 0.0 0.0
+                    ai 0
+                    friendly 0
+                    behavior NEUTRAL
+                    health 50
+					invincible false
+                }
+						obj Asteroid143
+                {
+                    mesh asteroid0
+                    type ASTEROID
+                    position 493.93487548828125 -1329.0439453125 425.95916748046875
+                    orientation 1.0 0.0 0.0 0.0
+                    speed 0.0 0.0 0.0
+                    ai 0
+                    friendly 0
+                    behavior NEUTRAL
+                    health 50
+					invincible false
+                }
+						obj Asteroid144
+                {
+                    mesh asteroid2
+                    type ASTEROID
+                    position 185.26373291015625 -515.2330932617188 151.26153564453125
+                    orientation 1.0 0.0 0.0 0.0
+                    speed 0.0 0.0 0.0
+                    ai 0
+                    friendly 0
+                    behavior NEUTRAL
+                    health 50
+					invincible false
+                }
+						obj Asteroid145
+                {
+                    mesh asteroid2
+                    type ASTEROID
+                    position 222.341064453125 -874.0249633789062 -362.9926452636719
+                    orientation 1.0 0.0 0.0 0.0
+                    speed 0.0 0.0 0.0
+                    ai 0
+                    friendly 0
+                    behavior NEUTRAL
+                    health 50
+					invincible false
+                }
+						obj Asteroid146
+                {
+                    mesh asteroid2
+                    type ASTEROID
+                    position 126.10333251953125 -963.5172729492188 230.3216552734375
+                    orientation 1.0 0.0 0.0 0.0
+                    speed 0.0 0.0 0.0
+                    ai 0
+                    friendly 0
+                    behavior NEUTRAL
+                    health 50
+					invincible false
+                }
+						obj Asteroid147
+                {
+                    mesh asteroid0
+                    type ASTEROID
+                    position 280.873046875 -1219.868408203125 39.6326904296875
+                    orientation 1.0 0.0 0.0 0.0
+                    speed 0.0 0.0 0.0
+                    ai 0
+                    friendly 0
+                    behavior NEUTRAL
+                    health 50
+					invincible false
+                }
+						obj Asteroid148
+                {
+                    mesh asteroid0
+                    type ASTEROID
+                    position 323.94525146484375 -1049.584228515625 -246.44964599609375
+                    orientation 1.0 0.0 0.0 0.0
+                    speed 0.0 0.0 0.0
+                    ai 0
+                    friendly 0
+                    behavior NEUTRAL
+                    health 50
+					invincible false
+                }
+						obj Asteroid149
+                {
+                    mesh asteroid2
+                    type ASTEROID
+                    position -352.6298828125 -1342.4072265625 28.18914794921875
+                    orientation 1.0 0.0 0.0 0.0
+                    speed 0.0 0.0 0.0
+                    ai 0
+                    friendly 0
+                    behavior NEUTRAL
+                    health 50
+					invincible false
+                }
+						obj Asteroid150
+                {
+                    mesh asteroid0
+                    type ASTEROID
+                    position 13.94268798828125 -510.84710693359375 375.01373291015625
+                    orientation 1.0 0.0 0.0 0.0
+                    speed 0.0 0.0 0.0
+                    ai 0
+                    friendly 0
+                    behavior NEUTRAL
+                    health 50
+					invincible false
+                }
+						obj Asteroid151
+                {
+                    mesh asteroid3
+                    type ASTEROID
+                    position -343.09136962890625 -706.3466796875 -184.69161987304688
+                    orientation 1.0 0.0 0.0 0.0
+                    speed 0.0 0.0 0.0
+                    ai 0
+                    friendly 0
+                    behavior NEUTRAL
+                    health 50
+					invincible false
+                }
+						obj Asteroid152
+                {
+                    mesh asteroid4
+                    type ASTEROID
+                    position 396.18255615234375 -1177.18798828125 -472.2969665527344
+                    orientation 1.0 0.0 0.0 0.0
+                    speed 0.0 0.0 0.0
+                    ai 0
+                    friendly 0
+                    behavior NEUTRAL
+                    health 50
+					invincible false
+                }
+						obj Asteroid153
+                {
+                    mesh asteroid3
+                    type ASTEROID
+                    position -225.67068481445312 -419.84222412109375 -378.5352783203125
+                    orientation 1.0 0.0 0.0 0.0
+                    speed 0.0 0.0 0.0
+                    ai 0
+                    friendly 0
+                    behavior NEUTRAL
+                    health 50
+					invincible false
+                }
+						obj Asteroid154
+                {
+                    mesh asteroid3
+                    type ASTEROID
+                    position -19.399749755859375 -1121.0777587890625 413.71826171875
+                    orientation 1.0 0.0 0.0 0.0
+                    speed 0.0 0.0 0.0
+                    ai 0
+                    friendly 0
+                    behavior NEUTRAL
+                    health 50
+					invincible false
+                }
+						obj Asteroid155
+                {
+                    mesh asteroid0
+                    type ASTEROID
+                    position 235.5267333984375 -887.5847778320312 50.90460205078125
+                    orientation 1.0 0.0 0.0 0.0
+                    speed 0.0 0.0 0.0
+                    ai 0
+                    friendly 0
+                    behavior NEUTRAL
+                    health 50
+					invincible false
+                }
+						obj Asteroid156
+                {
+                    mesh asteroid4
+                    type ASTEROID
+                    position 498.22198486328125 -668.107666015625 57.791748046875
+                    orientation 1.0 0.0 0.0 0.0
+                    speed 0.0 0.0 0.0
+                    ai 0
+                    friendly 0
+                    behavior NEUTRAL
+                    health 50
+					invincible false
+                }
+						obj Asteroid157
+                {
+                    mesh asteroid1
+                    type ASTEROID
+                    position 173.547119140625 -677.7429809570312 296.45367431640625
+                    orientation 1.0 0.0 0.0 0.0
+                    speed 0.0 0.0 0.0
+                    ai 0
+                    friendly 0
+                    behavior NEUTRAL
+                    health 50
+					invincible false
+                }
+						obj Asteroid158
+                {
+                    mesh asteroid4
+                    type ASTEROID
+                    position 466.38787841796875 -1344.9256591796875 109.651611328125
+                    orientation 1.0 0.0 0.0 0.0
+                    speed 0.0 0.0 0.0
+                    ai 0
+                    friendly 0
+                    behavior NEUTRAL
+                    health 50
+					invincible false
+                }
+						obj Asteroid159
+                {
+                    mesh asteroid3
+                    type ASTEROID
+                    position 125.49884033203125 -674.9505004882812 -489.690673828125
+                    orientation 1.0 0.0 0.0 0.0
+                    speed 0.0 0.0 0.0
+                    ai 0
+                    friendly 0
+                    behavior NEUTRAL
+                    health 50
+					invincible false
+                }
+						obj Asteroid160
+                {
+                    mesh asteroid0
+                    type ASTEROID
+                    position 63.3294677734375 -574.598876953125 274.89361572265625
+                    orientation 1.0 0.0 0.0 0.0
+                    speed 0.0 0.0 0.0
+                    ai 0
+                    friendly 0
+                    behavior NEUTRAL
+                    health 50
+					invincible false
+                }
+						obj Asteroid161
+                {
+                    mesh asteroid4
+                    type ASTEROID
+                    position 336.64398193359375 -1235.9473876953125 -215.4088134765625
+                    orientation 1.0 0.0 0.0 0.0
+                    speed 0.0 0.0 0.0
+                    ai 0
+                    friendly 0
+                    behavior NEUTRAL
+                    health 50
+					invincible false
+                }
+						obj Asteroid162
+                {
+                    mesh asteroid4
+                    type ASTEROID
+                    position -36.82171630859375 -965.1063842773438 -229.84652709960938
+                    orientation 1.0 0.0 0.0 0.0
+                    speed 0.0 0.0 0.0
+                    ai 0
+                    friendly 0
+                    behavior NEUTRAL
+                    health 50
+					invincible false
+                }
+						obj Asteroid163
+                {
+                    mesh asteroid2
+                    type ASTEROID
+                    position 489.28472900390625 -517.0400390625 249.83782958984375
+                    orientation 1.0 0.0 0.0 0.0
+                    speed 0.0 0.0 0.0
+                    ai 0
+                    friendly 0
+                    behavior NEUTRAL
+                    health 50
+					invincible false
+                }
+						obj Asteroid164
+                {
+                    mesh asteroid1
+                    type ASTEROID
+                    position -454.8020324707031 -456.1578369140625 -442.8042297363281
+                    orientation 1.0 0.0 0.0 0.0
+                    speed 0.0 0.0 0.0
+                    ai 0
+                    friendly 0
+                    behavior NEUTRAL
+                    health 50
+					invincible false
+                }
+						obj Asteroid165
+                {
+                    mesh asteroid4
+                    type ASTEROID
+                    position 489.02569580078125 -1368.248779296875 -116.08929443359375
+                    orientation 1.0 0.0 0.0 0.0
+                    speed 0.0 0.0 0.0
+                    ai 0
+                    friendly 0
+                    behavior NEUTRAL
+                    health 50
+					invincible false
+                }
+						obj Asteroid166
+                {
+                    mesh asteroid0
+                    type ASTEROID
+                    position 428.2313232421875 -1212.2899169921875 209.79156494140625
+                    orientation 1.0 0.0 0.0 0.0
+                    speed 0.0 0.0 0.0
+                    ai 0
+                    friendly 0
+                    behavior NEUTRAL
+                    health 50
+					invincible false
+                }
+						obj Asteroid167
+                {
+                    mesh asteroid0
+                    type ASTEROID
+                    position -7.994171142578125 -1316.305908203125 161.46044921875
+                    orientation 1.0 0.0 0.0 0.0
+                    speed 0.0 0.0 0.0
+                    ai 0
+                    friendly 0
+                    behavior NEUTRAL
+                    health 50
+					invincible false
+                }
+						obj Asteroid168
+                {
+                    mesh asteroid3
+                    type ASTEROID
+                    position -406.05902099609375 -1388.956298828125 -460.80548095703125
+                    orientation 1.0 0.0 0.0 0.0
+                    speed 0.0 0.0 0.0
+                    ai 0
+                    friendly 0
+                    behavior NEUTRAL
+                    health 50
+					invincible false
+                }
+						obj Asteroid169
+                {
+                    mesh asteroid3
+                    type ASTEROID
+                    position -318.7069091796875 -629.481201171875 79.71270751953125
+                    orientation 1.0 0.0 0.0 0.0
+                    speed 0.0 0.0 0.0
+                    ai 0
+                    friendly 0
+                    behavior NEUTRAL
+                    health 50
+					invincible false
+                }
+						obj Asteroid170
+                {
+                    mesh asteroid1
+                    type ASTEROID
+                    position -184.80868530273438 -914.274658203125 -308.9619140625
+                    orientation 1.0 0.0 0.0 0.0
+                    speed 0.0 0.0 0.0
+                    ai 0
+                    friendly 0
+                    behavior NEUTRAL
+                    health 50
+					invincible false
+                }
+						obj Asteroid171
+                {
+                    mesh asteroid0
+                    type ASTEROID
+                    position -302.633544921875 -494.94866943359375 476.6954345703125
+                    orientation 1.0 0.0 0.0 0.0
+                    speed 0.0 0.0 0.0
+                    ai 0
+                    friendly 0
+                    behavior NEUTRAL
+                    health 50
+					invincible false
+                }
+						obj Asteroid172
+                {
+                    mesh asteroid0
+                    type ASTEROID
+                    position -230.88162231445312 -677.2469482421875 -418.2664794921875
+                    orientation 1.0 0.0 0.0 0.0
+                    speed 0.0 0.0 0.0
+                    ai 0
+                    friendly 0
+                    behavior NEUTRAL
+                    health 50
+					invincible false
+                }
+						obj Asteroid173
+                {
+                    mesh asteroid2
+                    type ASTEROID
+                    position 304.44012451171875 -1215.19091796875 154.86663818359375
+                    orientation 1.0 0.0 0.0 0.0
+                    speed 0.0 0.0 0.0
+                    ai 0
+                    friendly 0
+                    behavior NEUTRAL
+                    health 50
+					invincible false
+                }
+						obj Asteroid174
+                {
+                    mesh asteroid3
+                    type ASTEROID
+                    position 8.66162109375 -986.5277709960938 -380.9393005371094
+                    orientation 1.0 0.0 0.0 0.0
+                    speed 0.0 0.0 0.0
+                    ai 0
+                    friendly 0
+                    behavior NEUTRAL
+                    health 50
+					invincible false
+                }
+						obj Asteroid175
+                {
+                    mesh asteroid2
+                    type ASTEROID
+                    position 283.73809814453125 -1251.5462646484375 -153.50692749023438
+                    orientation 1.0 0.0 0.0 0.0
+                    speed 0.0 0.0 0.0
+                    ai 0
+                    friendly 0
+                    behavior NEUTRAL
+                    health 50
+					invincible false
+                }
+						obj Asteroid176
+                {
+                    mesh asteroid4
+                    type ASTEROID
+                    position -401.18182373046875 -613.124267578125 449.5540771484375
+                    orientation 1.0 0.0 0.0 0.0
+                    speed 0.0 0.0 0.0
+                    ai 0
+                    friendly 0
+                    behavior NEUTRAL
+                    health 50
+					invincible false
+                }
+						obj Asteroid177
+                {
+                    mesh asteroid1
+                    type ASTEROID
+                    position -499.65411376953125 -484.14752197265625 -148.35244750976562
+                    orientation 1.0 0.0 0.0 0.0
+                    speed 0.0 0.0 0.0
+                    ai 0
+                    friendly 0
+                    behavior NEUTRAL
+                    health 50
+					invincible false
+                }
+						obj Asteroid178
+                {
+                    mesh asteroid3
+                    type ASTEROID
+                    position 310.90606689453125 -857.1088256835938 372.02093505859375
+                    orientation 1.0 0.0 0.0 0.0
+                    speed 0.0 0.0 0.0
+                    ai 0
+                    friendly 0
+                    behavior NEUTRAL
+                    health 50
+					invincible false
+                }
+						obj Asteroid179
+                {
+                    mesh asteroid4
+                    type ASTEROID
+                    position 231.69842529296875 -889.5689697265625 195.60296630859375
+                    orientation 1.0 0.0 0.0 0.0
+                    speed 0.0 0.0 0.0
+                    ai 0
+                    friendly 0
+                    behavior NEUTRAL
+                    health 50
+					invincible false
+                }
+						obj Asteroid180
+                {
+                    mesh asteroid1
+                    type ASTEROID
+                    position -305.8033447265625 -1163.52392578125 253.547119140625
+                    orientation 1.0 0.0 0.0 0.0
+                    speed 0.0 0.0 0.0
+                    ai 0
+                    friendly 0
+                    behavior NEUTRAL
+                    health 50
+					invincible false
+                }
+						obj Asteroid181
+                {
+                    mesh asteroid2
+                    type ASTEROID
+                    position -450.3046875 -1118.7864990234375 -23.949798583984375
+                    orientation 1.0 0.0 0.0 0.0
+                    speed 0.0 0.0 0.0
+                    ai 0
+                    friendly 0
+                    behavior NEUTRAL
+                    health 50
+					invincible false
+                }
+						obj Asteroid182
+                {
+                    mesh asteroid0
+                    type ASTEROID
+                    position -184.84317016601562 -466.84344482421875 157.47662353515625
+                    orientation 1.0 0.0 0.0 0.0
+                    speed 0.0 0.0 0.0
+                    ai 0
+                    friendly 0
+                    behavior NEUTRAL
+                    health 50
+					invincible false
+                }
+						obj Asteroid183
+                {
+                    mesh asteroid3
+                    type ASTEROID
+                    position 163.68414306640625 -580.1387939453125 298.91217041015625
+                    orientation 1.0 0.0 0.0 0.0
+                    speed 0.0 0.0 0.0
+                    ai 0
+                    friendly 0
+                    behavior NEUTRAL
+                    health 50
+					invincible false
+                }
+						obj Asteroid184
+                {
+                    mesh asteroid2
+                    type ASTEROID
+                    position 357.4437255859375 -1129.811767578125 341.197998046875
+                    orientation 1.0 0.0 0.0 0.0
+                    speed 0.0 0.0 0.0
+                    ai 0
+                    friendly 0
+                    behavior NEUTRAL
+                    health 50
+					invincible false
+                }
+						obj Asteroid185
+                {
+                    mesh asteroid2
+                    type ASTEROID
+                    position 449.44293212890625 -1115.82275390625 -272.62322998046875
+                    orientation 1.0 0.0 0.0 0.0
+                    speed 0.0 0.0 0.0
+                    ai 0
+                    friendly 0
+                    behavior NEUTRAL
+                    health 50
+					invincible false
+                }
+						obj Asteroid186
+                {
+                    mesh asteroid4
+                    type ASTEROID
+                    position -133.82070922851562 -1043.898681640625 125.80499267578125
+                    orientation 1.0 0.0 0.0 0.0
+                    speed 0.0 0.0 0.0
+                    ai 0
+                    friendly 0
+                    behavior NEUTRAL
+                    health 50
+					invincible false
+                }
+						obj Asteroid187
+                {
+                    mesh asteroid4
+                    type ASTEROID
+                    position -459.7830810546875 -539.2647705078125 474.2987060546875
+                    orientation 1.0 0.0 0.0 0.0
+                    speed 0.0 0.0 0.0
+                    ai 0
+                    friendly 0
+                    behavior NEUTRAL
+                    health 50
+					invincible false
+                }
+						obj Asteroid188
+                {
+                    mesh asteroid4
+                    type ASTEROID
+                    position 10.900970458984375 -1327.90380859375 26.6209716796875
+                    orientation 1.0 0.0 0.0 0.0
+                    speed 0.0 0.0 0.0
+                    ai 0
+                    friendly 0
+                    behavior NEUTRAL
+                    health 50
+					invincible false
+                }
+						obj Asteroid189
+                {
+                    mesh asteroid0
+                    type ASTEROID
+                    position -145.26373291015625 -1019.7716064453125 -94.41513061523438
+                    orientation 1.0 0.0 0.0 0.0
+                    speed 0.0 0.0 0.0
+                    ai 0
+                    friendly 0
+                    behavior NEUTRAL
+                    health 50
+					invincible false
+                }
+						obj Asteroid190
+                {
+                    mesh asteroid0
+                    type ASTEROID
+                    position 477.21820068359375 -1114.96630859375 460.38360595703125
+                    orientation 1.0 0.0 0.0 0.0
+                    speed 0.0 0.0 0.0
+                    ai 0
+                    friendly 0
+                    behavior NEUTRAL
+                    health 50
+					invincible false
+                }
+						obj Asteroid191
+                {
+                    mesh asteroid4
+                    type ASTEROID
+                    position -118.28802490234375 -1208.803466796875 292.00970458984375
+                    orientation 1.0 0.0 0.0 0.0
+                    speed 0.0 0.0 0.0
+                    ai 0
+                    friendly 0
+                    behavior NEUTRAL
+                    health 50
+					invincible false
+                }
+						obj Asteroid192
+                {
+                    mesh asteroid1
+                    type ASTEROID
+                    position 49.64398193359375 -799.59521484375 -177.46853637695312
+                    orientation 1.0 0.0 0.0 0.0
+                    speed 0.0 0.0 0.0
+                    ai 0
+                    friendly 0
+                    behavior NEUTRAL
+                    health 50
+					invincible false
+                }
+						obj Asteroid193
+                {
+                    mesh asteroid4
+                    type ASTEROID
+                    position -2.556549072265625 -1101.4051513671875 -135.41305541992188
+                    orientation 1.0 0.0 0.0 0.0
+                    speed 0.0 0.0 0.0
+                    ai 0
+                    friendly 0
+                    behavior NEUTRAL
+                    health 50
+					invincible false
+                }
+						obj Asteroid194
+                {
+                    mesh asteroid0
+                    type ASTEROID
+                    position 180.93060302734375 -674.3069458007812 -240.4102783203125
+                    orientation 1.0 0.0 0.0 0.0
+                    speed 0.0 0.0 0.0
+                    ai 0
+                    friendly 0
+                    behavior NEUTRAL
+                    health 50
+					invincible false
+                }
+						obj Asteroid195
+                {
+                    mesh asteroid3
+                    type ASTEROID
+                    position -10.43707275390625 -594.4318237304688 202.929443359375
+                    orientation 1.0 0.0 0.0 0.0
+                    speed 0.0 0.0 0.0
+                    ai 0
+                    friendly 0
+                    behavior NEUTRAL
+                    health 50
+					invincible false
+                }
+						obj Asteroid196
+                {
+                    mesh asteroid2
+                    type ASTEROID
+                    position -256.48779296875 -784.548828125 -82.41848754882812
+                    orientation 1.0 0.0 0.0 0.0
+                    speed 0.0 0.0 0.0
+                    ai 0
+                    friendly 0
+                    behavior NEUTRAL
+                    health 50
+					invincible false
+                }
+						obj Asteroid197
+                {
+                    mesh asteroid4
+                    type ASTEROID
+                    position 324.81390380859375 -1091.0482177734375 212.6890869140625
+                    orientation 1.0 0.0 0.0 0.0
+                    speed 0.0 0.0 0.0
+                    ai 0
+                    friendly 0
+                    behavior NEUTRAL
+                    health 50
+					invincible false
+                }
+						obj Asteroid198
+                {
+                    mesh asteroid2
+                    type ASTEROID
+                    position -256.28997802734375 -625.0140991210938 -423.85369873046875
+                    orientation 1.0 0.0 0.0 0.0
+                    speed 0.0 0.0 0.0
+                    ai 0
+                    friendly 0
+                    behavior NEUTRAL
+                    health 50
+					invincible false
+                }
+						obj Asteroid199
+                {
+                    mesh asteroid2
+                    type ASTEROID
+                    position -112.41848754882812 -1256.21875 253.9427490234375
+                    orientation 1.0 0.0 0.0 0.0
+                    speed 0.0 0.0 0.0
+                    ai 0
+                    friendly 0
+                    behavior NEUTRAL
+                    health 50
+					invincible false
+                }
+						obj Asteroid200
+                {
+                    mesh asteroid1
+                    type ASTEROID
+                    position 342.20562744140625 -1374.990234375 -203.63034057617188
+                    orientation 1.0 0.0 0.0 0.0
+                    speed 0.0 0.0 0.0
+                    ai 0
+                    friendly 0
+                    behavior NEUTRAL
+                    health 50
+					invincible false
+                }
+						obj Asteroid201
+                {
+                    mesh asteroid2
+                    type ASTEROID
+                    position 475.18585205078125 -887.2682495117188 -163.92855834960938
+                    orientation 1.0 0.0 0.0 0.0
+                    speed 0.0 0.0 0.0
+                    ai 0
+                    friendly 0
+                    behavior NEUTRAL
+                    health 50
+					invincible false
+                }
+						obj Asteroid202
+                {
+                    mesh asteroid4
+                    type ASTEROID
+                    position 386.876953125 -869.0033569335938 474.20062255859375
+                    orientation 1.0 0.0 0.0 0.0
+                    speed 0.0 0.0 0.0
+                    ai 0
+                    friendly 0
+                    behavior NEUTRAL
+                    health 50
+					invincible false
+                }
+						obj Asteroid203
+                {
+                    mesh asteroid2
+                    type ASTEROID
+                    position 450.598388671875 -1000.55029296875 -67.34149169921875
+                    orientation 1.0 0.0 0.0 0.0
+                    speed 0.0 0.0 0.0
+                    ai 0
+                    friendly 0
+                    behavior NEUTRAL
+                    health 50
+					invincible false
+                }
+						obj Asteroid204
+                {
+                    mesh asteroid4
+                    type ASTEROID
+                    position -35.818817138671875 -831.2115478515625 154.46246337890625
+                    orientation 1.0 0.0 0.0 0.0
+                    speed 0.0 0.0 0.0
+                    ai 0
+                    friendly 0
+                    behavior NEUTRAL
+                    health 50
+					invincible false
+                }
+						obj Asteroid205
+                {
+                    mesh asteroid0
+                    type ASTEROID
+                    position -50.978729248046875 -1143.4913330078125 -434.829833984375
+                    orientation 1.0 0.0 0.0 0.0
+                    speed 0.0 0.0 0.0
+                    ai 0
+                    friendly 0
+                    behavior NEUTRAL
+                    health 50
+					invincible false
+                }
+						obj Asteroid206
+                {
+                    mesh asteroid3
+                    type ASTEROID
+                    position 319.11865234375 -635.23876953125 -216.3333740234375
+                    orientation 1.0 0.0 0.0 0.0
+                    speed 0.0 0.0 0.0
+                    ai 0
+                    friendly 0
+                    behavior NEUTRAL
+                    health 50
+					invincible false
+                }
+						obj Asteroid207
+                {
+                    mesh asteroid1
+                    type ASTEROID
+                    position -310.09381103515625 -878.208740234375 -161.11773681640625
+                    orientation 1.0 0.0 0.0 0.0
+                    speed 0.0 0.0 0.0
+                    ai 0
+                    friendly 0
+                    behavior NEUTRAL
+                    health 50
+					invincible false
+                }
+						obj Asteroid208
+                {
+                    mesh asteroid1
+                    type ASTEROID
+                    position 462.80206298828125 -767.0303955078125 160.8677978515625
+                    orientation 1.0 0.0 0.0 0.0
+                    speed 0.0 0.0 0.0
+                    ai 0
+                    friendly 0
+                    behavior NEUTRAL
+                    health 50
+					invincible false
+                }
+						obj Asteroid209
+                {
+                    mesh asteroid3
+                    type ASTEROID
+                    position -102.99957275390625 -791.302734375 -102.300537109375
+                    orientation 1.0 0.0 0.0 0.0
+                    speed 0.0 0.0 0.0
+                    ai 0
+                    friendly 0
+                    behavior NEUTRAL
+                    health 50
+					invincible false
+                }
+						obj Asteroid210
+                {
+                    mesh asteroid4
+                    type ASTEROID
+                    position 192.501708984375 -978.2955322265625 395.2884521484375
+                    orientation 1.0 0.0 0.0 0.0
+                    speed 0.0 0.0 0.0
+                    ai 0
+                    friendly 0
+                    behavior NEUTRAL
+                    health 50
+					invincible false
+                }
+						obj Asteroid211
+                {
+                    mesh asteroid3
+                    type ASTEROID
+                    position 137.15087890625 -553.68212890625 -432.6058044433594
+                    orientation 1.0 0.0 0.0 0.0
+                    speed 0.0 0.0 0.0
+                    ai 0
+                    friendly 0
+                    behavior NEUTRAL
+                    health 50
+					invincible false
+                }
+						obj Asteroid212
+                {
+                    mesh asteroid1
+                    type ASTEROID
+                    position -311.7206726074219 -803.78369140625 -24.84332275390625
+                    orientation 1.0 0.0 0.0 0.0
+                    speed 0.0 0.0 0.0
+                    ai 0
+                    friendly 0
+                    behavior NEUTRAL
+                    health 50
+					invincible false
+                }
+						obj Asteroid213
+                {
+                    mesh asteroid1
+                    type ASTEROID
+                    position -135.33389282226562 -1376.9886474609375 -480.369140625
+                    orientation 1.0 0.0 0.0 0.0
+                    speed 0.0 0.0 0.0
+                    ai 0
+                    friendly 0
+                    behavior NEUTRAL
+                    health 50
+					invincible false
+                }
+						obj Asteroid214
+                {
+                    mesh asteroid2
+                    type ASTEROID
+                    position -484.82293701171875 -1077.1080322265625 359.7337646484375
+                    orientation 1.0 0.0 0.0 0.0
+                    speed 0.0 0.0 0.0
+                    ai 0
+                    friendly 0
+                    behavior NEUTRAL
+                    health 50
+					invincible false
+                }
+						obj Asteroid215
+                {
+                    mesh asteroid4
+                    type ASTEROID
+                    position -375.696533203125 -1236.03662109375 484.903564453125
+                    orientation 1.0 0.0 0.0 0.0
+                    speed 0.0 0.0 0.0
+                    ai 0
+                    friendly 0
+                    behavior NEUTRAL
+                    health 50
+					invincible false
+                }
+						obj Asteroid216
+                {
+                    mesh asteroid1
+                    type ASTEROID
+                    position 218.779052734375 -1244.5234375 -438.9685363769531
+                    orientation 1.0 0.0 0.0 0.0
+                    speed 0.0 0.0 0.0
+                    ai 0
+                    friendly 0
+                    behavior NEUTRAL
+                    health 50
+					invincible false
+                }
+						obj Asteroid217
+                {
+                    mesh asteroid0
+                    type ASTEROID
+                    position -34.473724365234375 -1288.8966064453125 -236.35757446289062
+                    orientation 1.0 0.0 0.0 0.0
+                    speed 0.0 0.0 0.0
+                    ai 0
+                    friendly 0
+                    behavior NEUTRAL
+                    health 50
+					invincible false
+                }
+						obj Asteroid218
+                {
+                    mesh asteroid0
+                    type ASTEROID
+                    position -431.0085144042969 -1039.1278076171875 -218.44924926757812
+                    orientation 1.0 0.0 0.0 0.0
+                    speed 0.0 0.0 0.0
+                    ai 0
+                    friendly 0
+                    behavior NEUTRAL
+                    health 50
+					invincible false
+                }
+						obj Asteroid219
+                {
+                    mesh asteroid4
+                    type ASTEROID
+                    position 365.61920166015625 -522.0333251953125 150.73388671875
+                    orientation 1.0 0.0 0.0 0.0
+                    speed 0.0 0.0 0.0
+                    ai 0
+                    friendly 0
+                    behavior NEUTRAL
+                    health 50
+					invincible false
+                }
+						obj Asteroid220
+                {
+                    mesh asteroid0
+                    type ASTEROID
+                    position 176.66131591796875 -413.98370361328125 -156.59396362304688
+                    orientation 1.0 0.0 0.0 0.0
+                    speed 0.0 0.0 0.0
+                    ai 0
+                    friendly 0
+                    behavior NEUTRAL
+                    health 50
+					invincible false
+                }
+						obj Asteroid221
+                {
+                    mesh asteroid0
+                    type ASTEROID
+                    position -259.9167785644531 -743.5289306640625 -346.591552734375
+                    orientation 1.0 0.0 0.0 0.0
+                    speed 0.0 0.0 0.0
+                    ai 0
+                    friendly 0
+                    behavior NEUTRAL
+                    health 50
+					invincible false
+                }
+						obj Asteroid222
+                {
+                    mesh asteroid0
+                    type ASTEROID
+                    position 236.68463134765625 -937.448974609375 -23.58477783203125
+                    orientation 1.0 0.0 0.0 0.0
+                    speed 0.0 0.0 0.0
+                    ai 0
+                    friendly 0
+                    behavior NEUTRAL
+                    health 50
+					invincible false
+                }
+						obj Asteroid223
+                {
+                    mesh asteroid2
+                    type ASTEROID
+                    position -320.67657470703125 -427.11279296875 -48.798431396484375
+                    orientation 1.0 0.0 0.0 0.0
+                    speed 0.0 0.0 0.0
+                    ai 0
+                    friendly 0
+                    behavior NEUTRAL
+                    health 50
+					invincible false
+                }
+						obj Asteroid224
+                {
+                    mesh asteroid0
+                    type ASTEROID
+                    position -475.20465087890625 -1043.6156005859375 238.4444580078125
+                    orientation 1.0 0.0 0.0 0.0
+                    speed 0.0 0.0 0.0
+                    ai 0
+                    friendly 0
+                    behavior NEUTRAL
+                    health 50
+					invincible false
+                }
+						obj Asteroid225
+                {
+                    mesh asteroid4
+                    type ASTEROID
+                    position 163.5501708984375 -1218.3212890625 294.77044677734375
+                    orientation 1.0 0.0 0.0 0.0
+                    speed 0.0 0.0 0.0
+                    ai 0
+                    friendly 0
+                    behavior NEUTRAL
+                    health 50
+					invincible false
+                }
+						obj Asteroid226
+                {
+                    mesh asteroid1
+                    type ASTEROID
+                    position -396.1212158203125 -643.9677124023438 170.7471923828125
+                    orientation 1.0 0.0 0.0 0.0
+                    speed 0.0 0.0 0.0
+                    ai 0
+                    friendly 0
+                    behavior NEUTRAL
+                    health 50
+					invincible false
+                }
+						obj Asteroid227
+                {
+                    mesh asteroid3
+                    type ASTEROID
+                    position -33.45001220703125 -408.25921630859375 155.25885009765625
+                    orientation 1.0 0.0 0.0 0.0
+                    speed 0.0 0.0 0.0
+                    ai 0
+                    friendly 0
+                    behavior NEUTRAL
+                    health 50
+					invincible false
+                }
+						obj Asteroid228
+                {
+                    mesh asteroid3
+                    type ASTEROID
+                    position -257.4756164550781 -625.449462890625 417.565673828125
+                    orientation 1.0 0.0 0.0 0.0
+                    speed 0.0 0.0 0.0
+                    ai 0
+                    friendly 0
+                    behavior NEUTRAL
+                    health 50
+					invincible false
+                }
+						obj Asteroid229
+                {
+                    mesh asteroid3
+                    type ASTEROID
+                    position -265.2210693359375 -1293.6456298828125 287.6171875
+                    orientation 1.0 0.0 0.0 0.0
+                    speed 0.0 0.0 0.0
+                    ai 0
+                    friendly 0
+                    behavior NEUTRAL
+                    health 50
+					invincible false
+                }
+						obj Asteroid230
+                {
+                    mesh asteroid0
+                    type ASTEROID
+                    position -206.01553344726562 -583.4039306640625 140.13897705078125
+                    orientation 1.0 0.0 0.0 0.0
+                    speed 0.0 0.0 0.0
+                    ai 0
+                    friendly 0
+                    behavior NEUTRAL
+                    health 50
+					invincible false
+                }
+						obj Asteroid231
+                {
+                    mesh asteroid0
+                    type ASTEROID
+                    position -79.65277099609375 -1012.8495483398438 445.3795166015625
+                    orientation 1.0 0.0 0.0 0.0
+                    speed 0.0 0.0 0.0
+                    ai 0
+                    friendly 0
+                    behavior NEUTRAL
+                    health 50
+					invincible false
+                }
+						obj Asteroid232
+                {
+                    mesh asteroid0
+                    type ASTEROID
+                    position -108.99114990234375 -606.5051879882812 -265.138916015625
+                    orientation 1.0 0.0 0.0 0.0
+                    speed 0.0 0.0 0.0
+                    ai 0
+                    friendly 0
+                    behavior NEUTRAL
+                    health 50
+					invincible false
+                }
+						obj Asteroid233
+                {
+                    mesh asteroid0
+                    type ASTEROID
+                    position -14.001129150390625 -754.8583984375 -305.38873291015625
+                    orientation 1.0 0.0 0.0 0.0
+                    speed 0.0 0.0 0.0
+                    ai 0
+                    friendly 0
+                    behavior NEUTRAL
+                    health 50
+					invincible false
+                }
+						obj Asteroid234
+                {
+                    mesh asteroid1
+                    type ASTEROID
+                    position 263.38909912109375 -530.99658203125 221.353759765625
+                    orientation 1.0 0.0 0.0 0.0
+                    speed 0.0 0.0 0.0
+                    ai 0
+                    friendly 0
+                    behavior NEUTRAL
+                    health 50
+					invincible false
+                }
+						obj Asteroid235
+                {
+                    mesh asteroid3
+                    type ASTEROID
+                    position 49.02191162109375 -1226.992919921875 2.6038818359375
+                    orientation 1.0 0.0 0.0 0.0
+                    speed 0.0 0.0 0.0
+                    ai 0
+                    friendly 0
+                    behavior NEUTRAL
+                    health 50
+					invincible false
+                }
+						obj Asteroid236
+                {
+                    mesh asteroid2
+                    type ASTEROID
+                    position 313.8731689453125 -411.589599609375 206.01123046875
+                    orientation 1.0 0.0 0.0 0.0
+                    speed 0.0 0.0 0.0
+                    ai 0
+                    friendly 0
+                    behavior NEUTRAL
+                    health 50
+					invincible false
+                }
+						obj Asteroid237
+                {
+                    mesh asteroid0
+                    type ASTEROID
+                    position -151.65985107421875 -950.765380859375 267.266845703125
+                    orientation 1.0 0.0 0.0 0.0
+                    speed 0.0 0.0 0.0
+                    ai 0
+                    friendly 0
+                    behavior NEUTRAL
+                    health 50
+					invincible false
+                }
+						obj Asteroid238
+                {
+                    mesh asteroid2
+                    type ASTEROID
+                    position -460.5572204589844 -1267.720458984375 -403.1851806640625
+                    orientation 1.0 0.0 0.0 0.0
+                    speed 0.0 0.0 0.0
+                    ai 0
+                    friendly 0
+                    behavior NEUTRAL
+                    health 50
+					invincible false
+                }
+						obj Asteroid239
+                {
+                    mesh asteroid4
+                    type ASTEROID
+                    position -150.50100708007812 -1312.5789794921875 225.97418212890625
+                    orientation 1.0 0.0 0.0 0.0
+                    speed 0.0 0.0 0.0
+                    ai 0
+                    friendly 0
+                    behavior NEUTRAL
+                    health 50
+					invincible false
+                }
+						obj Asteroid240
+                {
+                    mesh asteroid4
+                    type ASTEROID
+                    position -7.55560302734375 -1253.10791015625 -55.43524169921875
+                    orientation 1.0 0.0 0.0 0.0
+                    speed 0.0 0.0 0.0
+                    ai 0
+                    friendly 0
+                    behavior NEUTRAL
+                    health 50
+					invincible false
+                }
+						obj Asteroid241
+                {
+                    mesh asteroid4
+                    type ASTEROID
+                    position 170.878662109375 -685.6193237304688 -98.01239013671875
+                    orientation 1.0 0.0 0.0 0.0
+                    speed 0.0 0.0 0.0
+                    ai 0
+                    friendly 0
+                    behavior NEUTRAL
+                    health 50
+					invincible false
+                }
+						obj Asteroid242
+                {
+                    mesh asteroid0
+                    type ASTEROID
+                    position -50.0035400390625 -844.671630859375 -213.98287963867188
+                    orientation 1.0 0.0 0.0 0.0
+                    speed 0.0 0.0 0.0
+                    ai 0
+                    friendly 0
+                    behavior NEUTRAL
+                    health 50
+					invincible false
+                }
+						obj Asteroid243
+                {
+                    mesh asteroid0
+                    type ASTEROID
+                    position -305.3514404296875 -690.6329956054688 20.2652587890625
+                    orientation 1.0 0.0 0.0 0.0
+                    speed 0.0 0.0 0.0
+                    ai 0
+                    friendly 0
+                    behavior NEUTRAL
+                    health 50
+					invincible false
+                }
+						obj Asteroid244
+                {
+                    mesh asteroid3
+                    type ASTEROID
+                    position 437.1661376953125 -870.3829956054688 -27.060516357421875
+                    orientation 1.0 0.0 0.0 0.0
+                    speed 0.0 0.0 0.0
+                    ai 0
+                    friendly 0
+                    behavior NEUTRAL
+                    health 50
+					invincible false
+                }
+						obj Asteroid245
+                {
+                    mesh asteroid4
+                    type ASTEROID
+                    position -21.671051025390625 -1200.003662109375 187.28265380859375
+                    orientation 1.0 0.0 0.0 0.0
+                    speed 0.0 0.0 0.0
+                    ai 0
+                    friendly 0
+                    behavior NEUTRAL
+                    health 50
+					invincible false
+                }
+						obj Asteroid246
+                {
+                    mesh asteroid1
+                    type ASTEROID
+                    position 361.408203125 -993.4243774414062 -78.71389770507812
+                    orientation 1.0 0.0 0.0 0.0
+                    speed 0.0 0.0 0.0
+                    ai 0
+                    friendly 0
+                    behavior NEUTRAL
+                    health 50
+					invincible false
+                }
+						obj Asteroid247
+                {
+                    mesh asteroid3
+                    type ASTEROID
+                    position 243.7158203125 -885.3781127929688 496.0430908203125
+                    orientation 1.0 0.0 0.0 0.0
+                    speed 0.0 0.0 0.0
+                    ai 0
+                    friendly 0
+                    behavior NEUTRAL
+                    health 50
+					invincible false
+                }
+						obj Asteroid248
+                {
+                    mesh asteroid1
+                    type ASTEROID
+                    position -109.62606811523438 -518.1878051757812 -219.09375
+                    orientation 1.0 0.0 0.0 0.0
+                    speed 0.0 0.0 0.0
+                    ai 0
+                    friendly 0
+                    behavior NEUTRAL
+                    health 50
+					invincible false
+                }
+						obj Asteroid249
+                {
+                    mesh asteroid0
+                    type ASTEROID
+                    position 249.873046875 -668.3758544921875 -129.57186889648438
+                    orientation 1.0 0.0 0.0 0.0
+                    speed 0.0 0.0 0.0
+                    ai 0
+                    friendly 0
+                    behavior NEUTRAL
+                    health 50
+					invincible false
+                }
+						obj Asteroid250
+                {
+                    mesh asteroid2
+                    type ASTEROID
+                    position -81.54904174804688 -1249.1239013671875 -187.45608520507812
+                    orientation 1.0 0.0 0.0 0.0
+                    speed 0.0 0.0 0.0
+                    ai 0
+                    friendly 0
+                    behavior NEUTRAL
+                    health 50
+					invincible false
+                }
+						obj Asteroid251
+                {
+                    mesh asteroid3
+                    type ASTEROID
+                    position -59.7586669921875 -933.7317504882812 -325.10125732421875
+                    orientation 1.0 0.0 0.0 0.0
+                    speed 0.0 0.0 0.0
+                    ai 0
+                    friendly 0
+                    behavior NEUTRAL
+                    health 50
+					invincible false
+                }
+						obj Asteroid252
+                {
+                    mesh asteroid0
+                    type ASTEROID
+                    position 123.54217529296875 -646.9011840820312 -380.5526428222656
+                    orientation 1.0 0.0 0.0 0.0
+                    speed 0.0 0.0 0.0
+                    ai 0
+                    friendly 0
+                    behavior NEUTRAL
+                    health 50
+					invincible false
+                }
+						obj Asteroid253
+                {
+                    mesh asteroid1
+                    type ASTEROID
+                    position -327.57806396484375 -1188.691162109375 -217.64785766601562
+                    orientation 1.0 0.0 0.0 0.0
+                    speed 0.0 0.0 0.0
+                    ai 0
+                    friendly 0
+                    behavior NEUTRAL
+                    health 50
+					invincible false
+                }
+						obj Asteroid254
+                {
+                    mesh asteroid3
+                    type ASTEROID
+                    position -363.48809814453125 -572.1932983398438 -415.3993225097656
+                    orientation 1.0 0.0 0.0 0.0
+                    speed 0.0 0.0 0.0
+                    ai 0
+                    friendly 0
+                    behavior NEUTRAL
+                    health 50
+					invincible false
+                }
+						obj Asteroid255
+                {
+                    mesh asteroid4
+                    type ASTEROID
+                    position -376.52838134765625 -593.3253173828125 -9.445556640625
+                    orientation 1.0 0.0 0.0 0.0
+                    speed 0.0 0.0 0.0
+                    ai 0
+                    friendly 0
+                    behavior NEUTRAL
+                    health 50
+					invincible false
+                }
+						obj Asteroid256
+                {
+                    mesh asteroid0
+                    type ASTEROID
+                    position -292.01300048828125 -658.92822265625 -475.8109436035156
+                    orientation 1.0 0.0 0.0 0.0
+                    speed 0.0 0.0 0.0
+                    ai 0
+                    friendly 0
+                    behavior NEUTRAL
+                    health 50
+					invincible false
+                }
+						obj Asteroid257
+                {
+                    mesh asteroid3
+                    type ASTEROID
+                    position -142.5294189453125 -777.8394165039062 331.6715087890625
+                    orientation 1.0 0.0 0.0 0.0
+                    speed 0.0 0.0 0.0
+                    ai 0
+                    friendly 0
+                    behavior NEUTRAL
+                    health 50
+					invincible false
+                }
+						obj Asteroid258
+                {
+                    mesh asteroid0
+                    type ASTEROID
+                    position -178.4510498046875 -904.0042724609375 8.978912353515625
+                    orientation 1.0 0.0 0.0 0.0
+                    speed 0.0 0.0 0.0
+                    ai 0
+                    friendly 0
+                    behavior NEUTRAL
+                    health 50
+					invincible false
+                }
+						obj Asteroid259
+                {
+                    mesh asteroid0
+                    type ASTEROID
+                    position 96.64703369140625 -862.3778686523438 -288.10125732421875
+                    orientation 1.0 0.0 0.0 0.0
+                    speed 0.0 0.0 0.0
+                    ai 0
+                    friendly 0
+                    behavior NEUTRAL
+                    health 50
+					invincible false
+                }
+						obj Asteroid260
+                {
+                    mesh asteroid1
+                    type ASTEROID
+                    position -63.905120849609375 -433.6649169921875 457.1549072265625
+                    orientation 1.0 0.0 0.0 0.0
+                    speed 0.0 0.0 0.0
+                    ai 0
+                    friendly 0
+                    behavior NEUTRAL
+                    health 50
+					invincible false
+                }
+						obj Asteroid261
+                {
+                    mesh asteroid0
+                    type ASTEROID
+                    position 381.3448486328125 -715.4066162109375 -66.1240234375
+                    orientation 1.0 0.0 0.0 0.0
+                    speed 0.0 0.0 0.0
+                    ai 0
+                    friendly 0
+                    behavior NEUTRAL
+                    health 50
+					invincible false
+                }
+						obj Asteroid262
+                {
+                    mesh asteroid4
+                    type ASTEROID
+                    position 339.802001953125 -459.77593994140625 -350.9676513671875
+                    orientation 1.0 0.0 0.0 0.0
+                    speed 0.0 0.0 0.0
+                    ai 0
+                    friendly 0
+                    behavior NEUTRAL
+                    health 50
+					invincible false
+                }
+						obj Asteroid263
+                {
+                    mesh asteroid4
+                    type ASTEROID
+                    position -478.7462463378906 -1330.142333984375 -96.51522827148438
+                    orientation 1.0 0.0 0.0 0.0
+                    speed 0.0 0.0 0.0
+                    ai 0
+                    friendly 0
+                    behavior NEUTRAL
+                    health 50
+					invincible false
+                }
+						obj Asteroid264
+                {
+                    mesh asteroid0
+                    type ASTEROID
+                    position -424.6785583496094 -954.126953125 -248.92002868652344
+                    orientation 1.0 0.0 0.0 0.0
+                    speed 0.0 0.0 0.0
+                    ai 0
+                    friendly 0
+                    behavior NEUTRAL
+                    health 50
+					invincible false
+                }
+						obj Asteroid265
+                {
+                    mesh asteroid1
+                    type ASTEROID
+                    position 11.910797119140625 -731.6912231445312 454.0621337890625
+                    orientation 1.0 0.0 0.0 0.0
+                    speed 0.0 0.0 0.0
+                    ai 0
+                    friendly 0
+                    behavior NEUTRAL
+                    health 50
+					invincible false
+                }
+						obj Asteroid266
+                {
+                    mesh asteroid3
+                    type ASTEROID
+                    position -103.8253173828125 -733.290283203125 -168.60443115234375
+                    orientation 1.0 0.0 0.0 0.0
+                    speed 0.0 0.0 0.0
+                    ai 0
+                    friendly 0
+                    behavior NEUTRAL
+                    health 50
+					invincible false
+                }
+						obj Asteroid267
+                {
+                    mesh asteroid0
+                    type ASTEROID
+                    position 46.00262451171875 -889.7747802734375 -222.66024780273438
+                    orientation 1.0 0.0 0.0 0.0
+                    speed 0.0 0.0 0.0
+                    ai 0
+                    friendly 0
+                    behavior NEUTRAL
+                    health 50
+					invincible false
+                }
+						obj Asteroid268
+                {
+                    mesh asteroid0
+                    type ASTEROID
+                    position -5.016876220703125 -482.03155517578125 -484.72607421875
+                    orientation 1.0 0.0 0.0 0.0
+                    speed 0.0 0.0 0.0
+                    ai 0
+                    friendly 0
+                    behavior NEUTRAL
+                    health 50
+					invincible false
+                }
+						obj Asteroid269
+                {
+                    mesh asteroid1
+                    type ASTEROID
+                    position -3.311279296875 -532.5359497070312 -111.0965576171875
+                    orientation 1.0 0.0 0.0 0.0
+                    speed 0.0 0.0 0.0
+                    ai 0
+                    friendly 0
+                    behavior NEUTRAL
+                    health 50
+					invincible false
+                }
+						obj Asteroid270
+                {
+                    mesh asteroid0
+                    type ASTEROID
+                    position -357.91217041015625 -794.5736694335938 -121.51730346679688
+                    orientation 1.0 0.0 0.0 0.0
+                    speed 0.0 0.0 0.0
+                    ai 0
+                    friendly 0
+                    behavior NEUTRAL
+                    health 50
+					invincible false
+                }
+						obj Asteroid271
+                {
+                    mesh asteroid3
+                    type ASTEROID
+                    position 141.7410888671875 -908.3541259765625 -300.0577697753906
+                    orientation 1.0 0.0 0.0 0.0
+                    speed 0.0 0.0 0.0
+                    ai 0
+                    friendly 0
+                    behavior NEUTRAL
+                    health 50
+					invincible false
+                }
+						obj Asteroid272
+                {
+                    mesh asteroid2
+                    type ASTEROID
+                    position 452.37359619140625 -1376.1630859375 -390.0206604003906
+                    orientation 1.0 0.0 0.0 0.0
+                    speed 0.0 0.0 0.0
+                    ai 0
+                    friendly 0
+                    behavior NEUTRAL
+                    health 50
+					invincible false
+                }
+						obj Asteroid273
+                {
+                    mesh asteroid0
+                    type ASTEROID
+                    position 11.8995361328125 -746.2845458984375 -473.64068603515625
+                    orientation 1.0 0.0 0.0 0.0
+                    speed 0.0 0.0 0.0
+                    ai 0
+                    friendly 0
+                    behavior NEUTRAL
+                    health 50
+					invincible false
+                }
+						obj Asteroid274
+                {
+                    mesh asteroid1
+                    type ASTEROID
+                    position -429.35107421875 -432.21270751953125 256.3447265625
+                    orientation 1.0 0.0 0.0 0.0
+                    speed 0.0 0.0 0.0
+                    ai 0
+                    friendly 0
+                    behavior NEUTRAL
+                    health 50
+					invincible false
+                }
+						obj Asteroid275
+                {
+                    mesh asteroid2
+                    type ASTEROID
+                    position -339.3731689453125 -712.7691650390625 200.89874267578125
+                    orientation 1.0 0.0 0.0 0.0
+                    speed 0.0 0.0 0.0
+                    ai 0
+                    friendly 0
+                    behavior NEUTRAL
+                    health 50
+					invincible false
+                }
+						obj Asteroid276
+                {
+                    mesh asteroid1
+                    type ASTEROID
+                    position 136.73638916015625 -564.6470947265625 -223.09799194335938
+                    orientation 1.0 0.0 0.0 0.0
+                    speed 0.0 0.0 0.0
+                    ai 0
+                    friendly 0
+                    behavior NEUTRAL
+                    health 50
+					invincible false
+                }
+						obj Asteroid277
+                {
+                    mesh asteroid3
+                    type ASTEROID
+                    position -408.5133056640625 -1304.365478515625 -166.21868896484375
+                    orientation 1.0 0.0 0.0 0.0
+                    speed 0.0 0.0 0.0
+                    ai 0
+                    friendly 0
+                    behavior NEUTRAL
+                    health 50
+					invincible false
+                }
+						obj Asteroid278
+                {
+                    mesh asteroid4
+                    type ASTEROID
+                    position 485.00335693359375 -1002.0247192382812 470.8353271484375
+                    orientation 1.0 0.0 0.0 0.0
+                    speed 0.0 0.0 0.0
+                    ai 0
+                    friendly 0
+                    behavior NEUTRAL
+                    health 50
+					invincible false
+                }
+						obj Asteroid279
+                {
+                    mesh asteroid1
+                    type ASTEROID
+                    position -165.2652587890625 -726.0321044921875 -85.701171875
+                    orientation 1.0 0.0 0.0 0.0
+                    speed 0.0 0.0 0.0
+                    ai 0
+                    friendly 0
+                    behavior NEUTRAL
+                    health 50
+					invincible false
+                }
+						obj Asteroid280
+                {
+                    mesh asteroid4
+                    type ASTEROID
+                    position 14.49957275390625 -1020.5929565429688 102.2933349609375
+                    orientation 1.0 0.0 0.0 0.0
+                    speed 0.0 0.0 0.0
+                    ai 0
+                    friendly 0
+                    behavior NEUTRAL
+                    health 50
+					invincible false
+                }
+						obj Asteroid281
+                {
+                    mesh asteroid1
+                    type ASTEROID
+                    position -320.0408935546875 -998.3074340820312 423.4619140625
+                    orientation 1.0 0.0 0.0 0.0
+                    speed 0.0 0.0 0.0
+                    ai 0
+                    friendly 0
+                    behavior NEUTRAL
+                    health 50
+					invincible false
+                }
+						obj Asteroid282
+                {
+                    mesh asteroid0
+                    type ASTEROID
+                    position -423.82025146484375 -1265.860595703125 -15.525054931640625
+                    orientation 1.0 0.0 0.0 0.0
+                    speed 0.0 0.0 0.0
+                    ai 0
+                    friendly 0
+                    behavior NEUTRAL
+                    health 50
+					invincible false
+                }
+						obj Asteroid283
+                {
+                    mesh asteroid4
+                    type ASTEROID
+                    position -106.00692749023438 -896.387451171875 -122.83261108398438
+                    orientation 1.0 0.0 0.0 0.0
+                    speed 0.0 0.0 0.0
+                    ai 0
+                    friendly 0
+                    behavior NEUTRAL
+                    health 50
+					invincible false
+                }
+						obj Asteroid284
+                {
+                    mesh asteroid3
+                    type ASTEROID
+                    position 304.93389892578125 -679.5810546875 26.4600830078125
+                    orientation 1.0 0.0 0.0 0.0
+                    speed 0.0 0.0 0.0
+                    ai 0
+                    friendly 0
+                    behavior NEUTRAL
+                    health 50
+					invincible false
+                }
+						obj Asteroid285
+                {
+                    mesh asteroid2
+                    type ASTEROID
+                    position -428.5337829589844 -448.46527099609375 -80.64996337890625
+                    orientation 1.0 0.0 0.0 0.0
+                    speed 0.0 0.0 0.0
+                    ai 0
+                    friendly 0
+                    behavior NEUTRAL
+                    health 50
+					invincible false
+                }
+						obj Asteroid286
+                {
+                    mesh asteroid3
+                    type ASTEROID
+                    position 316.6826171875 -1357.7041015625 -180.96792602539062
+                    orientation 1.0 0.0 0.0 0.0
+                    speed 0.0 0.0 0.0
+                    ai 0
+                    friendly 0
+                    behavior NEUTRAL
+                    health 50
+					invincible false
+                }
+						obj Asteroid287
+                {
+                    mesh asteroid0
+                    type ASTEROID
+                    position 37.24420166015625 -680.8611450195312 247.2279052734375
+                    orientation 1.0 0.0 0.0 0.0
+                    speed 0.0 0.0 0.0
+                    ai 0
+                    friendly 0
+                    behavior NEUTRAL
+                    health 50
+					invincible false
+                }
+						obj Asteroid288
+                {
+                    mesh asteroid0
+                    type ASTEROID
+                    position 140.66448974609375 -1325.6912841796875 -43.69097900390625
+                    orientation 1.0 0.0 0.0 0.0
+                    speed 0.0 0.0 0.0
+                    ai 0
+                    friendly 0
+                    behavior NEUTRAL
+                    health 50
+					invincible false
+                }
+						obj Asteroid289
+                {
+                    mesh asteroid2
+                    type ASTEROID
+                    position 426.44287109375 -1163.809326171875 142.7740478515625
+                    orientation 1.0 0.0 0.0 0.0
+                    speed 0.0 0.0 0.0
+                    ai 0
+                    friendly 0
+                    behavior NEUTRAL
+                    health 50
+					invincible false
+                }
+						obj Asteroid290
+                {
+                    mesh asteroid3
+                    type ASTEROID
+                    position -21.782867431640625 -915.1712646484375 187.6611328125
+                    orientation 1.0 0.0 0.0 0.0
+                    speed 0.0 0.0 0.0
+                    ai 0
+                    friendly 0
+                    behavior NEUTRAL
+                    health 50
+					invincible false
+                }
+						obj Asteroid291
+                {
+                    mesh asteroid2
+                    type ASTEROID
+                    position 407.70721435546875 -1364.4969482421875 -402.19915771484375
+                    orientation 1.0 0.0 0.0 0.0
+                    speed 0.0 0.0 0.0
+                    ai 0
+                    friendly 0
+                    behavior NEUTRAL
+                    health 50
+					invincible false
+                }
+						obj Asteroid292
+                {
+                    mesh asteroid0
+                    type ASTEROID
+                    position 371.5069580078125 -981.098876953125 307.56927490234375
+                    orientation 1.0 0.0 0.0 0.0
+                    speed 0.0 0.0 0.0
+                    ai 0
+                    friendly 0
+                    behavior NEUTRAL
+                    health 50
+					invincible false
+                }
+						obj Asteroid293
+                {
+                    mesh asteroid4
+                    type ASTEROID
+                    position -108.81716918945312 -942.6038818359375 194.87017822265625
+                    orientation 1.0 0.0 0.0 0.0
+                    speed 0.0 0.0 0.0
+                    ai 0
+                    friendly 0
+                    behavior NEUTRAL
+                    health 50
+					invincible false
+                }
+						obj Asteroid294
+                {
+                    mesh asteroid4
+                    type ASTEROID
+                    position 394.5701904296875 -1026.0782470703125 -310.91473388671875
+                    orientation 1.0 0.0 0.0 0.0
+                    speed 0.0 0.0 0.0
+                    ai 0
+                    friendly 0
+                    behavior NEUTRAL
+                    health 50
+					invincible false
+                }
+						obj Asteroid295
+                {
+                    mesh asteroid2
+                    type ASTEROID
+                    position -17.266998291015625 -1364.704833984375 142.70751953125
+                    orientation 1.0 0.0 0.0 0.0
+                    speed 0.0 0.0 0.0
+                    ai 0
+                    friendly 0
+                    behavior NEUTRAL
+                    health 50
+					invincible false
+                }
+						obj Asteroid296
+                {
+                    mesh asteroid1
+                    type ASTEROID
+                    position -317.20404052734375 -605.468994140625 -361.6189880371094
+                    orientation 1.0 0.0 0.0 0.0
+                    speed 0.0 0.0 0.0
+                    ai 0
+                    friendly 0
+                    behavior NEUTRAL
+                    health 50
+					invincible false
+                }
+						obj Asteroid297
+                {
+                    mesh asteroid0
+                    type ASTEROID
+                    position 7.65777587890625 -469.86553955078125 138.416259765625
+                    orientation 1.0 0.0 0.0 0.0
+                    speed 0.0 0.0 0.0
+                    ai 0
+                    friendly 0
+                    behavior NEUTRAL
+                    health 50
+					invincible false
+                }
+						obj Asteroid298
+                {
+                    mesh asteroid0
+                    type ASTEROID
+                    position -92.22906494140625 -421.91162109375 -340.95452880859375
+                    orientation 1.0 0.0 0.0 0.0
+                    speed 0.0 0.0 0.0
+                    ai 0
+                    friendly 0
+                    behavior NEUTRAL
+                    health 50
+					invincible false
+                }
+						obj Asteroid299
+                {
+                    mesh asteroid3
+                    type ASTEROID
+                    position -181.86257934570312 -444.50762939453125 -241.75912475585938
+                    orientation 1.0 0.0 0.0 0.0
+                    speed 0.0 0.0 0.0
+                    ai 0
+                    friendly 0
+                    behavior NEUTRAL
+                    health 50
+					invincible false
+                }
+						obj Asteroid300
+                {
+                    mesh asteroid3
+                    type ASTEROID
+                    position -8.7664794921875 -960.11328125 -160.70086669921875
+                    orientation 1.0 0.0 0.0 0.0
+                    speed 0.0 0.0 0.0
+                    ai 0
+                    friendly 0
+                    behavior NEUTRAL
+                    health 50
+					invincible false
+                }
+						obj Asteroid301
+                {
+                    mesh asteroid3
+                    type ASTEROID
+                    position -408.22027587890625 -1002.6851806640625 -325.53515625
+                    orientation 1.0 0.0 0.0 0.0
+                    speed 0.0 0.0 0.0
+                    ai 0
+                    friendly 0
+                    behavior NEUTRAL
+                    health 50
+					invincible false
+                }
+						obj Asteroid302
+                {
+                    mesh asteroid1
+                    type ASTEROID
+                    position -183.22509765625 -1309.623046875 -34.06488037109375
+                    orientation 1.0 0.0 0.0 0.0
+                    speed 0.0 0.0 0.0
+                    ai 0
+                    friendly 0
+                    behavior NEUTRAL
+                    health 50
+					invincible false
+                }
+	}
+
+	event invasion0
+	{
+		delay msecs 0
+			spawn
+			{
+						obj Attacker0
+				{
+				mesh ship_alien0
+				type FIGHTER_SHIP
+				position 500.0 500.0 -2000.0
+				orientation 0.0 1.0 0.0 180.0000007067588
+				speed 0.0 0.0 0.0
+				ai 1
+				friendly 0
+				behavior AGGRESSIVE
+				health 100
+				invincible false
+				}
+						obj Attacker1
+				{
+				mesh ship_alien1
+				type FIGHTER_SHIP
+				position 200.0 500.0 -2000.0
+				orientation 0.0 1.0 0.0 180.0000007067588
+				speed 0.0 0.0 0.0
+				ai 1
+				friendly 0
+				behavior AGGRESSIVE
+				health 100
+				invincible false
+				}
+						obj Attacker2
+				{
+				mesh ship_alien2
+				type FIGHTER_SHIP
+				position 200.0 300.0 -2000.0
+				orientation 0.0 1.0 0.0 180.0000007067588
+				speed 0.0 0.0 0.0
+				ai 1
+				friendly 0
+				behavior AGGRESSIVE
+				health 100
+				invincible false
+				}
+			}
+
+		end_cond invasion0_end
+		{
+			type win
+			{
+				cond win_cond0
+				{
+					type DESTROYED
+					objs 3 Attacker0 Attacker1 Attacker2 
+				}
+			}
+			type loss
+			{
+				cond loss_cond0
+				{
+					type TIME_ELAPSED
+					msecs 600000
+				}
+			}
+		}
+	}
+
+	end
+	{
+		events 1 invasion0 
+	}
+}

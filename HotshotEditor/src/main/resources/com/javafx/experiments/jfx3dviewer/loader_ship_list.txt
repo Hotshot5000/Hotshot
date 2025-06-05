@@ -1,0 +1,91 @@
+cd raw
+
+model ship_human0
+{
+	model_file ship_human0.mesh
+	material_file mat_ship_human0.txt
+}
+
+model ship_human1
+{
+	model_file ship_human1.mesh
+	material_file mat_ship_human1.txt
+}
+
+model ship_human2
+{
+	model_file ship_human2.mesh
+	material_file mat_ship_human2.txt
+}
+
+model ship_human3
+{
+	model_file ship_human3.mesh
+	material_file mat_ship_human3.txt
+}
+
+model ship_alien0
+{
+	model_file ship_alien0.mesh
+	material_file mat_ship_alien0.txt
+}
+
+model ship_alien1
+{
+	model_file ship_alien1.mesh
+	material_file mat_ship_alien1.txt
+}
+
+model ship_alien2
+{
+	model_file ship_alien2.mesh
+	material_file mat_ship_alien2.txt
+}
+
+model ship_alien3
+{
+	model_file ship_alien3.mesh
+	material_file mat_ship_alien3.txt
+}
+
+model ship_alien4
+{
+	model_file ship_alien4.mesh
+	material_file mat_ship_alien4.txt
+}
+
+model ship_alien_big0
+{
+	model_file ship_alien_big0.mesh
+	material_file mat_ship_alien_big0.txt
+}
+
+model ship_alien_big1
+{
+	model_file ship_alien_big1.mesh
+	material_file mat_ship_alien_big1.txt
+}
+
+model ship_human_big0
+{
+	model_file ship_human_big0.mesh
+	material_file mat_ship_human_big0.txt
+}
+
+model ship_human_big1
+{
+	model_file ship_human_big1.mesh
+	material_file mat_ship_human_big1.txt
+}
+
+model ship_human_big2
+{
+	model_file ship_human_big2.mesh
+	material_file mat_ship_human_big2.txt
+}
+
+model reloader
+{
+	model_file reloader.mesh
+	material_file mat_ship_reloader.txt
+}

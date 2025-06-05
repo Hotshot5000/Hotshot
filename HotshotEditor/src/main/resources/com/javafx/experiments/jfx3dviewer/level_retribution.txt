@@ -1,0 +1,1422 @@
+level retribution
+{
+	start
+	{
+		skybox SkyboxWorkspace1
+		light_dir -1.0 0.0 0.0
+		light_type directional
+		light_power_scale 1.0
+		light_diffuse_color 0.8 0.4 0.2 1.0
+		light_specular_color 0.8 0.4 0.2 1.0
+		ambient_light_upperhemi_lowerhemi_dir 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 -1.0 0.0 0.0
+		
+		player_ship_selection
+		{
+			team human
+			{
+				cd raw
+				name ship_human0
+				name ship_human1
+			}
+		}
+		obj PlayerShip
+		{
+			type player_ship
+			position -9500.0 -9500.0 -9500.0
+			ai 0
+			invincible 0
+		}
+		obj Defender0
+		{
+			mesh ship_human0
+			type fighter_ship
+			position -9800.0 -9800.0 -9700.0
+			orientation 0.0 1.0 0.0 45.0
+			speed 0.0 0.0 0.0
+			ai 1
+			friendly 1
+			behavior defensive
+			health 100
+		}
+		obj Defender1
+		{
+			mesh ship_human0
+			type fighter_ship
+			position 300.0 0.0 -300.0
+			orientation 0.0 0.0 0.0 0.0
+			speed 0.0 0.0 0.0
+			ai 1
+			friendly 1
+			behavior aggresive
+			health 100
+		}
+		obj Defender2
+		{
+			mesh ship_human0
+			type fighter_ship
+			position -300.0 0.0 -300.0
+			orientation 0.0 0.0 0.0 0.0
+			speed 0.0 0.0 0.0
+			ai 1
+			friendly 1
+			behavior aggresive
+			health 100
+		}
+		obj Defender3
+		{
+			mesh ship_human0
+			type fighter_ship
+			position 300.0 0.0 300.0
+			orientation 0.0 0.0 0.0 0.0
+			speed 0.0 0.0 0.0
+			ai 1
+			friendly 1
+			behavior aggresive
+			health 100
+		}
+		obj Defender4
+		{
+			mesh ship_human0
+			type fighter_ship
+			position 300.0 -200.0 300.0
+			orientation 0.0 0.0 0.0 0.0
+			speed 0.0 0.0 0.0
+			ai 1
+			friendly 1
+			behavior aggresive
+			health 100
+		}
+                obj Asteroid0
+                {
+                    mesh asteroid3
+                    type asteroid
+                    position 335.35302734375 297.813720703125 -111.914306640625 1.0
+                    orientation 0.0 0.0 0.0 1.0
+                    speed 0.0 0.0 0.0
+		    ai 0
+		    health 50
+                }
+                obj Asteroid1
+                {
+                    mesh asteroid4
+                    type asteroid
+                    position 296.0648193359375 327.8060302734375 -732.2540893554688 1.0
+                    orientation 0.0 0.0 0.0 1.0
+                    speed 0.0 0.0 0.0
+		    ai 0
+		    health 50
+                }
+                obj Asteroid2
+                {
+                    mesh asteroid2
+                    type asteroid
+                    position -333.4310607910156 227.399169921875 -756.484130859375 1.0
+                    orientation 0.0 0.0 0.0 1.0
+                    speed 0.0 0.0 0.0
+		    ai 0
+		    health 50
+                }
+                obj Asteroid3
+                {
+                    mesh asteroid1
+                    type asteroid
+                    position -194.95755004882812 111.02157592773438 -504.1742858886719 1.0
+                    orientation 0.0 0.0 0.0 1.0
+                    speed 0.0 0.0 0.0
+		    ai 0
+		    health 50
+                }
+                obj Asteroid4
+                {
+                    mesh asteroid4
+                    type asteroid
+                    position -14.458648681640625 357.5926513671875 -425.5816345214844 1.0
+                    orientation 0.0 0.0 0.0 1.0
+                    speed 0.0 0.0 0.0
+		    ai 0
+		    health 50
+                }
+                obj Asteroid5
+                {
+                    mesh asteroid1
+                    type asteroid
+                    position 51.196014404296875 -93.7147216796875 -635.1730346679688 1.0
+                    orientation 0.0 0.0 0.0 1.0
+                    speed 0.0 0.0 0.0
+		    ai 0
+		    health 50
+                }
+                obj Asteroid6
+                {
+                    mesh asteroid3
+                    type asteroid
+                    position 374.30322265625 58.658660888671875 -713.8706665039062 1.0
+                    orientation 0.0 0.0 0.0 1.0
+                    speed 0.0 0.0 0.0
+		    ai 0
+		    health 50
+                }
+                obj Asteroid7
+                {
+                    mesh asteroid2
+                    type asteroid
+                    position 136.31793212890625 -92.61459350585938 -197.936279296875 1.0
+                    orientation 0.0 0.0 0.0 1.0
+                    speed 0.0 0.0 0.0
+		    ai 0
+		    health 50
+                }
+                obj Asteroid8
+                {
+                    mesh asteroid3
+                    type asteroid
+                    position 156.61199951171875 -112.59478759765625 -375.52655029296875 1.0
+                    orientation 0.0 0.0 0.0 1.0
+                    speed 0.0 0.0 0.0
+		    ai 0
+		    health 50
+                }
+                obj Asteroid9
+                {
+                    mesh asteroid0
+                    type asteroid
+                    position 321.08056640625 -88.92355346679688 -413.67120361328125 1.0
+                    orientation 0.0 0.0 0.0 1.0
+                    speed 0.0 0.0 0.0
+		    ai 0
+		    health 50
+                }
+                obj Asteroid10
+                {
+                    mesh asteroid3
+                    type asteroid
+                    position -106.91232299804688 -360.42376708984375 -175.885986328125 1.0
+                    orientation 0.0 0.0 0.0 1.0
+                    speed 0.0 0.0 0.0
+		    ai 0
+		    health 50
+                }
+                obj Asteroid11
+                {
+                    mesh asteroid4
+                    type asteroid
+                    position -108.70590209960938 255.1351318359375 -866.9837646484375 1.0
+                    orientation 0.0 0.0 0.0 1.0
+                    speed 0.0 0.0 0.0
+		    ai 0
+		    health 50
+                }
+                obj Asteroid12
+                {
+                    mesh asteroid0
+                    type asteroid
+                    position -63.292938232421875 399.41668701171875 -285.50927734375 1.0
+                    orientation 0.0 0.0 0.0 1.0
+                    speed 0.0 0.0 0.0
+		    ai 0
+		    health 50
+                }
+                obj Asteroid13
+                {
+                    mesh asteroid2
+                    type asteroid
+                    position -362.6429443359375 91.7735595703125 -316.6649169921875 1.0
+                    orientation 0.0 0.0 0.0 1.0
+                    speed 0.0 0.0 0.0
+		    ai 0
+		    health 50
+                }
+                obj Asteroid14
+                {
+                    mesh asteroid2
+                    type asteroid
+                    position 363.207275390625 -330.53485107421875 -610.287109375 1.0
+                    orientation 0.0 0.0 0.0 1.0
+                    speed 0.0 0.0 0.0
+		    ai 0
+		    health 50
+                }
+                obj Asteroid15
+                {
+                    mesh asteroid1
+                    type asteroid
+                    position -363.91168212890625 -367.81304931640625 -675.2752685546875 1.0
+                    orientation 0.0 0.0 0.0 1.0
+                    speed 0.0 0.0 0.0
+		    ai 0
+		    health 50
+                }
+                obj Asteroid16
+                {
+                    mesh asteroid3
+                    type asteroid
+                    position 4.88592529296875 302.86224365234375 -440.3265075683594 1.0
+                    orientation 0.0 0.0 0.0 1.0
+                    speed 0.0 0.0 0.0
+		    ai 0
+		    health 50
+                }
+                obj Asteroid17
+                {
+                    mesh asteroid0
+                    type asteroid
+                    position 332.54571533203125 -43.255340576171875 -333.64532470703125 1.0
+                    orientation 0.0 0.0 0.0 1.0
+                    speed 0.0 0.0 0.0
+		    ai 0
+		    health 50
+                }
+                obj Asteroid18
+                {
+                    mesh asteroid2
+                    type asteroid
+                    position -208.1892547607422 -265.6926574707031 -755.3894653320312 1.0
+                    orientation 0.0 0.0 0.0 1.0
+                    speed 0.0 0.0 0.0
+		    ai 0
+		    health 50
+                }
+                obj Asteroid19
+                {
+                    mesh asteroid4
+                    type asteroid
+                    position -73.04959106445312 153.76214599609375 -702.5021362304688 1.0
+                    orientation 0.0 0.0 0.0 1.0
+                    speed 0.0 0.0 0.0
+		    ai 0
+		    health 50
+                }
+                obj Asteroid20
+                {
+                    mesh asteroid4
+                    type asteroid
+                    position -301.3616638183594 -324.0329284667969 -533.3392333984375 1.0
+                    orientation 0.0 0.0 0.0 1.0
+                    speed 0.0 0.0 0.0
+		    ai 0
+		    health 50
+                }
+                obj Asteroid21
+                {
+                    mesh asteroid0
+                    type asteroid
+                    position 397.69891357421875 179.94158935546875 -544.0674438476562 1.0
+                    orientation 0.0 0.0 0.0 1.0
+                    speed 0.0 0.0 0.0
+		    ai 0
+		    health 50
+                }
+                obj Asteroid22
+                {
+                    mesh asteroid0
+                    type asteroid
+                    position 269.55523681640625 221.72900390625 -395.4235534667969 1.0
+                    orientation 0.0 0.0 0.0 1.0
+                    speed 0.0 0.0 0.0
+		    ai 0
+		    health 50
+                }
+                obj Asteroid23
+                {
+                    mesh asteroid1
+                    type asteroid
+                    position 21.85064697265625 261.31634521484375 -463.0143737792969 1.0
+                    orientation -0.5356523475059324 0.5051042614301018 0.3732544921756364 0.5644708422648945
+                    speed 0.0 0.0 0.0
+		    ai 0
+		    health 50
+                }
+                obj Asteroid24
+                {
+                    mesh asteroid1
+                    type asteroid
+                    position 293.65509033203125 -308.345947265625 -673.9261474609375 1.0
+                    orientation 0.0 0.0 0.0 1.0
+                    speed 0.0 0.0 0.0
+		    ai 0
+		    health 50
+                }
+                obj Asteroid25
+                {
+                    mesh asteroid2
+                    type asteroid
+                    position -5.43084716796875 -366.1515197753906 -304.45489501953125 1.0
+                    orientation 0.0 0.0 0.0 1.0
+                    speed 0.0 0.0 0.0
+		    ai 0
+		    health 50
+                }
+                obj Asteroid26
+                {
+                    mesh asteroid1
+                    type asteroid
+                    position 229.767822265625 -117.3944091796875 -252.43402099609375 1.0
+                    orientation 0.0 0.0 0.0 1.0
+                    speed 0.0 0.0 0.0
+		    ai 0
+		    health 50
+                }
+                obj Asteroid27
+                {
+                    mesh asteroid4
+                    type asteroid
+                    position 322.14361572265625 236.91839599609375 -498.8817138671875 1.0
+                    orientation 0.0 0.0 0.0 1.0
+                    speed 0.0 0.0 0.0
+		    ai 0
+		    health 50
+                }
+                obj Asteroid28
+                {
+                    mesh asteroid2
+                    type asteroid
+                    position 346.125244140625 40.072479248046875 -584.5903930664062 1.0
+                    orientation 0.0 0.0 0.0 1.0
+                    speed 0.0 0.0 0.0
+		    ai 0
+		    health 50
+                }
+                obj Asteroid29
+                {
+                    mesh asteroid1
+                    type asteroid
+                    position -14.34503173828125 -266.994873046875 -114.69317626953125 1.0
+                    orientation 0.0 0.0 0.0 1.0
+                    speed 0.0 0.0 0.0
+		    ai 0
+		    health 50
+                }
+                obj Asteroid30
+                {
+                    mesh asteroid3
+                    type asteroid
+                    position 224.55389404296875 -88.21917724609375 -240.0716552734375 1.0
+                    orientation 0.0 0.0 0.0 1.0
+                    speed 0.0 0.0 0.0
+		    ai 0
+		    health 50
+                }
+                obj Asteroid31
+                {
+                    mesh asteroid4
+                    type asteroid
+                    position 156.38226318359375 399.0267333984375 -666.5933837890625 1.0
+                    orientation 0.0 0.0 0.0 1.0
+                    speed 0.0 0.0 0.0
+		    ai 0
+		    health 50
+                }
+                obj Asteroid32
+                {
+                    mesh asteroid2
+                    type asteroid
+                    position -181.47439575195312 257.5616455078125 -818.0167846679688 1.0
+                    orientation 0.0 0.0 0.0 1.0
+                    speed 0.0 0.0 0.0
+		    ai 0
+		    health 50
+                }
+                obj Asteroid33
+                {
+                    mesh asteroid2
+                    type asteroid
+                    position -92.1807861328125 283.93511962890625 -289.79229736328125 1.0
+                    orientation 0.0 0.0 0.0 1.0
+                    speed 0.0 0.0 0.0
+		    ai 0
+		    health 50
+                }
+                obj Asteroid34
+                {
+                    mesh asteroid2
+                    type asteroid
+                    position -155.45672607421875 -34.69049072265625 -548.1243286132812 1.0
+                    orientation 0.0 0.0 0.0 1.0
+                    speed 0.0 0.0 0.0
+		    ai 0
+		    health 50
+                }
+                obj Asteroid35
+                {
+                    mesh asteroid1
+                    type asteroid
+                    position -43.6995849609375 226.0299072265625 -220.1231689453125 1.0
+                    orientation 0.0 0.0 0.0 1.0
+                    speed 0.0 0.0 0.0
+		    ai 0
+		    health 50
+                }
+                obj Asteroid36
+                {
+                    mesh asteroid0
+                    type asteroid
+                    position 174.3585205078125 37.31622314453125 -351.07171630859375 1.0
+                    orientation 0.0 0.0 0.0 1.0
+                    speed 0.0 0.0 0.0
+		    ai 0
+		    health 50
+                }
+                obj Asteroid37
+                {
+                    mesh asteroid0
+                    type asteroid
+                    position 99.23348999023438 -307.89483642578125 -541.719482421875 1.0
+                    orientation 0.0 0.0 0.0 1.0
+                    speed 0.0 0.0 0.0
+		    ai 0
+		    health 50
+                }
+                obj Asteroid38
+                {
+                    mesh asteroid2
+                    type asteroid
+                    position 86.66571044921875 -375.54010009765625 -753.9860229492188 1.0
+                    orientation 0.0 0.0 0.0 1.0
+                    speed 0.0 0.0 0.0
+		    ai 0
+		    health 50
+                }
+                obj Asteroid39
+                {
+                    mesh asteroid1
+                    type asteroid
+                    position -35.269256591796875 -133.73724365234375 -411.6152648925781 1.0
+                    orientation 0.0 0.0 0.0 1.0
+                    speed 0.0 0.0 0.0
+		    ai 0
+		    health 50
+                }
+                obj Asteroid40
+                {
+                    mesh asteroid0
+                    type asteroid
+                    position -348.0069274902344 100.02508544921875 -692.8961181640625 1.0
+                    orientation 0.0 0.0 0.0 1.0
+                    speed 0.0 0.0 0.0
+		    ai 0
+		    health 50
+                }
+                obj Asteroid41
+                {
+                    mesh asteroid1
+                    type asteroid
+                    position 345.97393798828125 209.911865234375 -615.6923217773438 1.0
+                    orientation 0.0 0.0 0.0 1.0
+                    speed 0.0 0.0 0.0
+		    ai 0
+		    health 50
+                }
+                obj Asteroid42
+                {
+                    mesh asteroid1
+                    type asteroid
+                    position -324.85638427734375 1.96624755859375 -634.5662841796875 1.0
+                    orientation 0.0 0.0 0.0 1.0
+                    speed 0.0 0.0 0.0
+		    ai 0
+		    health 50
+                }
+                obj Asteroid43
+                {
+                    mesh asteroid1
+                    type asteroid
+                    position -386.1885681152344 -256.11614990234375 -496.4934387207031 1.0
+                    orientation 0.0 0.0 0.0 1.0
+                    speed 0.0 0.0 0.0
+		    ai 0
+		    health 50
+                }
+                obj Asteroid44
+                {
+                    mesh asteroid2
+                    type asteroid
+                    position -8.4256591796875 -156.10227966308594 -392.71636962890625 1.0
+                    orientation 0.0 0.0 0.0 1.0
+                    speed 0.0 0.0 0.0
+		    ai 0
+		    health 50
+                }
+                obj Asteroid45
+                {
+                    mesh asteroid1
+                    type asteroid
+                    position 56.9544677734375 -30.726470947265625 -632.0601806640625 1.0
+                    orientation 0.0 0.0 0.0 1.0
+                    speed 0.0 0.0 0.0
+		    ai 0
+		    health 50
+                }
+                obj Asteroid46
+                {
+                    mesh asteroid2
+                    type asteroid
+                    position 174.93902587890625 170.74462890625 -512.9925537109375 1.0
+                    orientation 0.0 0.0 0.0 1.0
+                    speed 0.0 0.0 0.0
+		    ai 0
+		    health 50
+                }
+                obj Asteroid47
+                {
+                    mesh asteroid4
+                    type asteroid
+                    position 238.79254150390625 -212.08868408203125 -491.5854797363281 1.0
+                    orientation 0.0 0.0 0.0 1.0
+                    speed 0.0 0.0 0.0
+		    ai 0
+		    health 50
+                }
+                obj Asteroid48
+                {
+                    mesh asteroid1
+                    type asteroid
+                    position 183.2906494140625 236.0474853515625 -452.11993408203125 1.0
+                    orientation 0.0 0.0 0.0 1.0
+                    speed 0.0 0.0 0.0
+		    ai 0
+		    health 50
+                }
+                obj Asteroid49
+                {
+                    mesh asteroid4
+                    type asteroid
+                    position 79.81787109375 288.3690185546875 -601.5465087890625 1.0
+                    orientation 0.0 0.0 0.0 1.0
+                    speed 0.0 0.0 0.0
+		    ai 0
+		    health 50
+                }
+                obj Asteroid50
+                {
+                    mesh asteroid0
+                    type asteroid
+                    position 26.8477783203125 348.9971923828125 -439.9443054199219 1.0
+                    orientation 0.0 0.0 0.0 1.0
+                    speed 0.0 0.0 0.0
+		    ai 0
+		    health 50
+                }
+                obj Asteroid51
+                {
+                    mesh asteroid0
+                    type asteroid
+                    position -169.89183044433594 -161.733154296875 -879.6041259765625 1.0
+                    orientation 0.0 0.0 0.0 1.0
+                    speed 0.0 0.0 0.0
+		    ai 0
+		    health 50
+                }
+                obj Asteroid52
+                {
+                    mesh asteroid3
+                    type asteroid
+                    position -165.9584503173828 176.9556884765625 -726.168212890625 1.0
+                    orientation 0.0 0.0 0.0 1.0
+                    speed 0.0 0.0 0.0
+		    ai 0
+		    health 50
+                }
+                obj Asteroid53
+                {
+                    mesh asteroid3
+                    type asteroid
+                    position 374.1905517578125 247.062255859375 -788.656005859375 1.0
+                    orientation 0.0 0.0 0.0 1.0
+                    speed 0.0 0.0 0.0
+		    ai 0
+		    health 50
+                }
+                obj Asteroid54
+                {
+                    mesh asteroid0
+                    type asteroid
+                    position 314.4561767578125 130.37005615234375 -588.1798706054688 1.0
+                    orientation 0.0 0.0 0.0 1.0
+                    speed 0.0 0.0 0.0
+		    ai 0
+		    health 50
+                }
+                obj Asteroid55
+                {
+                    mesh asteroid3
+                    type asteroid
+                    position 218.6688232421875 -28.220367431640625 -705.2491455078125 1.0
+                    orientation 0.0 0.0 0.0 1.0
+                    speed 0.0 0.0 0.0
+		    ai 0
+		    health 50
+                }
+                obj Asteroid56
+                {
+                    mesh asteroid0
+                    type asteroid
+                    position 329.12738037109375 -345.0263671875 -215.18353271484375 1.0
+                    orientation 0.0 0.0 0.0 1.0
+                    speed 0.0 0.0 0.0
+		    ai 0
+		    health 50
+                }
+                obj Asteroid57
+                {
+                    mesh asteroid2
+                    type asteroid
+                    position -136.86752319335938 -125.26593017578125 -713.4248046875 1.0
+                    orientation 0.0 0.0 0.0 1.0
+                    speed 0.0 0.0 0.0
+		    ai 0
+		    health 50
+                }
+                obj Asteroid58
+                {
+                    mesh asteroid0
+                    type asteroid
+                    position 192.914794921875 98.1265869140625 -726.8604736328125 1.0
+                    orientation 0.0 0.0 0.0 1.0
+                    speed 0.0 0.0 0.0
+		    ai 0
+		    health 50
+                }
+                obj Asteroid59
+                {
+                    mesh asteroid3
+                    type asteroid
+                    position -56.41827392578125 -290.83966064453125 -529.01904296875 1.0
+                    orientation 0.0 0.0 0.0 1.0
+                    speed 0.0 0.0 0.0
+		    ai 0
+		    health 50
+                }
+                obj Asteroid60
+                {
+                    mesh asteroid3
+                    type asteroid
+                    position -375.0992431640625 59.3106689453125 -469.19793701171875 1.0
+                    orientation 0.0 0.0 0.0 1.0
+                    speed 0.0 0.0 0.0
+		    ai 0
+		    health 50
+                }
+                obj Asteroid61
+                {
+                    mesh asteroid0
+                    type asteroid
+                    position -248.0530242919922 -214.7249755859375 -760.89111328125 1.0
+                    orientation 0.0 0.0 0.0 1.0
+                    speed 0.0 0.0 0.0
+		    ai 0
+		    health 50
+                }
+                obj Asteroid62
+                {
+                    mesh asteroid3
+                    type asteroid
+                    position 128.10614013671875 65.1802978515625 -423.2444152832031 1.0
+                    orientation 0.0 0.0 0.0 1.0
+                    speed 0.0 0.0 0.0
+		    ai 0
+		    health 50
+                }
+                obj Asteroid63
+                {
+                    mesh asteroid2
+                    type asteroid
+                    position 337.24774169921875 89.87237548828125 -393.75762939453125 1.0
+                    orientation 0.0 0.0 0.0 1.0
+                    speed 0.0 0.0 0.0
+		    ai 0
+		    health 50
+                }
+                obj Asteroid64
+                {
+                    mesh asteroid2
+                    type asteroid
+                    position 288.77825927734375 -49.008880615234375 -402.2314147949219 1.0
+                    orientation 0.0 0.0 0.0 1.0
+                    speed 0.0 0.0 0.0
+		    ai 0
+		    health 50
+                }
+                obj Asteroid65
+                {
+                    mesh asteroid0
+                    type asteroid
+                    position 361.55517578125 37.026214599609375 -603.645751953125 1.0
+                    orientation 0.0 0.0 0.0 1.0
+                    speed 0.0 0.0 0.0
+		    ai 0
+		    health 50
+                }
+                obj Asteroid66
+                {
+                    mesh asteroid2
+                    type asteroid
+                    position -315.0679016113281 -343.1636962890625 -864.3035278320312 1.0
+                    orientation 0.0 0.0 0.0 1.0
+                    speed 0.0 0.0 0.0
+		    ai 0
+		    health 50
+                }
+                obj Asteroid67
+                {
+                    mesh asteroid0
+                    type asteroid
+                    position -287.94073486328125 327.015380859375 -352.7315673828125 1.0
+                    orientation 0.0 0.0 0.0 1.0
+                    speed 0.0 0.0 0.0
+		    ai 0
+		    health 50
+                }
+                obj Asteroid68
+                {
+                    mesh asteroid3
+                    type asteroid
+                    position -141.48043823242188 377.61700439453125 -683.6205444335938 1.0
+                    orientation 0.0 0.0 0.0 1.0
+                    speed 0.0 0.0 0.0
+		    ai 0
+		    health 50
+                }
+                obj Asteroid69
+                {
+                    mesh asteroid3
+                    type asteroid
+                    position -340.3506164550781 -86.85464477539062 -166.05975341796875 1.0
+                    orientation 0.0 0.0 0.0 1.0
+                    speed 0.0 0.0 0.0
+		    ai 0
+		    health 50
+                }
+                obj Asteroid70
+                {
+                    mesh asteroid0
+                    type asteroid
+                    position -349.71014404296875 282.2430419921875 -558.4007568359375 1.0
+                    orientation 0.0 0.0 0.0 1.0
+                    speed 0.0 0.0 0.0
+		    ai 0
+		    health 50
+                }
+                obj Asteroid71
+                {
+                    mesh asteroid0
+                    type asteroid
+                    position -259.7539978027344 -217.305419921875 -780.8609619140625 1.0
+                    orientation 0.0 0.0 0.0 1.0
+                    speed 0.0 0.0 0.0
+		    ai 0
+		    health 50
+                }
+                obj Asteroid72
+                {
+                    mesh asteroid2
+                    type asteroid
+                    position 189.64471435546875 -102.26544189453125 -365.88861083984375 1.0
+                    orientation 0.0 0.0 0.0 1.0
+                    speed 0.0 0.0 0.0
+		    ai 0
+		    health 50
+                }
+                obj Asteroid73
+                {
+                    mesh asteroid3
+                    type asteroid
+                    position 37.61663818359375 -54.61920166015625 -337.253662109375 1.0
+                    orientation 0.0 0.0 0.0 1.0
+                    speed 0.0 0.0 0.0
+		    ai 0
+		    health 50
+                }
+                obj Asteroid74
+                {
+                    mesh asteroid2
+                    type asteroid
+                    position 77.49237060546875 168.3900146484375 -213.4564208984375 1.0
+                    orientation 0.0 0.0 0.0 1.0
+                    speed 0.0 0.0 0.0
+		    ai 0
+		    health 50
+                }
+                obj Asteroid75
+                {
+                    mesh asteroid2
+                    type asteroid
+                    position -259.1650390625 252.28961181640625 -354.3175048828125 1.0
+                    orientation 0.0 0.0 0.0 1.0
+                    speed 0.0 0.0 0.0
+		    ai 0
+		    health 50
+                }
+                obj Asteroid76
+                {
+                    mesh asteroid1
+                    type asteroid
+                    position 177.1856689453125 -45.05609130859375 -137.977783203125 1.0
+                    orientation 0.0 0.0 0.0 1.0
+                    speed 0.0 0.0 0.0
+		    ai 0
+		    health 50
+                }
+                obj Asteroid77
+                {
+                    mesh asteroid1
+                    type asteroid
+                    position 388.03656005859375 389.21295166015625 -779.0260009765625 1.0
+                    orientation 0.0 0.0 0.0 1.0
+                    speed 0.0 0.0 0.0
+		    ai 0
+		    health 50
+                }
+                obj Asteroid78
+                {
+                    mesh asteroid4
+                    type asteroid
+                    position 304.576904296875 264.037109375 -226.6153564453125 1.0
+                    orientation 0.0 0.0 0.0 1.0
+                    speed 0.0 0.0 0.0
+		    ai 0
+		    health 50
+                }
+                obj Asteroid79
+                {
+                    mesh asteroid2
+                    type asteroid
+                    position 344.7210693359375 -357.53485107421875 -687.294189453125 1.0
+                    orientation 0.0 0.0 0.0 1.0
+                    speed 0.0 0.0 0.0
+		    ai 0
+		    health 50
+                }
+                obj Asteroid80
+                {
+                    mesh asteroid0
+                    type asteroid
+                    position -232.94085693359375 -326.09625244140625 -761.4000854492188 1.0
+                    orientation 0.0 0.0 0.0 1.0
+                    speed 0.0 0.0 0.0
+		    ai 0
+		    health 50
+                }
+                obj Asteroid81
+                {
+                    mesh asteroid2
+                    type asteroid
+                    position -37.8057861328125 260.92559814453125 -317.78057861328125 1.0
+                    orientation 0.0 0.0 0.0 1.0
+                    speed 0.0 0.0 0.0
+		    ai 0
+		    health 50
+                }
+                obj Asteroid82
+                {
+                    mesh asteroid0
+                    type asteroid
+                    position 251.79449462890625 -170.24746704101562 -182.3963623046875 1.0
+                    orientation 0.0 0.0 0.0 1.0
+                    speed 0.0 0.0 0.0
+		    ai 0
+		    health 50
+                }
+                obj Asteroid83
+                {
+                    mesh asteroid0
+                    type asteroid
+                    position 182.5340576171875 -385.9189147949219 -145.041748046875 1.0
+                    orientation 0.0 0.0 0.0 1.0
+                    speed 0.0 0.0 0.0
+		    ai 0
+		    health 50
+                }
+                obj Asteroid84
+                {
+                    mesh asteroid4
+                    type asteroid
+                    position 117.11566162109375 365.83795166015625 -244.84503173828125 1.0
+                    orientation 0.0 0.0 0.0 1.0
+                    speed 0.0 0.0 0.0
+		    ai 0
+		    health 50
+                }
+                obj Asteroid85
+                {
+                    mesh asteroid4
+                    type asteroid
+                    position 267.7899169921875 -59.944732666015625 -136.44091796875 1.0
+                    orientation 0.0 0.0 0.0 1.0
+                    speed 0.0 0.0 0.0
+		    ai 0
+		    health 50
+                }
+                obj Asteroid86
+                {
+                    mesh asteroid0
+                    type asteroid
+                    position 78.73434448242188 346.30230712890625 -550.263427734375 1.0
+                    orientation 0.0 0.0 0.0 1.0
+                    speed 0.0 0.0 0.0
+		    ai 0
+		    health 50
+                }
+                obj Asteroid87
+                {
+                    mesh asteroid4
+                    type asteroid
+                    position 74.848876953125 -308.71978759765625 -433.49298095703125 1.0
+                    orientation 0.0 0.0 0.0 1.0
+                    speed 0.0 0.0 0.0
+		    ai 0
+		    health 50
+                }
+                obj Asteroid88
+                {
+                    mesh asteroid3
+                    type asteroid
+                    position -355.23480224609375 -81.6619873046875 -117.3582763671875 1.0
+                    orientation 0.0 0.0 0.0 1.0
+                    speed 0.0 0.0 0.0
+		    ai 0
+		    health 50
+                }
+                obj Asteroid89
+                {
+                    mesh asteroid1
+                    type asteroid
+                    position 104.65322875976562 208.9932861328125 -111.39056396484375 1.0
+                    orientation 0.0 0.0 0.0 1.0
+                    speed 0.0 0.0 0.0
+		    ai 0
+		    health 50
+                }
+                obj Asteroid90
+                {
+                    mesh asteroid2
+                    type asteroid
+                    position -73.3321533203125 91.51129150390625 -294.58538818359375 1.0
+                    orientation 0.0 0.0 0.0 1.0
+                    speed 0.0 0.0 0.0
+		    ai 0
+		    health 50
+                }
+                obj Asteroid91
+                {
+                    mesh asteroid2
+                    type asteroid
+                    position -92.62994384765625 -121.64553833007812 -259.662109375 1.0
+                    orientation 0.0 0.0 0.0 1.0
+                    speed 0.0 0.0 0.0
+		    ai 0
+		    health 50
+                }
+                obj Asteroid92
+                {
+                    mesh asteroid0
+                    type asteroid
+                    position -264.0876770019531 -246.0501251220703 -336.2137451171875 1.0
+                    orientation 0.0 0.0 0.0 1.0
+                    speed 0.0 0.0 0.0
+		    ai 0
+		    health 50
+                }
+                obj Asteroid93
+                {
+                    mesh asteroid0
+                    type asteroid
+                    position -305.9417724609375 -357.0627136230469 -626.0955810546875 1.0
+                    orientation 0.0 0.0 0.0 1.0
+                    speed 0.0 0.0 0.0
+		    ai 0
+		    health 50
+                }
+                obj Asteroid94
+                {
+                    mesh asteroid3
+                    type asteroid
+                    position 146.95904541015625 -187.57476806640625 -143.65380859375 1.0
+                    orientation 0.0 0.0 0.0 1.0
+                    speed 0.0 0.0 0.0
+		    ai 0
+		    health 50
+                }
+                obj Asteroid95
+                {
+                    mesh asteroid4
+                    type asteroid
+                    position -85.45828247070312 55.422607421875 -662.7427978515625 1.0
+                    orientation 0.0 0.0 0.0 1.0
+                    speed 0.0 0.0 0.0
+		    ai 0
+		    health 50
+                }
+                obj Asteroid96
+                {
+                    mesh asteroid4
+                    type asteroid
+                    position -369.8403015136719 387.520751953125 -665.392822265625 1.0
+                    orientation 0.0 0.0 0.0 1.0
+                    speed 0.0 0.0 0.0
+		    ai 0
+		    health 50
+                }
+                obj Asteroid97
+                {
+                    mesh asteroid3
+                    type asteroid
+                    position -239.02316284179688 -111.93963623046875 -730.2208251953125 1.0
+                    orientation 0.0 0.0 0.0 1.0
+                    speed 0.0 0.0 0.0
+		    ai 0
+		    health 50
+                }
+                obj Asteroid98
+                {
+                    mesh asteroid1
+                    type asteroid
+                    position 94.42950439453125 374.68597412109375 -480.89202880859375 1.0
+                    orientation 0.0 0.0 0.0 1.0
+                    speed 0.0 0.0 0.0
+		    ai 0
+		    health 50
+                }
+                obj Asteroid99
+                {
+                    mesh asteroid2
+                    type asteroid
+                    position -194.36582946777344 -266.0929260253906 -670.1453857421875 1.0
+                    orientation 0.0 0.0 0.0 1.0
+                    speed 0.0 0.0 0.0
+		    ai 0
+		    health 50
+                }
+	}
+	event invasion0
+	{
+		previous_end_cond
+		{
+			none
+		}
+		delay secs 5
+		spawn
+		{
+			obj Attacker0
+			{
+				mesh ship_alien1
+				type fighter_ship
+				position -300.0 3000.0 -300.0
+				orientation 0.0 0.0 0.0 0.0
+				speed 0.0 0.0 0.0
+				ai 1
+				friendly 0
+				behavior aggresive
+				health 100
+				prioritize 1 player_ship
+			}
+			obj Attacker1
+			{
+				mesh ship_alien2
+				type fighter_ship
+				position -300.0 3000.0 -500.0
+				orientation 0.0 0.0 0.0 0.0
+				speed 0.0 0.0 0.0
+				ai 1
+				friendly 0
+				behavior aggresive
+				health 100
+				prioritize 1 player_ship
+			}
+			obj Attacker2
+			{
+				mesh ship_alien0
+				type fighter_ship
+				position -300.0 4000.0 -700.0
+				orientation 0.0 0.0 0.0 0.0
+				speed 0.0 0.0 0.0
+				ai 1
+				friendly 0
+				behavior aggresive
+				health 100
+				prioritize 1 player_ship
+			}
+			obj Attacker3
+			{
+				mesh ship_alien0
+				type fighter_ship
+				position -300.0 -4000.0 -300.0
+				orientation 0.0 0.0 0.0 0.0
+				speed 0.0 0.0 0.0
+				ai 1
+				friendly 0
+				behavior aggresive
+				health 100
+				prioritize 1 player_ship
+			}
+			obj Attacker4
+			{
+				mesh ship_alien0
+				type fighter_ship
+				position -300.0 -4000.0 -500.0
+				orientation 0.0 0.0 0.0 0.0
+				speed 0.0 0.0 0.0
+				ai 1
+				friendly 0
+				behavior aggresive
+				health 100
+				prioritize 1 player_ship
+			}
+			obj Attacker5
+			{
+				mesh ship_alien0
+				type fighter_ship
+				position -300.0 -4000.0 -700.0
+				orientation 0.0 0.0 0.0 0.0
+				speed 0.0 0.0 0.0
+				ai 1
+				friendly 0
+				behavior aggresive
+				health 100
+				prioritize 1 player_ship
+			}
+		}
+		end_cond invasion0_end
+		{
+			type win
+			{
+				cond win_cond
+				{
+					type destroyed
+					objs 6 Attacker0 Attacker1 Attacker2 Attacker3 Attacker4 Attacker5
+				}
+			}
+			type loss
+			{
+				cond loss_cond0
+				{
+					type time_elapsed
+					secs 20
+				}
+			}
+		}
+	}
+	event reinforcements0
+	{
+		previous_end_cond
+		{
+			none
+		}
+		delay secs 120
+		spawn
+		{
+			obj Defender5
+			{
+				mesh ship_human1
+				type fighter_ship
+				position -300.0 400.0 300.0
+				orientation 0.0 0.0 0.0 0.0
+				speed 0.0 0.0 0.0
+				ai 1
+				friendly 1
+				behavior defensive
+				health 100
+			}
+			obj Defender6
+			{
+				mesh ship_human2
+				type fighter_ship
+				position 300.0 500.0 -300.0
+				orientation 0.0 0.0 0.0 0.0
+				speed 0.0 0.0 0.0
+				ai 1
+				friendly 1
+				behavior aggresive
+				health 100
+			}
+			obj Defender7
+			{
+				mesh ship_human2
+				type fighter_ship
+				position -300.0 600.0 -300.0
+				orientation 0.0 0.0 0.0 0.0
+				speed 0.0 0.0 0.0
+				ai 1
+				friendly 1
+				behavior aggresive
+				health 100
+			}
+			obj Defender8
+			{
+				mesh ship_human1
+				type fighter_ship
+				position 300.0 700.0 300.0
+				orientation 0.0 0.0 0.0 0.0
+				speed 0.0 0.0 0.0
+				ai 1
+				friendly 1
+				behavior aggresive
+				health 100
+			}
+		}
+		end_cond reinforcements0_end
+		{
+			type win
+			{
+				cond win_cond
+				{
+					type destroyed
+					objs 3 Attacker0 Attacker1 Attacker2 Attacker3 Attacker4 Attacker5
+				}
+			}
+			type loss
+			{
+				cond loss_cond0
+				{
+					type time_elapsed
+					secs 600
+				}
+			}
+		}
+	}
+	event invasion1
+	{
+		previous_end_cond
+		{
+			prev_conds 1 invasion0
+		}
+		delay secs 5
+		spawn
+		{
+			obj Attacker6
+			{
+				mesh ship_alien1
+				type fighter_ship
+				position -300.0 300.0 -300.0
+				orientation 0.0 0.0 0.0 0.0
+				speed 0.0 0.0 0.0
+				ai 1
+				friendly 0
+				behavior aggresive
+				health 100
+				prioritize 1 player_ship
+			}
+			obj Attacker7
+			{
+				mesh ship_alien2
+				type fighter_ship
+				position -300.0 400.0 -300.0
+				orientation 0.0 0.0 0.0 0.0
+				speed 0.0 0.0 0.0
+				ai 1
+				friendly 0
+				behavior aggresive
+				health 100
+				prioritize 1 player_ship
+			}
+			obj Attacker8
+			{
+				mesh ship_alien0
+				type fighter_ship
+				position -300.0 500.0 -300.0
+				orientation 0.0 0.0 0.0 0.0
+				speed 0.0 0.0 0.0
+				ai 1
+				friendly 0
+				behavior aggresive
+				health 100
+				prioritize 1 player_ship
+			}
+			obj Attacker9
+			{
+				mesh ship_alien0
+				type fighter_ship
+				position -300.0 -500.0 -300.0
+				orientation 0.0 0.0 0.0 0.0
+				speed 0.0 0.0 0.0
+				ai 1
+				friendly 0
+				behavior aggresive
+				health 100
+				prioritize 1 player_ship
+			}
+			obj Attacker10
+			{
+				mesh ship_alien0
+				type fighter_ship
+				position -300.0 -600.0 -300.0
+				orientation 0.0 0.0 0.0 0.0
+				speed 0.0 0.0 0.0
+				ai 1
+				friendly 0
+				behavior aggresive
+				health 100
+				prioritize 1 player_ship
+			}
+			obj Attacker11
+			{
+				mesh ship_alien0
+				type fighter_ship
+				position -300.0 -700.0 -300.0
+				orientation 0.0 0.0 0.0 0.0
+				speed 0.0 0.0 0.0
+				ai 1
+				friendly 0
+				behavior aggresive
+				health 100
+				prioritize 1 player_ship
+			}
+		}
+		end_cond invasion1_end
+		{
+			type win
+			{
+				cond win_cond
+				{
+					type destroyed
+					objs 6 Attacker6 Attacker7 Attacker8 Attacker9 Attacker10 Attacker11
+				}
+			}
+			type loss
+			{
+				cond loss_cond0
+				{
+					type time_elapsed
+					secs 600
+				}
+			}
+		}
+	}
+	event friendly_ship_exit
+	{
+		previous_end_cond
+		{
+			prev_conds 2 invasion0 invasion1
+			comparator ( and invasion0 invasion1 )
+		}
+		delay secs 5
+		exit
+		{
+			objs 9 Defender0 Defender1 Defender2 Defender3 Defender4 Defender5 Defender6 Defender7 Defender8
+		}
+		
+		end_cond ship_exit
+		{
+			type win
+			{
+				cond win_cond0
+				{
+					type exited_or_destroyed
+					objs 9 Defender0 Defender1 Defender2 Defender3 Defender4 Defender5 Defender6 Defender7 Defender8
+				}
+			}
+			type loss
+			{
+				cond loss_cond0
+				{
+					type time_elapsed
+					secs 600
+				}
+			}
+		}
+	}
+	end
+	{
+		events 3 invasion0 invasion1 friendly_ship_exit
+		comparator ( and invasion0 invasion1 friendly_ship_exit )
+	}
+}

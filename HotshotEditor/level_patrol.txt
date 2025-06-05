@@ -1,0 +1,136 @@
+level patrol
+{
+	start
+	{
+		skybox SkyboxWorkspace0
+		waypoint_sector
+		{
+			 extents_min_max -300.0 -300.0 -300.0 300.0 300.0 700.0
+			 waypoint_table
+			 {
+				   size 7
+				   table
+				   {
+						[ 0 2 2 2 2 2 2 ]
+						[ 0 0 3 3 3 3 3 ]
+						[ 0 0 0 4 4 4 4 ]
+						[ 0 0 0 0 5 5 5 ]
+						[ 0 0 0 0 0 6 7 ]
+						[ 0 0 0 0 5 0 5 ]
+						[ 0 0 0 0 5 5 0 ]
+				   }
+			 }
+			 waypoint
+			 {
+				id 1
+				position 0.0 0.0 -200.0
+				next_id 2
+				entrance_or_exit 0.0 0.0 -1.0 30.0 20.0
+				radius 50.0
+			 }
+			 waypoint
+			 {
+				id 2
+				position 100.0 0.0 -100.0
+				next_id 3
+				radius 50.0
+			 }
+			 waypoint
+			 {
+				id 3
+				position 150.0 0.0 0.0
+				next_id 4
+				radius 50.0
+			 }
+			 waypoint
+			 {
+				id 4
+				position 0.0 0.0 100.0
+				next_id 5
+				radius 50.0
+			 }
+			 waypoint
+			 {
+				id 5
+				position 0.0 0.0 300.0
+				next_id 6
+				next_id 7
+				radius 50.0
+			 }
+			 waypoint
+			 {
+				id 6
+				position 0.0 0.0 0.0
+				next_id 5
+				radius 50.0
+			 }
+			 waypoint
+			 {
+				id 7
+				position 0.0 0.0 500.0
+				next_id 5
+				entrance_or_exit 0.0 0.0 1.0 30.0 20.0
+				radius 50.0
+			 }
+		}
+		
+		light_dir -1.0 0.0 0.0
+		light_type directional
+		light_power_scale 3.14
+		light_diffuse_color 0.8 0.4 0.2 1.0
+		light_specular_color 0.8 0.4 0.2 1.0
+		ambient_light_upperhemi_lowerhemi_dir 0.3 0.5 0.7 0.1 0.6 0.45 0.3 0.1 -1.0 0.0 0.0
+	//	play_cutscene sl_level_patrol_begin
+	//	use_skybox_data_from_level 1
+		player_ship_selection
+		{
+			team human
+			{
+				cd raw
+				name ship_human0
+				name ship_human1
+			}
+		}
+
+						obj PlayerShip
+                {
+                    type PLAYER_SHIP
+                    position 0.0 0.0 1000.0
+                    orientation 1.0 0.0 0.0 0.0
+                    speed 0.0 0.0 0.0
+                    ai 1
+                    friendly 0
+                    behavior AGGRESSIVE
+                    health 100
+                }
+						obj PlayerShip
+                {
+                    type PLAYER_SHIP
+                    position 0.0 0.0 1000.0
+                    orientation 1.0 0.0 0.0 0.0
+                    speed 0.0 0.0 0.0
+                    ai 1
+                    friendly 0
+                    behavior AGGRESSIVE
+                    health 100
+                }
+						obj Attacker0
+                {
+                    mesh ship_alien0
+                    type FIGHTER_SHIP
+                    position 0.0 0.0 -500.0
+                    orientation 0.0 1.0 0.0 180.0000007067588
+                    speed 0.0 0.0 0.0
+                    ai 1
+                    friendly 0
+                    behavior AGGRESSIVE
+                    health 100
+                }
+	}
+
+
+	end
+	{
+		events 0 
+	}
+}
