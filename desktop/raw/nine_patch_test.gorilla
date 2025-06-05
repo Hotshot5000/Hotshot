@@ -1,0 +1,5 @@
+[Texture]
+file nine_patch_test.9.png~Essential
+
+[NinePatches]
+test_patch 0 0 51 114

@@ -1,0 +1,1884 @@
+compositor_node HotshotPbsMaterialsRenderingNode
+{
+	in 0 rt_renderwindow
+	//in 1 rtDynamicCubemap
+
+	target rt_renderwindow
+	{
+		pass render_scene
+		{
+			load
+			{
+				all				clear
+				clear_colour	0.2 0.4 0.6 1
+			}
+			store
+			{
+				colour	store_or_resolve
+				depth	dont_care
+				stencil	dont_care
+			}
+			overlays	on
+		//	shadows		PbsMaterialsShadowNode
+
+			profiling_id "Main Render"
+		}
+	}
+}
+
+compositor_node SkyboxSMAA_RenderingNode
+{
+	//in 0 rt0
+	texture rt1 target_width target_height PFG_RGBA8_UNORM_SRGB
+
+	//out 0 rt0
+	out 0 rt1
+}
+
+compositor_node DefaultFinalComposition
+{
+	in 0 rtN
+	// Take input texture #1 and use the local name "rtN" for reference in this scope
+	in 1 rt_output
+//	in 1 rt_renderwindow
+
+	target rt_output
+	{
+
+		pass render_quad
+	    {
+			load
+			{
+				all				clear
+				clear_colour	0 0 0 1
+			}
+			store
+			{
+				depth			store_or_resolve
+				stencil			dont_care
+			}
+			//Ignore the alpha channel
+			material Ogre/Copy/4xFP32
+	    	input 0 rtN
+		}
+		
+		pass render_scene
+		{
+			
+			store
+			{
+				depth			dont_care
+				stencil			dont_care
+			}
+			lod_update_list	off
+
+			//Render Overlays
+			overlays	on
+			rq_first	254
+			rq_last		255
+		}
+	}
+}
+
+compositor_node Colored
+{
+	in 0 rt_input
+	in 1 rt_output
+
+	custom_id Hotshot/Skybox
+
+	target rt_output
+	{
+		//Play nice with Multi-GPU setups by telling the API there is no inter-frame dependency.
+		//On APIs that support discard_only (e.g. DX11) the driver may just ignore the colour value,
+		//and use a different memory region (i.e. the value read from a pixel of a discarded buffer
+		//without having written to it is undefined)
+		pass clear
+		{
+			colour_value	1 0 0 1
+			buffers			colour
+			discard_only	true
+		}
+		
+		// Draw a fullscreen quad with the black and white image
+		pass render_quad
+		{
+			// Renders a fullscreen quad with a material
+			material Postprocess/Colored
+			input 0 rt_input
+		}
+		
+		pass render_scene
+		{
+			lod_update_list	off
+
+			//Render Overlays
+			overlays	on
+			rq_first	254
+			rq_last		255
+		}
+	}
+	
+}
+
+abstract target cubemap_target_SkyboxWorkspace0
+{
+	pass render_scene
+	{
+		load
+		{
+			all				clear
+			clear_colour	0 0 0 1
+		}
+		store
+		{
+			//We only care about the contents of the colour target
+			depth			dont_care
+			stencil			dont_care
+		}
+		
+		expose cubemap
+
+		//Filter stuff that shouldn't be reflected (vampires?)
+		visibility_mask		0xFFFFFFFF
+		overlays			off
+		camera_cubemap_reorient true
+
+		//rq_first	0
+		//rq_last		250
+
+		//We want very accurate shadows in the reflections and Ogre seems to
+		//be unable to detect for each pass shadows should be recalculated,
+		//so force it.
+		//shadows LocalCubemapsShadowNode recalculate
+
+		profiling_id "Cubemap face pass"
+	}
+
+	//Render sky (see TutorialSky_Postprocess)
+	pass render_quad
+	{
+		store
+		{
+			//We only care about the contents of the colour target
+			depth			dont_care
+			stencil			dont_care
+		}
+		quad_normals	camera_direction
+		material SkyPostprocess0
+		camera_cubemap_reorient true
+	}
+}
+
+abstract target cubemap_target_SkyboxWorkspace1
+{
+	pass render_scene
+	{
+		load
+		{
+			all				clear
+			clear_colour	0 0 0 1
+		}
+		store
+		{
+			//We only care about the contents of the colour target//We only care about the contents of the colour target
+			depth			dont_care
+			stencil			dont_care
+		}
+		
+		expose cubemap
+
+		//Filter stuff that shouldn't be reflected (vampires?)
+		visibility_mask		0xFFFFFFFF
+		overlays			off
+		camera_cubemap_reorient true
+
+		//rq_first	0
+		//rq_last		250
+
+		//We want very accurate shadows in the reflections and Ogre seems to
+		//be unable to detect for each pass shadows should be recalculated,
+		//so force it.
+		//shadows LocalCubemapsShadowNode recalculate
+
+		profiling_id "Cubemap face pass"
+	}
+
+	//Render sky (see TutorialSky_Postprocess)
+	pass render_quad
+	{
+		store
+		{
+			//We only care about the contents of the colour target
+			depth			dont_care
+			stencil			dont_care
+		}
+		quad_normals	camera_direction
+		material SkyPostprocess1
+		camera_cubemap_reorient true
+	}
+}
+
+abstract target cubemap_target_SkyboxWorkspace2
+{
+	pass render_scene
+	{
+		load
+		{
+			all				clear
+			clear_colour	0 0 0 1
+		}
+		store
+		{
+			//We only care about the contents of the colour target//We only care about the contents of the colour target
+			depth			dont_care
+			stencil			dont_care
+		}
+		
+		expose cubemap
+
+		//Filter stuff that shouldn't be reflected (vampires?)
+		visibility_mask		0xFFFFFFFF
+		overlays			off
+		camera_cubemap_reorient true
+
+		//rq_first	0
+		//rq_last		250
+
+		//We want very accurate shadows in the reflections and Ogre seems to
+		//be unable to detect for each pass shadows should be recalculated,
+		//so force it.
+		//shadows LocalCubemapsShadowNode recalculate
+
+		profiling_id "Cubemap face pass"
+	}
+
+	//Render sky (see TutorialSky_Postprocess)
+	pass render_quad
+	{
+		store
+		{
+			//We only care about the contents of the colour target
+			depth			dont_care
+			stencil			dont_care
+		}
+		quad_normals	camera_direction
+		material SkyPostprocess2
+		camera_cubemap_reorient true
+	}
+}
+
+abstract target cubemap_target_SkyboxWorkspace3
+{
+	pass render_scene
+	{
+		load
+		{
+			all				clear
+			clear_colour	0 0 0 1
+		}
+		store
+		{
+			//We only care about the contents of the colour target//We only care about the contents of the colour target
+			depth			dont_care
+			stencil			dont_care
+		}
+		
+		expose cubemap
+
+		//Filter stuff that shouldn't be reflected (vampires?)
+		visibility_mask		0xFFFFFFFF
+		overlays			off
+		camera_cubemap_reorient true
+
+		//rq_first	0
+		//rq_last		250
+
+		//We want very accurate shadows in the reflections and Ogre seems to
+		//be unable to detect for each pass shadows should be recalculated,
+		//so force it.
+		//shadows LocalCubemapsShadowNode recalculate
+
+		profiling_id "Cubemap face pass"
+	}
+
+	//Render sky (see TutorialSky_Postprocess)
+	pass render_quad
+	{
+		store
+		{
+			//We only care about the contents of the colour target
+			depth			dont_care
+			stencil			dont_care
+		}
+		quad_normals	camera_direction
+		material SkyPostprocess3
+		camera_cubemap_reorient true
+	}
+}
+
+abstract target cubemap_target_SkyboxWorkspace4
+{
+	pass render_scene
+	{
+		load
+		{
+			all				clear
+			clear_colour	0 0 0 1
+		}
+		store
+		{
+			//We only care about the contents of the colour target//We only care about the contents of the colour target
+			depth			dont_care
+			stencil			dont_care
+		}
+		
+		expose cubemap
+
+		//Filter stuff that shouldn't be reflected (vampires?)
+		visibility_mask		0xFFFFFFFF
+		overlays			off
+		camera_cubemap_reorient true
+
+		//rq_first	0
+		//rq_last		250
+
+		//We want very accurate shadows in the reflections and Ogre seems to
+		//be unable to detect for each pass shadows should be recalculated,
+		//so force it.
+		//shadows LocalCubemapsShadowNode recalculate
+
+		profiling_id "Cubemap face pass"
+	}
+
+	//Render sky (see TutorialSky_Postprocess)
+	pass render_quad
+	{
+		store
+		{
+			//We only care about the contents of the colour target
+			depth			dont_care
+			stencil			dont_care
+		}
+		quad_normals	camera_direction
+		material SkyPostprocess4
+		camera_cubemap_reorient true
+	}
+}
+
+abstract target cubemap_target_SkyboxWorkspace5
+{
+	pass render_scene
+	{
+		load
+		{
+			all				clear
+			clear_colour	0 0 0 1
+		}
+		store
+		{
+			//We only care about the contents of the colour target//We only care about the contents of the colour target
+			depth			dont_care
+			stencil			dont_care
+		}
+		
+		expose cubemap
+
+		//Filter stuff that shouldn't be reflected (vampires?)
+		visibility_mask		0xFFFFFFFF
+		overlays			off
+		camera_cubemap_reorient true
+
+		//rq_first	0
+		//rq_last		250
+
+		//We want very accurate shadows in the reflections and Ogre seems to
+		//be unable to detect for each pass shadows should be recalculated,
+		//so force it.
+		//shadows LocalCubemapsShadowNode recalculate
+
+		profiling_id "Cubemap face pass"
+	}
+
+	//Render sky (see TutorialSky_Postprocess)
+	pass render_quad
+	{
+		store
+		{
+			//We only care about the contents of the colour target
+			depth			dont_care
+			stencil			dont_care
+		}
+		quad_normals	camera_direction
+		material SkyPostprocess5
+		camera_cubemap_reorient true
+	}
+}
+
+abstract target cubemap_target_SkyboxWorkspace6
+{
+	pass render_scene
+	{
+		load
+		{
+			all				clear
+			clear_colour	0 0 0 1
+		}
+		store
+		{
+			//We only care about the contents of the colour target//We only care about the contents of the colour target
+			depth			dont_care
+			stencil			dont_care
+		}
+		
+		expose cubemap
+
+		//Filter stuff that shouldn't be reflected (vampires?)
+		visibility_mask		0xFFFFFFFF
+		overlays			off
+		camera_cubemap_reorient true
+
+		//rq_first	0
+		//rq_last		250
+
+		//We want very accurate shadows in the reflections and Ogre seems to
+		//be unable to detect for each pass shadows should be recalculated,
+		//so force it.
+		//shadows LocalCubemapsShadowNode recalculate
+
+		profiling_id "Cubemap face pass"
+	}
+
+	//Render sky (see TutorialSky_Postprocess)
+	pass render_quad
+	{
+		store
+		{
+			//We only care about the contents of the colour target
+			depth			dont_care
+			stencil			dont_care
+		}
+		quad_normals	camera_direction
+		material SkyPostprocess6
+		camera_cubemap_reorient true
+	}
+}
+
+abstract target cubemap_target_SkyboxWorkspace7
+{
+	pass render_scene
+	{
+		load
+		{
+			all				clear
+			clear_colour	0 0 0 1
+		}
+		store
+		{
+			//We only care about the contents of the colour target//We only care about the contents of the colour target
+			depth			dont_care
+			stencil			dont_care
+		}
+		
+		expose cubemap
+
+		//Filter stuff that shouldn't be reflected (vampires?)
+		visibility_mask		0xFFFFFFFF
+		overlays			off
+		camera_cubemap_reorient true
+
+		//rq_first	0
+		//rq_last		250
+
+		//We want very accurate shadows in the reflections and Ogre seems to
+		//be unable to detect for each pass shadows should be recalculated,
+		//so force it.
+		//shadows LocalCubemapsShadowNode recalculate
+
+		profiling_id "Cubemap face pass"
+	}
+
+	//Render sky (see TutorialSky_Postprocess)
+	pass render_quad
+	{
+		store
+		{
+			//We only care about the contents of the colour target
+			depth			dont_care
+			stencil			dont_care
+		}
+		quad_normals	camera_direction
+		material SkyPostprocess7
+		camera_cubemap_reorient true
+	}
+}
+
+abstract target cubemap_target_SkyboxWorkspace8
+{
+	pass render_scene
+	{
+		load
+		{
+			all				clear
+			clear_colour	0 0 0 1
+		}
+		store
+		{
+			//We only care about the contents of the colour target//We only care about the contents of the colour target
+			depth			dont_care
+			stencil			dont_care
+		}
+		
+		expose cubemap
+
+		//Filter stuff that shouldn't be reflected (vampires?)
+		visibility_mask		0xFFFFFFFF
+		overlays			off
+		camera_cubemap_reorient true
+
+		//rq_first	0
+		//rq_last		250
+
+		//We want very accurate shadows in the reflections and Ogre seems to
+		//be unable to detect for each pass shadows should be recalculated,
+		//so force it.
+		//shadows LocalCubemapsShadowNode recalculate
+
+		profiling_id "Cubemap face pass"
+	}
+
+	//Render sky (see TutorialSky_Postprocess)
+	pass render_quad
+	{
+		store
+		{
+			//We only care about the contents of the colour target
+			depth			dont_care
+			stencil			dont_care
+		}
+		quad_normals	camera_direction
+		material SkyPostprocess7
+		camera_cubemap_reorient true
+	}
+}
+
+compositor_node CubemapRendererNode_SkyboxWorkspace0
+{
+	in 0 cubemap
+	
+	texture tmpCubemap target_width target_height target_format cubemap mipmaps 0
+
+	target tmpCubemap +X : cubemap_target_SkyboxWorkspace0 { }
+	target tmpCubemap -X : cubemap_target_SkyboxWorkspace0 { }
+	target tmpCubemap +Y : cubemap_target_SkyboxWorkspace0 { }
+	target tmpCubemap -Y : cubemap_target_SkyboxWorkspace0 { }
+	target tmpCubemap +Z : cubemap_target_SkyboxWorkspace0 { }
+	target tmpCubemap -Z : cubemap_target_SkyboxWorkspace0
+	{
+		pass ibl_specular
+		{
+			input tmpCubemap
+			output cubemap
+		}
+	}
+}
+
+compositor_node CubemapRendererNode_SkyboxWorkspace1
+{
+	in 0 cubemap
+	
+	texture tmpCubemap target_width target_height target_format cubemap mipmaps 0
+
+	target tmpCubemap +X : cubemap_target_SkyboxWorkspace1 { }
+	target tmpCubemap -X : cubemap_target_SkyboxWorkspace1 { }
+	target tmpCubemap +Y : cubemap_target_SkyboxWorkspace1 { }
+	target tmpCubemap -Y : cubemap_target_SkyboxWorkspace1 { }
+	target tmpCubemap +Z : cubemap_target_SkyboxWorkspace1 { }
+	target tmpCubemap -Z : cubemap_target_SkyboxWorkspace1
+	{
+		pass ibl_specular
+		{
+			input tmpCubemap
+			output cubemap
+		}
+	}
+}
+
+compositor_node CubemapRendererNode_SkyboxWorkspace2
+{
+	in 0 cubemap
+	
+	texture tmpCubemap target_width target_height target_format cubemap mipmaps 0
+
+	target tmpCubemap +X : cubemap_target_SkyboxWorkspace2 { }
+	target tmpCubemap -X : cubemap_target_SkyboxWorkspace2 { }
+	target tmpCubemap +Y : cubemap_target_SkyboxWorkspace2 { }
+	target tmpCubemap -Y : cubemap_target_SkyboxWorkspace2 { }
+	target tmpCubemap +Z : cubemap_target_SkyboxWorkspace2 { }
+	target tmpCubemap -Z : cubemap_target_SkyboxWorkspace2
+	{
+		pass ibl_specular
+		{
+			input tmpCubemap
+			output cubemap
+		}
+	}
+}
+
+compositor_node CubemapRendererNode_SkyboxWorkspace3
+{
+	in 0 cubemap
+	
+	texture tmpCubemap target_width target_height target_format cubemap mipmaps 0
+
+	target tmpCubemap +X : cubemap_target_SkyboxWorkspace3 { }
+	target tmpCubemap -X : cubemap_target_SkyboxWorkspace3 { }
+	target tmpCubemap +Y : cubemap_target_SkyboxWorkspace3 { }
+	target tmpCubemap -Y : cubemap_target_SkyboxWorkspace3 { }
+	target tmpCubemap +Z : cubemap_target_SkyboxWorkspace3 { }
+	target tmpCubemap -Z : cubemap_target_SkyboxWorkspace3
+	{
+		pass ibl_specular
+		{
+			input tmpCubemap
+			output cubemap
+		}
+	}
+}
+
+compositor_node CubemapRendererNode_SkyboxWorkspace4
+{
+	in 0 cubemap
+	
+	texture tmpCubemap target_width target_height target_format cubemap mipmaps 0
+
+	target tmpCubemap +X : cubemap_target_SkyboxWorkspace4 { }
+	target tmpCubemap -X : cubemap_target_SkyboxWorkspace4 { }
+	target tmpCubemap +Y : cubemap_target_SkyboxWorkspace4 { }
+	target tmpCubemap -Y : cubemap_target_SkyboxWorkspace4 { }
+	target tmpCubemap +Z : cubemap_target_SkyboxWorkspace4 { }
+	target tmpCubemap -Z : cubemap_target_SkyboxWorkspace4
+	{
+		pass ibl_specular
+		{
+			input tmpCubemap
+			output cubemap
+		}
+	}
+}
+
+compositor_node CubemapRendererNode_SkyboxWorkspace5
+{
+	in 0 cubemap
+	
+	texture tmpCubemap target_width target_height target_format cubemap mipmaps 0
+
+	target tmpCubemap +X : cubemap_target_SkyboxWorkspace5 { }
+	target tmpCubemap -X : cubemap_target_SkyboxWorkspace5 { }
+	target tmpCubemap +Y : cubemap_target_SkyboxWorkspace5 { }
+	target tmpCubemap -Y : cubemap_target_SkyboxWorkspace5 { }
+	target tmpCubemap +Z : cubemap_target_SkyboxWorkspace5 { }
+	target tmpCubemap -Z : cubemap_target_SkyboxWorkspace5
+	{
+		pass ibl_specular
+		{
+			input tmpCubemap
+			output cubemap
+		}
+	}
+}
+
+compositor_node CubemapRendererNode_SkyboxWorkspace6
+{
+	in 0 cubemap
+	
+	texture tmpCubemap target_width target_height target_format cubemap mipmaps 0
+
+	target tmpCubemap +X : cubemap_target_SkyboxWorkspace6 { }
+	target tmpCubemap -X : cubemap_target_SkyboxWorkspace6 { }
+	target tmpCubemap +Y : cubemap_target_SkyboxWorkspace6 { }
+	target tmpCubemap -Y : cubemap_target_SkyboxWorkspace6 { }
+	target tmpCubemap +Z : cubemap_target_SkyboxWorkspace6 { }
+	target tmpCubemap -Z : cubemap_target_SkyboxWorkspace6
+	{
+		pass ibl_specular
+		{
+			input tmpCubemap
+			output cubemap
+		}
+	}
+}
+
+compositor_node CubemapRendererNode_SkyboxWorkspace7
+{
+	in 0 cubemap
+	
+	texture tmpCubemap target_width target_height target_format cubemap mipmaps 0
+
+	target tmpCubemap +X : cubemap_target_SkyboxWorkspace7 { }
+	target tmpCubemap -X : cubemap_target_SkyboxWorkspace7 { }
+	target tmpCubemap +Y : cubemap_target_SkyboxWorkspace7 { }
+	target tmpCubemap -Y : cubemap_target_SkyboxWorkspace7 { }
+	target tmpCubemap +Z : cubemap_target_SkyboxWorkspace7 { }
+	target tmpCubemap -Z : cubemap_target_SkyboxWorkspace7
+	{
+		pass ibl_specular
+		{
+			input tmpCubemap
+			output cubemap
+		}
+	}
+}
+
+compositor_node CubemapRendererNode_SkyboxWorkspace8
+{
+	in 0 cubemap
+	
+	texture tmpCubemap target_width target_height target_format cubemap mipmaps 0
+
+	target tmpCubemap +X : cubemap_target_SkyboxWorkspace8 { }
+	target tmpCubemap -X : cubemap_target_SkyboxWorkspace8 { }
+	target tmpCubemap +Y : cubemap_target_SkyboxWorkspace8 { }
+	target tmpCubemap -Y : cubemap_target_SkyboxWorkspace8 { }
+	target tmpCubemap +Z : cubemap_target_SkyboxWorkspace8 { }
+	target tmpCubemap -Z : cubemap_target_SkyboxWorkspace8
+	{
+		pass ibl_specular
+		{
+			input tmpCubemap
+			output cubemap
+		}
+	}
+}
+
+abstract target cubemap_target_shadow_skybox
+{
+	pass render_scene
+	{
+		load
+		{
+			all									clear
+			clear_colour_reverse_depth_aware	1 1 1 1
+		}
+		store
+		{
+			//We only care about the contents of the colour target with point shadows
+			depth			dont_care
+			stencil			dont_care
+		}
+		camera_cubemap_reorient true
+	}
+}
+
+compositor_node_shadow DynamicCubemapShadowNode
+{
+	technique pssm
+
+	texture atlas		2048 7168 PFG_D32_FLOAT
+	texture tmpCubemap	1024 1024 PFG_R32_FLOAT cubemap depth_format PFG_D32_FLOAT
+
+	num_splits		3
+	pssm_lambda		0.95
+	shadow_map 0 atlas uv 0.0 0.000000000000000 1.0 0.285714285714286 light 0 split 0
+	shadow_map 1 atlas uv 0.0 0.285714285714286 0.5 0.142857142857143 light 0 split 1
+	shadow_map 2 atlas uv 0.5 0.285714285714286 0.5 0.142857142857143 light 0 split 2
+
+	technique focused
+	shadow_map 3 atlas uv 0.0 0.428571428571429 1.0 0.285714285714286 light 1
+	shadow_map 4 atlas uv 0.0 0.714285714285714 1.0 0.285714285714286 light 2
+
+	target atlas
+	{
+		pass clear
+		{
+			colour_value 1 1 1 1
+		}
+	}
+
+	shadow_map_target_type directional
+	{
+		shadow_map 0 1 2
+		{
+			pass render_scene
+			{
+			}
+		}
+	}
+
+	shadow_map_target_type directional spot
+	{
+		shadow_map 3 4
+		{
+			pass render_scene
+			{
+			}
+		}
+	}
+
+	shadow_map_target_type point
+	{
+		shadow_map_repeat 3 4
+		{
+			target tmpCubemap +X : cubemap_target_shadow_skybox {}
+			target tmpCubemap -X : cubemap_target_shadow_skybox {}
+			target tmpCubemap +Y : cubemap_target_shadow_skybox {}
+			target tmpCubemap -Y : cubemap_target_shadow_skybox {}
+			target tmpCubemap +Z : cubemap_target_shadow_skybox {}
+			target tmpCubemap -Z : cubemap_target_shadow_skybox {}
+
+			shadow_map
+			{
+				pass render_quad
+				{
+					material Ogre/DPSM/CubeToDpsm
+					input 0 tmpCubemap
+				}
+			}
+		}
+	}
+}
+
+compositor_node DynamicCubemapRenderingSkyboxNode0
+{
+	texture rt0 target_width target_height target_format
+	//in 0 rt_renderwindow
+	in 0 demo_dynamic_cubemap
+
+	target rt0
+	{
+		//Render sky (see TutorialSky_Postprocess)
+		pass render_quad
+		{
+			load
+			{
+				all				clear
+				clear_colour	0 0 0 1
+			}
+			store
+			{
+			//	colour	store_or_resolve
+				depth			store_or_resolve
+				stencil			dont_care
+			}
+			quad_normals	camera_direction
+			material SkyPostprocess0
+		}
+		
+		pass render_scene
+		{
+			
+			store
+			{
+				//colour	store_or_resolve
+				depth			dont_care
+				stencil			dont_care
+			}
+			
+			//Our materials in this pass will be using this cubemap,
+			//so we need to expose it to the pass.
+			//Note: Even if it "just works" without exposing, the reason for
+			//exposing is to ensure compatibility with Vulkan & D3D12.
+			expose demo_dynamic_cubemap
+
+			shadows		DynamicCubemapShadowNode
+			overlays	off
+			rq_first	0
+			rq_last		200
+		}
+
+		//Render transparent stuff after sky
+		pass render_scene
+		{
+			store
+			{
+			//	colour			store_or_resolve
+				depth			dont_care
+				stencil			dont_care
+			}
+			overlays	on
+			rq_first	200
+		}
+	}
+	out 0 rt0
+}
+
+compositor_node DynamicCubemapRenderingSkyboxNode1
+{
+	texture rt0 target_width target_height target_format
+	//in 0 rt_renderwindow
+	in 0 demo_dynamic_cubemap
+
+	target rt0
+	{
+		//Render sky (see TutorialSky_Postprocess)
+		pass render_quad
+		{
+			load
+			{
+				all				clear
+				clear_colour	0 0 0 1
+			}
+			store
+			{
+			//	colour	store_or_resolve
+				depth			store_or_resolve
+				stencil			dont_care
+			}
+			quad_normals	camera_direction
+			material SkyPostprocess0
+		}
+		
+		pass render_scene
+		{
+			
+			store
+			{
+				//colour	store_or_resolve
+				depth			dont_care
+				stencil			dont_care
+			}
+			
+			//Our materials in this pass will be using this cubemap,
+			//so we need to expose it to the pass.
+			//Note: Even if it "just works" without exposing, the reason for
+			//exposing is to ensure compatibility with Vulkan & D3D12.
+			expose demo_dynamic_cubemap
+
+			shadows		DynamicCubemapShadowNode
+			overlays	off
+			rq_first	0
+			rq_last		200
+		}
+
+		//Render transparent stuff after sky
+		pass render_scene
+		{
+			store
+			{
+				depth			dont_care
+				stencil			dont_care
+			}
+			overlays	on
+			rq_first	200
+		}
+	}
+	out 0 rt0
+}
+
+compositor_node DynamicCubemapRenderingSkyboxNode2
+{
+	texture rt0 target_width target_height target_format
+	//in 0 rt_renderwindow
+	in 0 demo_dynamic_cubemap
+
+	target rt0
+	{
+		//Render sky (see TutorialSky_Postprocess)
+		pass render_quad
+		{
+			load
+			{
+				all				clear
+				clear_colour	0 0 0 1
+			}
+			store
+			{
+			//	colour	store_or_resolve
+				depth			store_or_resolve
+				stencil			dont_care
+			}
+			quad_normals	camera_direction
+			material SkyPostprocess0
+		}
+		
+		pass render_scene
+		{
+			
+			store
+			{
+				//colour	store_or_resolve
+				depth			dont_care
+				stencil			dont_care
+			}
+			
+			//Our materials in this pass will be using this cubemap,
+			//so we need to expose it to the pass.
+			//Note: Even if it "just works" without exposing, the reason for
+			//exposing is to ensure compatibility with Vulkan & D3D12.
+			expose demo_dynamic_cubemap
+
+			shadows		DynamicCubemapShadowNode
+			overlays	off
+			rq_first	0
+			rq_last		200
+		}
+
+		//Render transparent stuff after sky
+		pass render_scene
+		{
+			store
+			{
+				depth			dont_care
+				stencil			dont_care
+			}
+			overlays	on
+			rq_first	200
+		}
+	}
+	out 0 rt0
+}
+
+compositor_node DynamicCubemapRenderingSkyboxNode3
+{
+	texture rt0 target_width target_height target_format
+	//in 0 rt_renderwindow
+	in 0 demo_dynamic_cubemap
+
+	target rt0
+	{
+		//Render sky (see TutorialSky_Postprocess)
+		pass render_quad
+		{
+			load
+			{
+				all				clear
+				clear_colour	0 0 0 1
+			}
+			store
+			{
+			//	colour	store_or_resolve
+				depth			store_or_resolve
+				stencil			dont_care
+			}
+			quad_normals	camera_direction
+			material SkyPostprocess0
+		}
+		
+		pass render_scene
+		{
+			
+			store
+			{
+				//colour	store_or_resolve
+				depth			dont_care
+				stencil			dont_care
+			}
+			
+			//Our materials in this pass will be using this cubemap,
+			//so we need to expose it to the pass.
+			//Note: Even if it "just works" without exposing, the reason for
+			//exposing is to ensure compatibility with Vulkan & D3D12.
+			expose demo_dynamic_cubemap
+
+			shadows		DynamicCubemapShadowNode
+			overlays	off
+			rq_first	0
+			rq_last		200
+		}
+
+		//Render transparent stuff after sky
+		pass render_scene
+		{
+			store
+			{
+				depth			dont_care
+				stencil			dont_care
+			}
+			overlays	on
+			rq_first	200
+		}
+	}
+	out 0 rt0
+}
+
+compositor_node DynamicCubemapRenderingSkyboxNode4
+{
+	texture rt0 target_width target_height target_format
+	//in 0 rt_renderwindow
+	in 0 demo_dynamic_cubemap
+
+	target rt0
+	{
+		//Render sky (see TutorialSky_Postprocess)
+		pass render_quad
+		{
+			load
+			{
+				all				clear
+				clear_colour	0 0 0 1
+			}
+			store
+			{
+			//	colour	store_or_resolve
+				depth			store_or_resolve
+				stencil			dont_care
+			}
+			quad_normals	camera_direction
+			material SkyPostprocess0
+		}
+		
+		pass render_scene
+		{
+			
+			store
+			{
+				//colour	store_or_resolve
+				depth			dont_care
+				stencil			dont_care
+			}
+			
+			//Our materials in this pass will be using this cubemap,
+			//so we need to expose it to the pass.
+			//Note: Even if it "just works" without exposing, the reason for
+			//exposing is to ensure compatibility with Vulkan & D3D12.
+			expose demo_dynamic_cubemap
+
+			shadows		DynamicCubemapShadowNode
+			overlays	off
+			rq_first	0
+			rq_last		200
+		}
+
+		//Render transparent stuff after sky
+		pass render_scene
+		{
+			store
+			{
+				depth			dont_care
+				stencil			dont_care
+			}
+			overlays	on
+			rq_first	200
+		}
+	}
+	out 0 rt0
+}
+
+compositor_node DynamicCubemapRenderingSkyboxNode5
+{
+	texture rt0 target_width target_height target_format
+	//in 0 rt_renderwindow
+	in 0 demo_dynamic_cubemap
+
+	target rt0
+	{
+		//Render sky (see TutorialSky_Postprocess)
+		pass render_quad
+		{
+			load
+			{
+				all				clear
+				clear_colour	0 0 0 1
+			}
+			store
+			{
+			//	colour	store_or_resolve
+				depth			store_or_resolve
+				stencil			dont_care
+			}
+			quad_normals	camera_direction
+			material SkyPostprocess0
+		}
+		
+		pass render_scene
+		{
+			
+			store
+			{
+				//colour	store_or_resolve
+				depth			dont_care
+				stencil			dont_care
+			}
+			
+			//Our materials in this pass will be using this cubemap,
+			//so we need to expose it to the pass.
+			//Note: Even if it "just works" without exposing, the reason for
+			//exposing is to ensure compatibility with Vulkan & D3D12.
+			expose demo_dynamic_cubemap
+
+			shadows		DynamicCubemapShadowNode
+			overlays	off
+			rq_first	0
+			rq_last		200
+		}
+
+		//Render transparent stuff after sky
+		pass render_scene
+		{
+			store
+			{
+				depth			dont_care
+				stencil			dont_care
+			}
+			overlays	on
+			rq_first	200
+		}
+	}
+	out 0 rt0
+}
+
+compositor_node DynamicCubemapRenderingSkyboxNode6
+{
+	texture rt0 target_width target_height target_format
+	//in 0 rt_renderwindow
+	in 0 demo_dynamic_cubemap
+
+	target rt0
+	{
+		//Render sky (see TutorialSky_Postprocess)
+		pass render_quad
+		{
+			load
+			{
+				all				clear
+				clear_colour	0 0 0 1
+			}
+			store
+			{
+			//	colour	store_or_resolve
+				depth			store_or_resolve
+				stencil			dont_care
+			}
+			quad_normals	camera_direction
+			material SkyPostprocess0
+		}
+		
+		pass render_scene
+		{
+			
+			store
+			{
+				//colour	store_or_resolve
+				depth			dont_care
+				stencil			dont_care
+			}
+			
+			//Our materials in this pass will be using this cubemap,
+			//so we need to expose it to the pass.
+			//Note: Even if it "just works" without exposing, the reason for
+			//exposing is to ensure compatibility with Vulkan & D3D12.
+			expose demo_dynamic_cubemap
+
+			shadows		DynamicCubemapShadowNode
+			overlays	off
+			rq_first	0
+			rq_last		200
+		}
+
+		//Render transparent stuff after sky
+		pass render_scene
+		{
+			store
+			{
+				depth			dont_care
+				stencil			dont_care
+			}
+			overlays	on
+			rq_first	200
+		}
+	}
+	out 0 rt0
+}
+
+compositor_node DynamicCubemapRenderingSkyboxNode7
+{
+	texture rt0 target_width target_height target_format
+	//in 0 rt_renderwindow
+	in 0 demo_dynamic_cubemap
+
+	target rt0
+	{
+		//Render sky (see TutorialSky_Postprocess)
+		pass render_quad
+		{
+			load
+			{
+				all				clear
+				clear_colour	0 0 0 1
+			}
+			store
+			{
+			//	colour	store_or_resolve
+				depth			store_or_resolve
+				stencil			dont_care
+			}
+			quad_normals	camera_direction
+			material SkyPostprocess0
+		}
+		
+		pass render_scene
+		{
+			
+			store
+			{
+				//colour	store_or_resolve
+				depth			dont_care
+				stencil			dont_care
+			}
+			
+			//Our materials in this pass will be using this cubemap,
+			//so we need to expose it to the pass.
+			//Note: Even if it "just works" without exposing, the reason for
+			//exposing is to ensure compatibility with Vulkan & D3D12.
+			expose demo_dynamic_cubemap
+
+			shadows		DynamicCubemapShadowNode
+			overlays	off
+			rq_first	0
+			rq_last		200
+		}
+
+		//Render transparent stuff after sky
+		pass render_scene
+		{
+			store
+			{
+				depth			dont_care
+				stencil			dont_care
+			}
+			overlays	on
+			rq_first	200
+		}
+	}
+	out 0 rt0
+}
+
+compositor_node DynamicCubemapRenderingSkyboxNode8
+{
+	texture rt0 target_width target_height target_format
+	//in 0 rt_renderwindow
+	in 0 demo_dynamic_cubemap
+
+	target rt0
+	{
+		//Render sky (see TutorialSky_Postprocess)
+		pass render_quad
+		{
+			load
+			{
+				all				clear
+				clear_colour	0 0 0 1
+			}
+			store
+			{
+			//	colour	store_or_resolve
+				depth			store_or_resolve
+				stencil			dont_care
+			}
+			quad_normals	camera_direction
+			material SkyPostprocess0
+		}
+		
+		pass render_scene
+		{
+			
+			store
+			{
+				//colour	store_or_resolve
+				depth			dont_care
+				stencil			dont_care
+			}
+			
+			//Our materials in this pass will be using this cubemap,
+			//so we need to expose it to the pass.
+			//Note: Even if it "just works" without exposing, the reason for
+			//exposing is to ensure compatibility with Vulkan & D3D12.
+			expose demo_dynamic_cubemap
+
+			shadows		DynamicCubemapShadowNode
+			overlays	off
+			rq_first	0
+			rq_last		200
+		}
+
+		//Render transparent stuff after sky
+		pass render_scene
+		{
+			store
+			{
+				depth			dont_care
+				stencil			dont_care
+			}
+			overlays	on
+			rq_first	200
+		}
+	}
+	out 0 rt0
+}
+
+compositor_node SkyboxNode0
+{
+	texture rt0 target_width target_height target_format
+//	in 0 rt_renderwindow
+	
+	custom_id Hotshot/Skybox
+
+	target rt0
+	{
+		
+		pass clear
+		{
+			colour_value 0.0 0.0 0.0 1
+		}
+
+		//Render opaque stuff
+		pass render_scene
+		{
+			overlays	off
+			rq_first	0
+			rq_last		2
+		}
+		
+		//Render sky after opaque stuff (performance optimization)
+		pass render_quad
+		{
+			quad_normals	camera_direction
+			material SkyPostprocess0
+		}
+		
+		//Render transparent stuff after sky
+		pass render_scene
+		{
+			overlays	off
+			rq_first	2
+		}
+	}
+	out 0 rt0
+}
+
+compositor_node SkyboxNode1
+{
+	texture rt0 target_width target_height target_format
+//	in 0 rt_renderwindow
+	
+	custom_id Hotshot/Skybox
+
+	target rt0
+	{
+		
+		pass clear
+		{
+			colour_value 0.0 0.0 0.0 1
+		}
+
+		//Render opaque stuff
+		pass render_scene
+		{
+			overlays	off
+			rq_first	0
+			rq_last		2
+		}
+		
+		//Render sky after opaque stuff (performance optimization)
+		pass render_quad
+		{
+			quad_normals	camera_direction
+			material SkyPostprocess1
+		}
+		
+		//Render transparent stuff after sky
+		pass render_scene
+		{
+			overlays	off
+			rq_first	2
+		}
+	}
+	out 0 rt0
+}
+
+compositor_node SkyboxNode2
+{
+	texture rt0 target_width target_height target_format
+//	in 0 rt_renderwindow
+	
+	custom_id Hotshot/Skybox
+
+	target rt0
+	{
+		
+		pass clear
+		{
+			colour_value 0.0 0.0 0.0 1
+		}
+
+		//Render opaque stuff
+		pass render_scene
+		{
+			overlays	off
+			rq_first	0
+			rq_last		2
+		}
+		
+		//Render sky after opaque stuff (performance optimization)
+		pass render_quad
+		{
+			quad_normals	camera_direction
+			material SkyPostprocess2
+		}
+		
+		//Render transparent stuff after sky
+		pass render_scene
+		{
+			overlays	off
+			rq_first	2
+		}
+	}
+	out 0 rt0
+}
+
+compositor_node SkyboxNode3
+{
+	texture rt0 target_width target_height target_format
+//	in 0 rt_renderwindow
+	
+	custom_id Hotshot/Skybox
+
+	target rt0
+	{
+		
+		pass clear
+		{
+			colour_value 0.0 0.0 0.0 1
+		}
+
+		//Render opaque stuff
+		pass render_scene
+		{
+			overlays	off
+			rq_first	0
+			rq_last		2
+		}
+		
+		//Render sky after opaque stuff (performance optimization)
+		pass render_quad
+		{
+			quad_normals	camera_direction
+			material SkyPostprocess3
+		}
+		
+		//Render transparent stuff after sky
+		pass render_scene
+		{
+			overlays	off
+			rq_first	2
+		}
+	}
+	out 0 rt0
+}
+
+compositor_node SkyboxNode4
+{
+	texture rt0 target_width target_height target_format
+//	in 0 rt_renderwindow
+	
+	custom_id Hotshot/Skybox
+
+	target rt0
+	{
+		
+		pass clear
+		{
+			colour_value 0.0 0.0 0.0 1
+		}
+
+		//Render opaque stuff
+		pass render_scene
+		{
+			overlays	off
+			rq_first	0
+			rq_last		2
+		}
+		
+		//Render sky after opaque stuff (performance optimization)
+		pass render_quad
+		{
+			quad_normals	camera_direction
+			material SkyPostprocess4
+		}
+		
+		//Render transparent stuff after sky
+		pass render_scene
+		{
+			overlays	off
+			rq_first	2
+		}
+	}
+	out 0 rt0
+}
+
+compositor_node SkyboxNode5
+{
+	texture rt0 target_width target_height target_format
+//	in 0 rt_renderwindow
+	
+	custom_id Hotshot/Skybox
+
+	target rt0
+	{
+		
+		pass clear
+		{
+			colour_value 0.0 0.0 0.0 1
+		}
+
+		//Render opaque stuff
+		pass render_scene
+		{
+			overlays	off
+			rq_first	0
+			rq_last		2
+		}
+		
+		//Render sky after opaque stuff (performance optimization)
+		pass render_quad
+		{
+			quad_normals	camera_direction
+			material SkyPostprocess5
+		}
+		
+		//Render transparent stuff after sky
+		pass render_scene
+		{
+			overlays	off
+			rq_first	2
+		}
+	}
+	out 0 rt0
+}
+
+compositor_node SkyboxNode6
+{
+	texture rt0 target_width target_height target_format
+//	in 0 rt_renderwindow
+	
+	custom_id Hotshot/Skybox
+
+	target rt0
+	{
+		
+		pass clear
+		{
+			colour_value 0.0 0.0 0.0 1
+		}
+
+		//Render opaque stuff
+		pass render_scene
+		{
+			overlays	off
+			rq_first	0
+			rq_last		2
+		}
+		
+		//Render sky after opaque stuff (performance optimization)
+		pass render_quad
+		{
+			quad_normals	camera_direction
+			material SkyPostprocess6
+		}
+		
+		//Render transparent stuff after sky
+		pass render_scene
+		{
+			overlays	off
+			rq_first	2
+		}
+	}
+	out 0 rt0
+}
+
+compositor_node SkyboxNode7
+{
+	texture rt0 target_width target_height target_format
+//	in 0 rt_renderwindow
+	
+	custom_id Hotshot/Skybox
+
+	target rt0
+	{
+		
+		pass clear
+		{
+			colour_value 0.0 0.0 0.0 1
+		}
+
+		//Render opaque stuff
+		pass render_scene
+		{
+			overlays	off
+			rq_first	0
+			rq_last		2
+		}
+		
+		//Render sky after opaque stuff (performance optimization)
+		pass render_quad
+		{
+			quad_normals	camera_direction
+			material SkyPostprocess7
+		}
+		
+		//Render transparent stuff after sky
+		pass render_scene
+		{
+			overlays	off
+			rq_first	2
+		}
+	}
+	out 0 rt0
+}
+
+compositor_node SkyboxNode8
+{
+	texture rt0 target_width target_height target_format
+//	in 0 rt_renderwindow
+
+	custom_id Hotshot/Skybox
+
+	target rt0
+	{
+
+		pass clear
+		{
+			colour_value 0.0 0.0 0.0 1
+		}
+
+		//Render opaque stuff
+		pass render_scene
+		{
+			overlays	off
+			rq_first	0
+			rq_last		2
+		}
+
+		//Render sky after opaque stuff (performance optimization)
+		pass render_quad
+		{
+			quad_normals	camera_direction
+			material SkyPostprocess7
+		}
+
+		//Render transparent stuff after sky
+		pass render_scene
+		{
+			overlays	off
+			rq_first	2
+		}
+	}
+	out 0 rt0
+}
+
+workspace SkyboxWorkspace0
+{
+	//Cubemap on channel #1
+	connect_external 1 DynamicCubemapRenderingSkyboxNode0 0
+	
+	connect DynamicCubemapRenderingSkyboxNode0 0 SmaaNode 0
+	connect SkyboxSMAA_RenderingNode 0 SmaaNode 1
+
+	connect SmaaNode 0 DefaultFinalComposition 0
+	//Render Window on channel #0
+	connect_external 0 DefaultFinalComposition 1
+}
+
+workspace SkyboxWorkspace1
+{
+	//Cubemap on channel #1
+	connect_external 1 DynamicCubemapRenderingSkyboxNode1 0
+	
+	connect DynamicCubemapRenderingSkyboxNode1 0 SmaaNode 0
+	connect SkyboxSMAA_RenderingNode 0 SmaaNode 1
+
+	connect SmaaNode 0 DefaultFinalComposition 0
+	//Render Window on channel #0
+	connect_external 0 DefaultFinalComposition 1
+}
+
+workspace SkyboxWorkspace2
+{
+	//Cubemap on channel #1
+	connect_external 1 DynamicCubemapRenderingSkyboxNode2 0
+	
+	connect DynamicCubemapRenderingSkyboxNode2 0 SmaaNode 0
+	connect SkyboxSMAA_RenderingNode 0 SmaaNode 1
+
+	connect SmaaNode 0 DefaultFinalComposition 0
+	//Render Window on channel #0
+	connect_external 0 DefaultFinalComposition 1
+}
+
+workspace SkyboxWorkspace3
+{
+	//Cubemap on channel #1
+	connect_external 1 DynamicCubemapRenderingSkyboxNode3 0
+	
+	connect DynamicCubemapRenderingSkyboxNode3 0 SmaaNode 0
+	connect SkyboxSMAA_RenderingNode 0 SmaaNode 1
+
+	connect SmaaNode 0 DefaultFinalComposition 0
+	//Render Window on channel #0
+	connect_external 0 DefaultFinalComposition 1
+}
+
+workspace SkyboxWorkspace4
+{
+	//Cubemap on channel #1
+	connect_external 1 DynamicCubemapRenderingSkyboxNode4 0
+	
+	connect DynamicCubemapRenderingSkyboxNode4 0 SmaaNode 0
+	connect SkyboxSMAA_RenderingNode 0 SmaaNode 1
+
+	connect SmaaNode 0 DefaultFinalComposition 0
+	//Render Window on channel #0
+	connect_external 0 DefaultFinalComposition 1
+}
+
+workspace SkyboxWorkspace5
+{
+	//Cubemap on channel #1
+	connect_external 1 DynamicCubemapRenderingSkyboxNode5 0
+	
+	connect DynamicCubemapRenderingSkyboxNode5 0 SmaaNode 0
+	connect SkyboxSMAA_RenderingNode 0 SmaaNode 1
+
+	connect SmaaNode 0 DefaultFinalComposition 0
+	//Render Window on channel #0
+	connect_external 0 DefaultFinalComposition 1
+}
+
+workspace SkyboxWorkspace6
+{
+	//Cubemap on channel #1
+	connect_external 1 DynamicCubemapRenderingSkyboxNode6 0
+	
+	connect DynamicCubemapRenderingSkyboxNode6 0 SmaaNode 0
+	connect SkyboxSMAA_RenderingNode 0 SmaaNode 1
+
+	connect SmaaNode 0 DefaultFinalComposition 0
+	//Render Window on channel #0
+	connect_external 0 DefaultFinalComposition 1
+}
+
+workspace SkyboxWorkspace7
+{
+	//Cubemap on channel #1
+	connect_external 1 DynamicCubemapRenderingSkyboxNode7 0
+	
+	connect DynamicCubemapRenderingSkyboxNode7 0 SmaaNode 0
+	connect SkyboxSMAA_RenderingNode 0 SmaaNode 1
+
+	connect SmaaNode 0 DefaultFinalComposition 0
+	//Render Window on channel #0
+	connect_external 0 DefaultFinalComposition 1
+}
+
+workspace SkyboxWorkspace8
+{
+	//Cubemap on channel #1
+	connect_external 1 DynamicCubemapRenderingSkyboxNode8 0
+	
+	connect DynamicCubemapRenderingSkyboxNode8 0 SmaaNode 0
+	connect SkyboxSMAA_RenderingNode 0 SmaaNode 1
+
+	connect SmaaNode 0 DefaultFinalComposition 0
+	//Render Window on channel #0
+	connect_external 0 DefaultFinalComposition 1
+}

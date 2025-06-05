@@ -1,0 +1,26 @@
+compositor_node HotshotDefaultRenderingNode
+{
+	in 0 rt_renderwindow
+
+	target rt_renderwindow
+	{
+		
+		pass clear
+		{
+			colour_value 0.0 0.0 0.0 1
+		}
+
+		pass render_scene
+		{
+			overlays	on
+			//shadows		HotshotDefaultShadowNode
+		}
+	}
+}
+
+
+
+workspace HotshotDefaultWorkspace
+{
+	connect_output HotshotDefaultRenderingNode 0
+}
