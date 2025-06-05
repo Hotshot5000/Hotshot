@@ -6,7 +6,7 @@ COMING SOON!
 
 If you have questions, want to help, want to say hi, tell me how bad the code is, write an issue and I will get back to you.
 
-This is a mobile/desktop game where you pilot a spaceship from 1st or 3rd persone view and fight against AI or other players online.
+This is a mobile/desktop game where you pilot a spaceship from 1st or 3rd person view and fight against AI or other players online.
 Game code is mostly Java but most of the backend is C++.
 
 The base framework is libGDX to enable portability on iOS/Android and Windows but it has been extended with the following libs:
