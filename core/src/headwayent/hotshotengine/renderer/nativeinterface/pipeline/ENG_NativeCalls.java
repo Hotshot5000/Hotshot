@@ -217,6 +217,7 @@ public final class ENG_NativeCalls {
 //        OVERLAY_ELEMENT_UPDATE_DATA(order++),
         OVERLAY_ELEMENT_SET_MATERIAL_NAME(order++),
         OVERLAY_ELEMENT_SET_ALIGNMENT(order++),
+        OVERLAY_ELEMENT_SET_COLOR(order++),
 
         GPU_PROGRAM_PARAMS_GET_PROGRAM_PARAMS(order++),
         GPU_PROGRAM_PARAMS_SET_NAMED_CONSTANT_COLOUR(order++),
@@ -2094,6 +2095,12 @@ public final class ENG_NativeCalls {
         ENG_RenderingThread.writeByte(NativeCallsList.OVERLAY_ELEMENT_SET_ALIGNMENT.getCallPos());
         ENG_RenderingThread.writeLong(overlayElement.getPointer());
         ENG_RenderingThread.writeByte(alignment.getPos());
+    }
+
+    public static void overlayElement_setTextColour(ENG_TextAreaOverlayElement overlayElement, ENG_ColorValue colour) {
+        ENG_RenderingThread.writeByte(NativeCallsList.OVERLAY_ELEMENT_SET_COLOR.getCallPos());
+        ENG_RenderingThread.writeLong(overlayElement.getPointer());
+        writeColour(colour);
     }
 
     public static void gpuProgramParams_getProgramParams(final ENG_GpuProgramParameters params, //ENG_NativePointerWithSetter ptr,

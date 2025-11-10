@@ -8,13 +8,15 @@
 
 package headwayent.hotshotengine;
 
-import com.google.common.base.CharMatcher;
+//import com.google.common.base.CharMatcher;
 
 public class ENG_StringUtility {
 
-    public static boolean isASCII(char c) {
-        return CharMatcher.ascii().matches(c);
-    }
+    // This does not exist in Guava 18 and we can't use 21 as it crashes in iOS build.
+    // Checkout core/build.gradle for the longer explanation.
+//    public static boolean isASCII(char c) {
+//        return CharMatcher.ascii().matches(c);
+//    }
 
     public static boolean isWordCharacter(char c) {
         return (c >= 'A' && c <= 'Z') || (c >= 'a' && c <= 'z') ||

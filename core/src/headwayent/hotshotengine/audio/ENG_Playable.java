@@ -25,6 +25,8 @@ public interface ENG_Playable {
 
     ENG_Vector4D getEntityVelocity();
 
+    ENG_Vector4D getFrontVec();
+
     float getDopplerFactor();
 
     float getMaxSoundSpeed();

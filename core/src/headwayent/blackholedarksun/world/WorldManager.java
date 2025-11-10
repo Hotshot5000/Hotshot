@@ -10,7 +10,6 @@ package headwayent.blackholedarksun.world;
 
 import com.artemis.Entity;
 
-import games.rednblack.miniaudio.MAAttenuationModel;
 import headwayent.blackholedarksun.*;
 import headwayent.blackholedarksun.animations.PlayerShipDeathCamAnimation;
 import headwayent.blackholedarksun.animations.ProjectileExplosionAnimation;
@@ -26,6 +25,7 @@ import headwayent.blackholedarksun.parser.ast.InitialConds;
 import headwayent.blackholedarksun.physics.EntityMotionState;
 import headwayent.blackholedarksun.physics.PhysicsProperties;
 import headwayent.blackholedarksun.physics.PlayerShipMotionState;
+import headwayent.blackholedarksun.systems.helper.ai.skynet.SquadManager;
 import headwayent.hotshotengine.*;
 import headwayent.hotshotengine.audio.ENG_Playable;
 import headwayent.hotshotengine.renderer.*;
@@ -305,6 +305,7 @@ public abstract class WorldManager extends WorldManagerBase {
                 gameWorld.getSystem(MovementSystem.class).destroyThreads();
             }
         }
+        SquadManager.getInstance().reset();
     }
 
     /** @noinspection deprecation*/
@@ -565,6 +566,14 @@ public abstract class WorldManager extends WorldManagerBase {
         getClosestObject(pos, cargoIdList.iterator(), data);
     }
 
+    public void initializeAmbientSounds() {
+        Level level = (Level) gameWorld.getCurrentLevel();
+        for (AmbientPlayable ambientSound : level.levelStart.ambientSounds) {
+            playSoundBasedOnDistance(ambientSound, ambientSound.getSoundName(), true, false);
+        }
+
+    }
+
     private float getSoundPan(EntityProperties playerShipEntityProperties,
                               ENG_Playable playable) {
         ENG_Matrix4 transform = playerShipEntityProperties.getNode()
@@ -597,7 +606,12 @@ public abstract class WorldManager extends WorldManagerBase {
             EntityProperties playerShipEntityProperties = null;
             if (playerShip != null) {
                 playerShipEntityProperties = entityPropertiesComponentMapper.get(playerShip);
-                listeningNode = playerShipEntityProperties.getNode();
+                CameraProperties playerShipCameraProperties = cameraPropertiesComponentMapper.get(playerShip);
+                if (playerShipCameraProperties.getType() == CameraType.FIRST_PERSON) {
+                    listeningNode = playerShipEntityProperties.getNode();
+                } else {
+                    listeningNode = cameraNode;
+                }
             } else {
                 if (!isCameraNodeAvailable()) return;
                 listeningNode = cameraNode;
@@ -625,7 +639,7 @@ public abstract class WorldManager extends WorldManagerBase {
                     } else {
 //                        System.out.println("Updating sound: " + sound.name + " for node: " + playable.getSceneNode().getName() + " playId: " + sound.id);
                         soundRoot.setSoundPosition(sound.id, playable.getPosition());
-                        soundRoot.setSoundFrontDirection(sound.id, playable.getSceneNode().getLocalInverseZAxis());
+                        soundRoot.setSoundFrontDirection(sound.id, playable.getFrontVec());
                         ENG_Vector4D soundVelocity = playable.getEntityVelocity().divAsVec(new ENG_Vector4D(1.0f, 1.0f,
                                 sound.maxSoundSpeed * ENG_SoundManager.MINIAUDIO_3D_SOUND_SPEED_ATTENUATION, 0.0f));
                         ENG_Vector4D orientedSoundVelocity = playable.getOrientation().mul(soundVelocity);
@@ -719,6 +733,18 @@ public abstract class WorldManager extends WorldManagerBase {
         }
     }
 
+    public Sound playSoundFromCameraNode(String soundName) {
+        return playSoundFromCameraNode(soundName, false, false);
+    }
+
+    public Sound playSoundFromCameraNode(String soundName, boolean loop, boolean startOnProximity) {
+        if (cameraNode == null) {
+            System.out.println("cameraNode == null when playing sound: " + soundName);
+            return null;
+        }
+        return playSoundBasedOnDistance(new CameraNodePlayable(cameraNode), soundName, loop, startOnProximity);
+    }
+
     public Sound playSoundBasedOnDistance(ENG_Playable playable,
                                           String soundName) {
         return playSoundBasedOnDistance(playable, soundName, false, false);
@@ -745,7 +771,7 @@ public abstract class WorldManager extends WorldManagerBase {
             // We are in a cutscene and don't have a player ship so we use the camera node.
             if (cameraNode == null) {
                 Level level = (Level) gameWorld.getCurrentLevel();
-                if (level.cutsceneActive) {
+                if (level != null && level.cutsceneActive) {
                     throw new NullPointerException("cameraNode has not been initialized");
                 } else {
                     return false;
@@ -760,11 +786,27 @@ public abstract class WorldManager extends WorldManagerBase {
         return true;
     }
 
+    /**
+     *
+     * @param listeningNode only used for non-MiniAudio3D
+     * @param playable
+     * @param soundName
+     * @return
+     */
     public Sound playSoundBasedOnDistance(ENG_SceneNode listeningNode, ENG_Playable playable,
                                           String soundName) {
         return playSoundBasedOnDistance(listeningNode, playable, soundName,false, false);
     }
 
+    /**
+     *
+     * @param listeningNode only used for non-MiniAudio3D
+     * @param playable
+     * @param soundName
+     * @param loop
+     * @param startOnProximity
+     * @return
+     */
     public Sound playSoundBasedOnDistance(ENG_SceneNode listeningNode, ENG_Playable playable,
                                           String soundName, boolean loop, boolean startOnProximity) {
         ENG_ISoundRoot soundRoot = MainApp.getGame().getSound();

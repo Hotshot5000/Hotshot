@@ -159,6 +159,27 @@ public class Utility {
 //    private static ENG_Vector4D inertia = new ENG_Vector4D();
     private static final Vector3 btTorque = new Vector3();
 
+    public static void applyTorque(EntityProperties entityProperties, ENG_Vector4D torque) {
+        btTorque.set(torque.x, torque.y, torque.z);
+        entityProperties.getRigidBody().applyTorqueImpulse(btTorque);
+
+        if (MainActivity.isDebugmode()) {
+            if (torque.isNaN()) {
+                throw new IllegalArgumentException("torque is NAN");
+            }
+        }
+    }
+
+    public static void applyTorqueParallel(EntityProperties entityProperties, ENG_Vector4D torque) {
+        entityProperties.getRigidBody().applyTorqueImpulse(new Vector3(torque.x, torque.y, torque.z));
+
+        if (MainActivity.isDebugmode()) {
+            if (torque.isNaN()) {
+                throw new IllegalArgumentException("torque is NAN");
+            }
+        }
+    }
+
     public static void rotateToPosition(ENG_Vector4D currentFrontVec, ENG_Vector4D destVec, float updateInterval,
                                         EntityProperties entityProperties, float maxAngularVelocity) {
         ENG_Math.rotateToPositionTorque(currentFrontVec, destVec, updateInterval, torque, maxAngularVelocity);

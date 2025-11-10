@@ -239,6 +239,7 @@ enum NativeCallsList {
 //        OVERLAY_ELEMENT_UPDATE_DATA,
     OVERLAY_ELEMENT_SET_MATERIAL_NAME,
     OVERLAY_ELEMENT_SET_ALIGNMENT,
+    OVERLAY_ELEMENT_SET_COLOR,
 
     GPU_PROGRAM_PARAMS_GET_PROGRAM_PARAMS,
     GPU_PROGRAM_PARAMS_SET_NAMED_CONSTANT_COLOUR,
@@ -2669,6 +2670,16 @@ void extractMessages(JNIEnv *env, char* buf, char* frameIdPos)
                 overlayElement->setAlignment(alignment);
             }
                 break;
+			case OVERLAY_ELEMENT_SET_COLOR:
+			{
+                BufferRead<long long> bufferReadLong;
+                alignPointer(&buf, 4);
+                long long int overlayElementPtr = bufferReadLong.read(&buf);
+                Ogre::v1::TextAreaOverlayElement* overlayElement = (Ogre::v1::TextAreaOverlayElement*)overlayElementPtr;
+                const Ogre::ColourValue& col = readColour(&buf);
+                overlayElement->setColour(col);
+			}
+				break;
             case GPU_PROGRAM_PARAMS_GET_PROGRAM_PARAMS:
             {
                 BufferRead<long long> bufferReadLong;

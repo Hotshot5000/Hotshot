@@ -43,6 +43,7 @@ import headwayent.blackholedarksun.physics.PhysicsProperties;
 import headwayent.blackholedarksun.physics.PhysicsUtility;
 import headwayent.blackholedarksun.systems.FollowingShipCounterResetSystem;
 import headwayent.blackholedarksun.systems.MovementSystem;
+import headwayent.blackholedarksun.systems.helper.ai.skynet.SquadManager;
 import headwayent.hotshotengine.*;
 import headwayent.hotshotengine.renderer.ENG_Item;
 import headwayent.hotshotengine.renderer.ENG_SceneNode;
@@ -136,6 +137,7 @@ public class WorldManagerServerSide extends WorldManagerBase {
         cutsceneMap.clear();
 //        availableNameList.clear();
         gameWorld.getSystem(MovementSystem.class).destroyThreads();
+        SquadManager.getInstance().reset();
     }
 
     @Override

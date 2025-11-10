@@ -171,6 +171,27 @@ public class WeaponData extends EntityData {
             throw new IllegalArgumentException("Invalid weapon type");
         }
 
+        public static int getWeaponLowAmmo(WeaponType wpn) {
+            switch (wpn) {
+                case LASER_GREEN:
+                case LASER_RED:
+                case LASER_GREEN_QUAD:
+                case LASER_RED_QUAD:
+                    return -1;
+                case CONCUSSION:
+                    return 3;
+                case HOMING:
+                    return 3;
+                case MEGA:
+                    return 1;
+                case PLASMA:
+                    return 25;
+                case PIRANHA:
+                    return 3;
+            }
+            throw new IllegalArgumentException("Invalid weapon type");
+        }
+
         public static int getDefaultMissileNumber(WeaponType wpn) {
             return weaponMap.get(wpn).defaultMissileNumber;
         }

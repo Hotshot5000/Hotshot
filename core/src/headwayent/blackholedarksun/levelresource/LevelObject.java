@@ -83,4 +83,9 @@ public class LevelObject {
     public long userId;
     public int waypointSectorId;
     public int waypointId;
+    public int squadNum = -1;
+    public float squadMinDistance = 500.0f;
+    public float squadMaxDistance = 2000.0f;
+    public String squadName;
+    public boolean squadLeader;
 }

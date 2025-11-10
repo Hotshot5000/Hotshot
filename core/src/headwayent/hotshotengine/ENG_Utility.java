@@ -32,6 +32,8 @@ import java.nio.*;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.util.ArrayList;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
 public class ENG_Utility {
@@ -2724,6 +2726,43 @@ public class ENG_Utility {
                 o.wait(1);
             } catch (InterruptedException ignored) {
             }
+        }
+    }
+
+    public interface LockExecutor {
+        void execute();
+    }
+
+    public static void executeWithLock(Lock lock, LockExecutor executor) {
+        lock.lock();
+        try {
+            executor.execute();
+        } finally {
+            lock.unlock();
+        }
+    }
+
+    public static void executeWithTryLock(Lock lock, LockExecutor executor) {
+        if (lock.tryLock()) {
+            try {
+                executor.execute();
+            } finally {
+                lock.unlock();
+            }
+        }
+    }
+
+    public static void executeWithTryLock(Lock lock, long time, TimeUnit timeUnit, LockExecutor executor) {
+        try {
+            if (lock.tryLock(time, timeUnit)) {
+                try {
+                    executor.execute();
+                } finally {
+                    lock.unlock();
+                }
+            }
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
         }
     }
 }

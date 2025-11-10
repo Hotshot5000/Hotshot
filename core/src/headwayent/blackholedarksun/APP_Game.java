@@ -1324,6 +1324,10 @@ public abstract class APP_Game extends ENG_GameDescription {
         this.accelerometerEnabled.set(accelerometerEnabled);
     }
 
+    /**
+     * This should never be used if MINIAUDIO_3D is enabled.
+     */
+    @Deprecated
     public void playSoundMaxVolume(String name) {
 //		soundRoot.setVolume(name, 100);
         soundRoot.playSound(name, PlayType.PLAY_ONCE);

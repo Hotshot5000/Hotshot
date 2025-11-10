@@ -13,7 +13,6 @@ import com.artemis.Entity;
 
 import java.util.ArrayList;
 
-import headwayent.blackholedarksun.MainApp;
 import headwayent.blackholedarksun.components.EntityProperties;
 import headwayent.blackholedarksun.components.ShipProperties;
 import headwayent.blackholedarksun.gamestatedebugger.FrameInterval;
@@ -45,8 +44,6 @@ import headwayent.hotshotengine.ENG_Math;
 import headwayent.hotshotengine.ENG_Quaternion;
 import headwayent.hotshotengine.ENG_Utility;
 import headwayent.hotshotengine.ENG_Vector3D;
-import headwayent.hotshotengine.ENG_Vector4D;
-import headwayent.hotshotengine.audio.ENG_Playable;
 import headwayent.hotshotengine.renderer.ENG_RenderRoot;
 import headwayent.hotshotengine.renderer.ENG_SceneManager;
 import headwayent.hotshotengine.renderer.ENG_SceneNode;
@@ -357,60 +354,15 @@ public class CutsceneEventDispatcher extends AbstractEventDispatcher {
             if (event.getPlaySound() != null && !event.getPlaySound().isExecuted()) {
                 PlaySound playSound = event.getPlaySound();
                 if (playSound.getSoundName() != null) {
-                    MainApp.getGame().playSoundMaxVolume(playSound.getSoundName());
+                    // TODO With MiniAudio3D you can't simply play a sound without a position.
+//                    MainApp.getGame().playSoundMaxVolume(playSound.getSoundName());
                 } else if (playSound.getObjName() != null) {
                     Entity levelObject = worldManager.getLevelObject(playSound.getObjName());
                     ComponentMapper<EntityProperties> entityPropertiesComponentMapper = worldManager.getEntityPropertiesComponentMapper();
                     EntityProperties entityProperties = entityPropertiesComponentMapper.get(levelObject);
                     worldManager.playSoundBasedOnDistance(entityProperties, playSound.getSoundName());
                 } else if (playSound.getSoundPos() != null) {
-                    worldManager.playSoundBasedOnDistance(cameraNode, new ENG_Playable() {
-
-                        @Override
-                        public String getName() {
-                            return cameraNode.getName();
-                        }
-
-                        @Override
-                        public ENG_Vector4D getPosition() {
-                            return cameraNode.getPosition();
-                        }
-
-                        @Override
-                        public void getPosition(ENG_Vector4D position) {
-                            position.set(cameraNode.getPositionForNative());
-                        }
-
-                        @Override
-                        public ENG_Quaternion getOrientation() {
-                            return cameraNode.getOrientation();
-                        }
-
-                        @Override
-                        public void getOrientation(ENG_Quaternion orientation) {
-                            orientation.set(cameraNode.getOrientationForNative());
-                        }
-
-                        @Override
-                        public ENG_SceneNode getSceneNode() {
-                            return cameraNode;
-                        }
-
-                        @Override
-                        public ENG_Vector4D getEntityVelocity() {
-                            return ENG_Math.VEC4_ZERO;
-                        }
-
-                        @Override
-                        public float getDopplerFactor() {
-                            return 1.0f;
-                        }
-
-                        @Override
-                        public float getMaxSoundSpeed() {
-                            return 1.0f;
-                        }
-                    }, playSound.getSoundName());
+                    worldManager.playSoundBasedOnDistance(cameraNode, new WorldManagerBase.CameraNodePlayable(cameraNode), playSound.getSoundName());
                 } else {
                     throw new IllegalStateException("No valid param for playing sound");
                 }

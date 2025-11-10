@@ -9,6 +9,9 @@
 package headwayent.blackholedarksun.components;
 
 import headwayent.blackholedarksun.systems.AISystem.VelocityChange;
+import headwayent.blackholedarksun.systems.helper.ai.WaypointSystem;
+import headwayent.blackholedarksun.systems.helper.ai.skynet.SquadMemberProperties;
+import headwayent.hotshotengine.ENG_Math;
 import headwayent.hotshotengine.ENG_Utility;
 import headwayent.hotshotengine.ENG_Vector4D;
 import headwayent.hotshotengine.basictypes.ENG_Integer;
@@ -22,11 +25,16 @@ public class AIProperties extends Component {
 
     public enum AIState {
         SEEK_CLOSEST_PLAYER, FOLLOW_PLAYER, SHOOT_PLAYER, EVADE_MISSILE,
-        COLLISION_RESPONSE, EVADE_HIT, FOLLOW_PLAYER_SHIP, EVADE_LEVEL_LIMITS, REACH_DESTINATION
+        COLLISION_RESPONSE, EVADE_HIT, FOLLOW_PLAYER_SHIP, EVADE_LEVEL_LIMITS, REACH_DESTINATION,
+        FOLLOW_SQUAD_LEADER
     }
 
     public enum AIWaypointState {
         NONE, MOVING_TO_ENTRANCE, MOVING_TO_EXIT, MOVING_TO_WAYPOINT_DESTINATION
+    }
+
+    public enum AISquadState {
+        NONE, IN_SQUAD, LEFT_SQUAD_TEMPORARILY, LEFT_SQUAD_PERMANENTLY, REJOINING_SQUAD
     }
 
     private AIState state = AIState.SEEK_CLOSEST_PLAYER;
@@ -109,6 +117,17 @@ public class AIProperties extends Component {
 
     private String entityName;
     private int setStateNum;
+
+    private int squadNum = -1;
+    private float squadMinDistance;
+    private float squadMaxDistance;
+    private boolean squadLeader;
+    // We can temporarily leave the squad if attacked. Not implemented yet. Should we keep the squadNum while
+    // the AI has left the squad to come back later?
+    private AISquadState squadState = AISquadState.NONE; // If the squad has already been left there is no need to remove it again.
+    private SquadMemberProperties squadMemberProperties = null;
+    private ENG_Vector4D squadFinalTorque = new ENG_Vector4D();
+    private float squadVelocity;
 
 //    private boolean ignoreAI; // Used during portal exit so it doesn't look around
 
@@ -770,7 +789,9 @@ public class AIProperties extends Component {
 //        exitWaypointId = 0;
         waypointChainToEvasionWaypoint = null;
         waypointChainToEvasionWaypointCurrentIndex = 0;
-        System.out.println("resetWaypointData()");
+        if (WaypointSystem.DEBUG) {
+            System.out.println("resetWaypointData()");
+        }
     }
 
     public ClosestNotMeRayResultCallback getRayResultCallback() {
@@ -779,6 +800,78 @@ public class AIProperties extends Component {
 
     public void setRayResultCallback(ClosestNotMeRayResultCallback rayResultCallback) {
         this.rayResultCallback = rayResultCallback;
+    }
+
+    public int getSquadNum() {
+        return squadNum;
+    }
+
+    public void setSquadNum(int squadNum) {
+        this.squadNum = squadNum;
+    }
+
+    public boolean isSquadLeader() {
+        return squadLeader;
+    }
+
+    public void setSquadLeader(boolean squadLeader) {
+        this.squadLeader = squadLeader;
+    }
+
+    public AISquadState getSquadState() {
+        return squadState;
+    }
+
+    public void setSquadState(AISquadState squadState) {
+        this.squadState = squadState;
+    }
+
+    public float getSquadMinDistance() {
+        return squadMinDistance;
+    }
+
+    public void setSquadMinDistance(float squadMinDistance) {
+        this.squadMinDistance = squadMinDistance;
+    }
+
+    public float getSquadMaxDistance() {
+        return squadMaxDistance;
+    }
+
+    public void setSquadMaxDistance(float squadMaxDistance) {
+        this.squadMaxDistance = squadMaxDistance;
+    }
+
+    public SquadMemberProperties getSquadMemberProperties() {
+        return squadMemberProperties;
+    }
+
+    public void setSquadMemberProperties(SquadMemberProperties squadMemberProperties) {
+        this.squadMemberProperties = squadMemberProperties;
+    }
+
+    public void getSquadFinalTorque(ENG_Vector4D finalTorque) {
+        finalTorque.set(squadFinalTorque);
+    }
+
+    public ENG_Vector4D getSquadFinalTorque() {
+        return squadFinalTorque;
+    }
+
+    public void setSquadFinalTorque(ENG_Vector4D squadFinalTorque) {
+        this.squadFinalTorque.set(squadFinalTorque);
+    }
+
+    public void resetSquadFinalTorque() {
+        squadFinalTorque.set(ENG_Math.PT4_ZERO);
+    }
+
+    public float getSquadVelocity() {
+        return squadVelocity;
+    }
+
+    public void setSquadVelocity(float squadVelocity) {
+        this.squadVelocity = squadVelocity;
     }
 
     //		public boolean isIgnoreAI() {

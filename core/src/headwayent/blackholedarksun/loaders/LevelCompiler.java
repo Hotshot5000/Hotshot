@@ -8,6 +8,7 @@
 
 package headwayent.blackholedarksun.loaders;
 
+import headwayent.blackholedarksun.audio.LevelPlayable;
 import headwayent.blackholedarksun.entitydata.ShipData;
 import headwayent.blackholedarksun.levelresource.*;
 import headwayent.blackholedarksun.levelresource.LevelEndCond.EndCondType;
@@ -19,7 +20,12 @@ import headwayent.blackholedarksun.levelresource.levelmesh.LevelMesh;
 import headwayent.blackholedarksun.levelresource.levelmesh.LevelPortal;
 import headwayent.blackholedarksun.levelresource.levelmesh.LevelZone;
 import headwayent.blackholedarksun.systems.helper.ai.WaypointTable;
+import headwayent.blackholedarksun.world.WorldManagerBase;
+import headwayent.hotshotengine.ENG_Aabb;
+import headwayent.hotshotengine.ENG_Vector3D;
+import headwayent.hotshotengine.ENG_Vector4D;
 import headwayent.hotshotengine.exception.ENG_InvalidFormatParsingException;
+import headwayent.hotshotengine.exception.ENG_ParsingException;
 import headwayent.hotshotengine.renderer.ENG_Light;
 import headwayent.hotshotengine.resource.ENG_Resource;
 import headwayent.hotshotengine.scriptcompiler.ENG_AbstractCompiler;
@@ -27,6 +33,7 @@ import headwayent.hotshotengine.scriptcompiler.ENG_CompilerUtil;
 
 import java.io.DataInputStream;
 import java.util.ArrayList;
+import java.util.Collection;
 
 public class LevelCompiler extends ENG_AbstractCompiler<LevelBase> {
 
@@ -64,6 +71,12 @@ public class LevelCompiler extends ENG_AbstractCompiler<LevelBase> {
     private static final String OBJECT_INVINCIBLE = "invincible";
     private static final String OBJECT_DESTINATION = "destination";
     private static final String OBJECT_REACH_DESTINATION = "reach_destination";
+
+    private static final String OBJECT_SQUAD = "squad";
+    private static final String OBJECT_SQUAD_LEADER = "squad_leader";
+    private static final String OBJECT_SQUAD_MIN_DISTANCE = "squad_leader_min_distance";
+    private static final String OBJECT_SQUAD_MAX_DISTANCE = "squad_leader_max_distance";
+    private static final String OBJECT_SQUAD_NAME = "squad_name";
 
     private static final String START_SKYBOX = "skybox";
     private static final String START_LIGHT_DIR = "light_dir";
@@ -109,11 +122,27 @@ public class LevelCompiler extends ENG_AbstractCompiler<LevelBase> {
     private static final String START_LEVEL_PORTAL = "portal";
     private static final String START_LEVEL_PORTAL_TYPE = "type";
     private static final String START_LEVEL_PORTAL_CORNERS = "corners";
+    private static final String START_AMBIENT_SOUNDS = "ambient_sounds";
+    private static final String START_LEVEL_SOUNDS = "level_sounds";
 
     private static final String SPAWN_POINT = "spawn_point";
     private static final String SPAWN_POINT_TYPE = "type";
     private static final String SPAWN_POINT_POSITION = "position";
     private static final String SPAWN_POINT_ORIENTATION = "orientation";
+
+    private static final String AMBIENT_SOUND = "ambient_sound";
+    private static final String AMBIENT_SOUND_NAME = "sound_name";
+    private static final String AMBIENT_PLAYABLE_NAME = "playable_name";
+    private static final String AMBIENT_BOX_CENTER = "box_center";
+    private static final String AMBIENT_BOX_HALF_SIZE = "box_half_size";
+    private static final String AMBIENT_SOUND_POSITION = "sound_position";
+
+    private static final String LEVEL_SOUND = "level_sound";
+    private static final String LEVEL_PLAYABLE_NAME = "playable_name";
+    private static final String LEVEL_SOUND_POSITION = "sound_position";
+    private static final String LEVEL_DOPPLER_FACTOR = "doppler_factor";
+    private static final String LEVEL_MAX_SOUND_SPEED = "max_sound_speed";
+    private static final String LEVEL_FRONT_VEC = "front_vec";
 
     private static final String EVENT_PREVIOUS_END_COND = "previous_end_cond";
     private static final String EVENT_PREV_CONDS = "prev_conds";
@@ -166,6 +195,135 @@ public class LevelCompiler extends ENG_AbstractCompiler<LevelBase> {
 
     public LevelCompiler(boolean multiplayer) {
         this.multiplayer = multiplayer;
+    }
+
+    private LevelPlayable parseLevelSound(DataInputStream fp0) {
+        String s;
+        s = ENG_CompilerUtil.getNextWord(fp0);
+        checkNull(s);
+        LevelPlayable levelPlayable = new LevelPlayable();
+        levelPlayable.setName(s);
+        s = ENG_CompilerUtil.getNextWord(fp0);
+        checkNull(s);
+        if (s.equalsIgnoreCase(BRACKET_OPEN)) {
+            incrementBracketLevel();
+        } else {
+            throw new ENG_InvalidFormatParsingException("bracket after start mandatory");
+        }
+        boolean playableNameSet = false;
+        ENG_Vector4D soundPosition = null;
+        while ((s = ENG_CompilerUtil.getNextWord(fp0)) != null) {
+            if (s.equalsIgnoreCase(LEVEL_PLAYABLE_NAME)) {
+                s = ENG_CompilerUtil.getNextWord(fp0);
+                checkNull(s);
+                levelPlayable.setSoundName(s);
+                playableNameSet = true;
+            } else if (s.equalsIgnoreCase(LEVEL_SOUND_POSITION)) {
+                soundPosition = getVector3D(fp0);
+                soundPosition.w = 1.0f;
+            } else if (s.equalsIgnoreCase(LEVEL_DOPPLER_FACTOR)) {
+
+            } else if (s.equalsIgnoreCase(LEVEL_MAX_SOUND_SPEED)) {
+
+            } else if (s.equalsIgnoreCase(LEVEL_FRONT_VEC)) {
+
+            } else if (s.equalsIgnoreCase(BRACKET_CLOSE)) {
+                decrementBracketLevel();
+                break;
+            }
+        }
+        if (playableNameSet && soundPosition != null) {
+            levelPlayable.setPosition(soundPosition);
+            return levelPlayable;
+        }
+        throw new ENG_ParsingException("Level sound does not contain all elements");
+    }
+
+    private ArrayList<LevelPlayable> parseLevelSounds(DataInputStream fp0) {
+        String s;
+        s = ENG_CompilerUtil.getNextWord(fp0);
+        checkNull(s);
+        if (s.equalsIgnoreCase(BRACKET_OPEN)) {
+            incrementBracketLevel();
+        } else {
+            throw new ENG_InvalidFormatParsingException("Bracket mandatory after " +
+                    "level sounds");
+        }
+        ArrayList<LevelPlayable> sounds = new ArrayList<>();
+        while ((s = ENG_CompilerUtil.getNextWord(fp0)) != null) {
+            if (s.equalsIgnoreCase(LEVEL_SOUND)) {
+                sounds.add(parseLevelSound(fp0));
+            } else if (s.equalsIgnoreCase(BRACKET_CLOSE)) {
+                decrementBracketLevel();
+                break;
+            }
+        }
+        return sounds;
+    }
+
+    private WorldManagerBase.AmbientPlayable parseAmbientSound(DataInputStream fp0) {
+        String s;
+        s = ENG_CompilerUtil.getNextWord(fp0);
+        checkNull(s);
+        WorldManagerBase.AmbientPlayable ambientPlayable = new WorldManagerBase.AmbientPlayable();
+        ambientPlayable.setName(s);
+        s = ENG_CompilerUtil.getNextWord(fp0);
+        checkNull(s);
+        if (s.equalsIgnoreCase(BRACKET_OPEN)) {
+            incrementBracketLevel();
+        } else {
+            throw new ENG_InvalidFormatParsingException("bracket after start mandatory");
+        }
+        boolean playableNameSet = false;
+        ENG_Vector4D boxCenter = null;
+        ENG_Vector4D boxHalfSize = null;
+        ENG_Vector4D soundPosition = null;
+        while ((s = ENG_CompilerUtil.getNextWord(fp0)) != null) {
+            if (s.equalsIgnoreCase(AMBIENT_PLAYABLE_NAME)) {
+                s = ENG_CompilerUtil.getNextWord(fp0);
+                checkNull(s);
+                ambientPlayable.setSoundName(s);
+                playableNameSet = true;
+            } else if (s.equalsIgnoreCase(AMBIENT_BOX_CENTER)) {
+                boxCenter = getVector3D(fp0);
+            } else if (s.equalsIgnoreCase(AMBIENT_BOX_HALF_SIZE)) {
+                boxHalfSize = getVector3D(fp0);
+            } else if (s.equalsIgnoreCase(AMBIENT_SOUND_POSITION)) {
+                soundPosition = getVector3D(fp0);
+                soundPosition.w = 1.0f;
+            } else if (s.equalsIgnoreCase(BRACKET_CLOSE)) {
+                decrementBracketLevel();
+                break;
+            }
+        }
+        if (playableNameSet && boxCenter != null && boxHalfSize != null && soundPosition != null) {
+            ambientPlayable.setBox(new ENG_Aabb(new ENG_Vector3D(boxCenter), new ENG_Vector3D(boxHalfSize)));
+            ambientPlayable.setPosition(soundPosition);
+            return ambientPlayable;
+        }
+        throw new ENG_ParsingException("Ambient sound does not contain all elements");
+    }
+
+    private ArrayList<WorldManagerBase.AmbientPlayable> parseAmbientSounds(DataInputStream fp0) {
+        String s;
+        s = ENG_CompilerUtil.getNextWord(fp0);
+        checkNull(s);
+        if (s.equalsIgnoreCase(BRACKET_OPEN)) {
+            incrementBracketLevel();
+        } else {
+            throw new ENG_InvalidFormatParsingException("Bracket mandatory after " +
+                    "ambient sounds");
+        }
+        ArrayList<WorldManagerBase.AmbientPlayable> ambientSounds = new ArrayList<>();
+        while ((s = ENG_CompilerUtil.getNextWord(fp0)) != null) {
+            if (s.equalsIgnoreCase(AMBIENT_SOUND)) {
+                ambientSounds.add(parseAmbientSound(fp0));
+            } else if (s.equalsIgnoreCase(BRACKET_CLOSE)) {
+                decrementBracketLevel();
+                break;
+            }
+        }
+        return ambientSounds;
     }
 
     private LevelSpawnPoint parseSpawnPoint(DataInputStream fp0) {
@@ -412,6 +570,18 @@ public class LevelCompiler extends ENG_AbstractCompiler<LevelBase> {
                 destinationSet = true;
             } else if (s.equalsIgnoreCase(OBJECT_REACH_DESTINATION)) {
                 levelObject.reachDestination = getFloat(fp0) == 1;
+            } else if (s.equalsIgnoreCase(OBJECT_SQUAD)) {
+                levelObject.squadNum = getInt(fp0);
+            } else if (s.equalsIgnoreCase(OBJECT_SQUAD_LEADER)) {
+                levelObject.squadLeader = getBoolean(fp0);
+            } else if (s.equalsIgnoreCase(OBJECT_SQUAD_MIN_DISTANCE)) {
+                levelObject.squadMinDistance = getFloat(fp0);
+            } else if (s.equalsIgnoreCase(OBJECT_SQUAD_MAX_DISTANCE)) {
+                levelObject.squadMaxDistance = getFloat(fp0);
+            } else if (s.equalsIgnoreCase(OBJECT_SQUAD_NAME)) {
+                s = ENG_CompilerUtil.getNextWord(fp0);
+                checkNull(s);
+                levelObject.squadName = s;
             } else if (s.equalsIgnoreCase(BRACKET_CLOSE)) {
                 decrementBracketLevel();
                 break;
@@ -483,6 +653,10 @@ public class LevelCompiler extends ENG_AbstractCompiler<LevelBase> {
                 levelStart.spawnPoints.addAll(parseSpawnPoints(fp0));
             } else if (s.equalsIgnoreCase(START_LEVEL_MESH)) {
                 levelStart.levelMesh = parseLevelMesh(fp0);
+            } else if (s.equalsIgnoreCase(START_AMBIENT_SOUNDS)) {
+                levelStart.ambientSounds.addAll(parseAmbientSounds(fp0));
+            } else if (s.equalsIgnoreCase(START_LEVEL_SOUNDS)) {
+                levelStart.sounds.addAll(parseLevelSounds(fp0));
             } else if (s.equalsIgnoreCase(BRACKET_CLOSE)) {
                 decrementBracketLevel();
                 break;

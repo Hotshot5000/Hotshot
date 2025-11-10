@@ -73,6 +73,11 @@ public class EntityProperties extends MultiplayerComponent implements ENG_Playab
     }
 
     @Override
+    public ENG_Vector4D getFrontVec() {
+        return getSceneNode().getLocalInverseZAxis();
+    }
+
+    @Override
     public float getMaxSoundSpeed() {
         return maxSpeed;
     }

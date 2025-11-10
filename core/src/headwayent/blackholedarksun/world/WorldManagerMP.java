@@ -414,6 +414,8 @@ public class WorldManagerMP extends WorldManager {
                 cargoIdList.add(cargoNameToIdMap.get(obj.name));
             }
         }
+
+        initializeAmbientSounds();
     }
 
     @Override

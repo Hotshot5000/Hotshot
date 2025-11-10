@@ -396,7 +396,9 @@ public class ENG_SoundManager {
         }
         long playID = -1;
         if (soundAvailable) {
-            if (soundEngine == SoundEngine.MINIAUDIO) {
+            if (soundEngine == SoundEngine.MINIAUDIO_3D) {
+                throw new IllegalStateException("If MINIAUDIO_3D is enabled never play sound directly!");
+            } else if (soundEngine == SoundEngine.MINIAUDIO) {
                 SoundInternalMiniAudio sound = soundsMiniAudio.get(name);
                 if (sound == null) {
                     throw new IllegalArgumentException(name + " is not a valid sound name");

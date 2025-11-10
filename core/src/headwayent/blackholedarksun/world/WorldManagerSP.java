@@ -83,6 +83,8 @@ public class WorldManagerSP extends WorldManager {
                 cargoIdList.add(cargoNameToIdMap.get(obj.name));
             }
         }
+
+        initializeAmbientSounds();
     }
 
     @Override
@@ -860,6 +862,11 @@ public class WorldManagerSP extends WorldManager {
                     sound.maxDistance = MAX_ENGINE_SOUND_DISTANCE;
                     sound.volumeMultiplier = 0.5f;
                     shipProp.setEngineSound(sound);
+                }
+            }
+            if (obj.type == LevelObject.LevelObjectType.FIGHTER_SHIP) {
+                if (obj.squadNum != -1) {
+
                 }
             }
 //            entityMap.put(id, gameEntity);

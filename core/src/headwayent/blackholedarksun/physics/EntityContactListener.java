@@ -8,6 +8,8 @@
 
 package headwayent.blackholedarksun.physics;
 
+import static headwayent.blackholedarksun.HudManager.BEEP_SND;
+
 import com.artemis.ComponentMapper;
 import com.artemis.Entity;
 import com.badlogic.gdx.physics.bullet.collision.ContactListener;
@@ -396,6 +398,32 @@ public class EntityContactListener extends ContactListener {
             return;
         }
 
+        ProjectileProperties projectileProperties = projectilePropertiesMapper.getSafe(e);
+        if (projectileProperties != null) {
+            ShipProperties hitShipProperties = shipPropertiesMapper.getSafe(next);
+            if (hitShipProperties != null) {
+                // Only play sound when hitting another ship.
+                Entity launcherShip = worldManager.getShipByGameEntityId(projectileProperties.getParentId());
+                if (launcherShip != null) {
+                    ShipProperties launcherShipProperties = shipPropertiesMapper.getSafe(launcherShip);
+                    if (hitShipProperties.getShipData().team != launcherShipProperties.getShipData().team) {
+                        // Only play sound when hitting an enemy ship.
+                        Entity playerShip = worldManager.getPlayerShip();
+                        if (playerShip != null) {
+                            EntityProperties launcherShipEntityProperties = entityPropertiesMapper.get(launcherShip);
+                            EntityProperties playerEntityProperties = entityPropertiesMapper.get(playerShip);
+                            if (launcherShipEntityProperties.getItemId() == playerEntityProperties.getItemId()) {
+                                // TODO update with a real hit sound.
+                                WorldManager.getSingleton().playSoundFromCameraNode(BEEP_SND);
+//                                MainApp.getGame().playSoundMaxVolume(BEEP_SND);
+                                System.out.println("Playing hit sound");
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
         ProjectileProperties othProjectileProperties = projectilePropertiesMapper.getSafe(next);
 
 
@@ -406,6 +434,11 @@ public class EntityContactListener extends ContactListener {
             if (ship != null) {
                 ShipProperties component = shipPropertiesMapper.get(ship);
                 component.incrementKills();
+                Entity playerShip = worldManager.getPlayerShip();
+                if (playerShip != null) {
+                    HudManager.getSingleton().setBelowCrosshairText(
+                            othProjectileProperties.getParentName() + " killed " + entityProperties.getName());
+                }
 //                System.out.println(entityProperties.getName() + " kills: " + component.getKills());
             }
         }

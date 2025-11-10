@@ -72,6 +72,7 @@ public interface ENG_ISoundRoot {
 
     /**
      * Plays a sound using a PlayType.
+     * for MiniAudio3D this is deprecated. You need position for this to work.
      *
      * @param name     Name of sound to be played
      * @param playType The way the sound should be played.

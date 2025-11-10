@@ -269,6 +269,10 @@ public class WaypointSystem {
         this.visible = visible;
     }
 
+    public boolean isInitialized() {
+        return initialized && !waypointSectors.isEmpty();
+    }
+
     public static WaypointSystem getSingleton() {
         return waypointSystem;
     }

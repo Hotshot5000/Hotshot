@@ -487,6 +487,7 @@ public class ENG_TextAreaOverlayElement extends ENG_OverlayElement {
         mColourBottom.set(col);
         mColourTop.set(col);
         mColoursChanged = true;
+        ENG_NativeCalls.overlayElement_setTextColour(this, col);
     }
 
     @Override

@@ -8,6 +8,8 @@
 
 package headwayent.blackholedarksun.systems;
 
+import static headwayent.blackholedarksun.systems.helper.ai.skynet.SquadManager.USE_SQUAD_TACTICS;
+
 import headwayent.blackholedarksun.entitydata.ShipData;
 import headwayent.blackholedarksun.entitydata.ShipData.ShipTeam;
 import headwayent.blackholedarksun.entitydata.WeaponData;
@@ -26,6 +28,9 @@ import headwayent.blackholedarksun.systems.helper.ai.Utilities;
 import headwayent.blackholedarksun.systems.helper.ai.Waypoint;
 import headwayent.blackholedarksun.systems.helper.ai.WaypointSector;
 import headwayent.blackholedarksun.systems.helper.ai.WaypointSystem;
+import headwayent.blackholedarksun.systems.helper.ai.skynet.SquadManager;
+import headwayent.blackholedarksun.systems.helper.ai.skynet.SquadMemberProperties;
+import headwayent.blackholedarksun.systems.helper.ai.skynet.SquadProperties;
 import headwayent.blackholedarksun.world.WorldManager;
 import headwayent.blackholedarksun.world.WorldManagerBase;
 import headwayent.hotshotengine.*;
@@ -60,6 +65,7 @@ public class AISystem extends IntervalEntityProcessingSystem {
     private static final float MIN_DISTANCE_SLOW_DOWN_RATE = 0.2f;
     private static final float ENEMY_MIN_DISTANCE = 100000.0f;
     private static final float REACHING_DESTINATION_VELOCITY_CHANGE_STEP = 0.1f;
+    private static final int VELOCITY_CHANGE_SQUAD_VELOCITY = 19;
     private static final int VELOCITY_CHANGE_NAME_MIN_DISTANCE_WAYPOINT = 18;
     private static final int VELOCITY_CHANGE_NAME_ACCELERATE_TO_MIN_SPEED_FOLLOWING_WAYPOINT = 17;
     private static final int VELOCITY_CHANGE_NAME_ACCELERATE_TO_MAX_SPEED_FOLLOWING_WAYPOINT = 16;
@@ -88,6 +94,7 @@ public class AISystem extends IntervalEntityProcessingSystem {
     private static final int PATROLING_ROTATION_TIME = 3000;
     private static final float PATROL_SPEED_COEFFICIENT = 0.25f;
     private static final int NO_ENEMY_DIRECTION_CHANGE_CHANCE = 10;
+    private static final float SQUAD_VELOCITY_ACCELERATION_STEP = 0.3f;
     private static final float COLLISION_RESPONSE_ACCELERATION_STEP = 0.3f;
     private static final int COLLISION_RESPONSE_ACCELERATION_TIME = 4000;
     private static final float COLLISION_RESPONSE_ACCELERATION_ANGLE = 45.0f * ENG_Math.DEGREES_TO_RADIANS;
@@ -107,6 +114,7 @@ public class AISystem extends IntervalEntityProcessingSystem {
     private static final float EVASION_ACCELERATION = 1.0f;
     private static final long EVADE_COLLISION_TIME = 3000;
     private static final float TARGETING_ANGLE = 1.0f * ENG_Math.DEGREES_TO_RADIANS;
+    private static final float SQUAD_ORIENTATION_ANGLE = TARGETING_ANGLE;
     private static final float ESCAPE_LEVEL_LIMITS_ANGLE = 20.0f * ENG_Math.DEGREES_TO_RADIANS;
     private static final float MIN_COUNTERMEASURES_DISTANCE = ENG_Math.sqr(800.0f);
     private static final float MIN_EVASION_DISTANCE = ENG_Math.sqr(500.0f);
@@ -128,6 +136,9 @@ public class AISystem extends IntervalEntityProcessingSystem {
     public static final float WAYPOINT_MAX_SPEED = 150.0f;
     public static final float ZERO_SPEED = 0.3f; // There is a bug with rotation around ship axis when ship is completely stationary.
     public static final float FOLLOW_SHIP_RAY_TEST_DISTANCE_AHEAD = 500.0f;
+    public static final float UNDER_SHIP_OFFSET = 0.3f;
+    public static final float FRONT_VEC_CLOSEST_SQUAD_MEMBER_ALIGNMENT = 1.0f * ENG_Math.DEGREES_TO_RADIANS;
+    public static final float FRONT_VEC_CLOSEST_SQUAD_MEMBER_DISTANCE_ALIGNMENT = 1.0f * ENG_Math.DEGREES_TO_RADIANS;
     private ComponentMapper<EntityProperties> entityPropertiesMapper;
     private ComponentMapper<ShipProperties> shipPropertiesMapper;
     private ComponentMapper<AIProperties> aIPropertiesMapper;
@@ -280,6 +291,7 @@ public class AISystem extends IntervalEntityProcessingSystem {
     protected void begin() {
         super.begin();
 //        beginTime = ENG_Utility.currentTimeMillis();
+        SquadManager.getInstance().update();
     }
 
     @Override
@@ -318,11 +330,81 @@ public class AISystem extends IntervalEntityProcessingSystem {
                     followPlayerShip(aiProperties, entityProperties, shipProperties);
                 }
                 break;
+                case FOLLOW_SQUAD_LEADER: {
+                    // If squad leader goes to shooting target mode then the followers can go to follow mode for the squad leader target.
+                    if (aiProperties.getSquadNum() == -1) {
+                        // If the squad has been disbanded during SquadManager.update() in AISystem.begin() go back to lone wolf.
+                        aiProperties.setState(AIState.SEEK_CLOSEST_PLAYER);
+                        break;
+                    }
+                    if (checkIsChased(shipProperties, aiProperties)) break;
+                    SquadManager squadManager = SquadManager.getInstance();
+                    SquadProperties squadProperties = squadManager.getSquadProperties(aiProperties.getSquadNum());
+
+                    if (squadProperties == null) {
+                        // We no longer have a squad so go back to normal seek mode.
+                        aiProperties.setState(AIState.SEEK_CLOSEST_PLAYER);
+                    } else {
+                        long leaderId = squadProperties.getLeaderId();
+                        if (leaderId == -1) {
+                            System.out.println("leaderId == -1 for squadId: " + squadProperties.getSquadId() +
+                                    " squad member id: " + entityProperties.getItemId() + " name: " + entityProperties.getName());
+                            aiProperties.setState(AIState.SEEK_CLOSEST_PLAYER);
+                        } else {
+                            SquadMemberProperties squadMemberProperties = squadManager.getSquadMemberProperties(entityProperties.getItemId());
+                            if (squadMemberProperties == null) {
+                                aiProperties.setState(AIState.SEEK_CLOSEST_PLAYER);
+                            } else {
+                                // Rotate to the calculated position by SquadManager.update() in AISystem.begin().
+//                                entityProperties.getNode().getPosition(currentPos);
+//                                squadMemberProperties.getFinalTargetPosition(otherPos);
+//                                entityProperties.getNode().getLocalInverseZAxis(currentFrontVec);
+//                                entityProperties.getNode().getLocalYAxis(currentUpVec);
+//
+//                                ENG_Quaternion currentOrientation = new ENG_Quaternion();
+//                                entityProperties.getNode().getOrientation(currentOrientation);
+//                                ENG_Vector4D orientedUpVec = currentOrientation.mul(currentUpVec);
+//                                orientedUpVec.mul(UNDER_SHIP_OFFSET);
+//                                ENG_Vector4D underShipPos = currentPos.subAsVec(orientedUpVec);
+//
+//
+//                                // System.out.println("playerShip pos: " + otherPos);
+//                                otherPos.sub(underShipPos, distVec);
+//                                distVec.normalize();
+//                                float angleBetween = currentFrontVec.angleBetween(distVec);
+//                                if (angleBetween > SQUAD_ORIENTATION_ANGLE) {
+//                                    Utility.rotateToPosition(currentFrontVec, distVec, updateInterval, entityProperties,
+//                                            shipProperties.getShipData().maxAngularVelocity);
+//                                }
+                                Utility.applyTorque(entityProperties, aiProperties.getSquadFinalTorque());
+                                if (Math.abs(entityProperties.getVelocity() - aiProperties.getSquadVelocity()) > 10.0f) {
+                                    changeVelocity(entityProperties, shipProperties, aiProperties,
+                                            new VelocityChange(
+                                                    VELOCITY_CHANGE_SQUAD_VELOCITY,
+                                                    aiProperties.getSquadVelocity(),
+                                                    SQUAD_VELOCITY_ACCELERATION_STEP));
+                                }
+                            }
+                        }
+                    }
+                }
+                break;
                 case SEEK_CLOSEST_PLAYER: {
                     if (checkShouldReachDestination(aiProperties, shipProperties)) break;
                     if (checkIsChased(shipProperties, aiProperties)) break;
-                    seekClosestPlayer(aiProperties, entityProperties,
-                            shipProperties);
+                    if (checkIsSquadFollower(aiProperties)) {
+                        // Sync speed with leader.
+                        // Keep distance from closest ship from the same squad.
+                        // Avoid collision.
+                        // Reestablish distance.
+                        // When close enough to enemy selected by squad leader break formation.
+                        // Reestablish squad formation when enemy destroyed or leader changes target.
+                        // Update squad leader if current squad leader destroyed by selecting the closest ship to ex-leader as the new leader.
+                        aiProperties.setState(AIState.FOLLOW_SQUAD_LEADER);
+                    } else {
+                        seekClosestPlayer(aiProperties, entityProperties,
+                                shipProperties);
+                    }
                 }
                 break;
                 case FOLLOW_PLAYER: {
@@ -412,7 +494,7 @@ public class AISystem extends IntervalEntityProcessingSystem {
                         ENG_Quaternion currentOrientation = new ENG_Quaternion();
                         entityProperties.getNode().getOrientation(currentOrientation);
                         ENG_Vector4D orientedUpVec = currentOrientation.mul(currentUpVec);
-                        orientedUpVec.mul(0.3f);
+                        orientedUpVec.mul(UNDER_SHIP_OFFSET);
                         ENG_Vector4D underShipPos = currentPos.subAsVec(orientedUpVec);
 
 
@@ -713,6 +795,18 @@ public class AISystem extends IntervalEntityProcessingSystem {
         }
     }
 
+    private static boolean checkIsPartOfSquad(AIProperties aiProperties) {
+        return USE_SQUAD_TACTICS && aiProperties.getSquadNum() != -1;
+    }
+
+    private static boolean checkIsSquadFollower(AIProperties aiProperties) {
+        return checkIsPartOfSquad(aiProperties) && !aiProperties.isSquadLeader();
+    }
+
+    private static boolean checkIsSquadLeader(AIProperties aiProperties) {
+        return checkIsPartOfSquad(aiProperties) && aiProperties.isSquadLeader();
+    }
+
     private void rayTestCollisionAhead(EntityProperties entityProperties, AIProperties aiProperties) {
         rayTestFrontVec(entityProperties, aiProperties, FOLLOW_SHIP_RAY_TEST_DISTANCE_AHEAD);
         ClosestNotMeRayResultCallback rayResultCallback = aiProperties.getRayResultCallback();
@@ -740,6 +834,9 @@ public class AISystem extends IntervalEntityProcessingSystem {
         if (!shipProperties.isChased()) {
             aiProperties.setState(AIState.SEEK_CLOSEST_PLAYER);
             showAIStateChange(shipProperties, aiProperties);
+            if (checkIsPartOfSquad(aiProperties)) {
+                aiProperties.setSquadState(AIProperties.AISquadState.REJOINING_SQUAD); // We need to rejoin the squad.
+            }
             return true;
         }
         return false;
@@ -970,6 +1067,7 @@ public class AISystem extends IntervalEntityProcessingSystem {
                                      ShipProperties shipProperties) {
         // Check if we need to update the waypoint routes.
         WaypointSystem waypointSystem = WaypointSystem.getSingleton();
+        if (!waypointSystem.isInitialized()) return;
         int reachedWaypointId = 0;
         boolean reachedNextWaypoint = false;
         if (aiProperties.getWaypointState() != AIProperties.AIWaypointState.NONE) {
@@ -1887,6 +1985,9 @@ public class AISystem extends IntervalEntityProcessingSystem {
         if (shipProperties.isChased()) {
             aiProperties.setState(AIState.EVADE_MISSILE);
             showAIStateChange(shipProperties, aiProperties);
+            if (checkIsPartOfSquad(aiProperties)) {
+                aiProperties.setSquadState(AIProperties.AISquadState.LEFT_SQUAD_TEMPORARILY);
+            }
             return true;
         }
         return false;
@@ -2575,7 +2676,7 @@ public class AISystem extends IntervalEntityProcessingSystem {
 
     /** @noinspection deprecation*/
     private static void showAIStateChange(ShipProperties shipProperties, AIProperties aiProperties) {
-        if (DEBUG || true) {
+        if (DEBUG/* || true*/) {
             ENG_Log.getInstance().log(shipProperties.getName() + " state changed to " + aiProperties.getState());
         }
     }

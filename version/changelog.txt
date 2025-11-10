@@ -1,0 +1,3 @@
+game 2025.1 - Added waypoint system.
+game 2025.2 - Added static objects support.
+game 2025.3 - Added swarm behavior for AI.

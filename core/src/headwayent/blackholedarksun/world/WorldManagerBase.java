@@ -20,6 +20,7 @@ import com.badlogic.gdx.physics.bullet.dynamics.btRigidBody;
 
 import headwayent.blackholedarksun.*;
 import headwayent.blackholedarksun.animations.AnimationFactory;
+import headwayent.blackholedarksun.audio.LevelPlayable;
 import headwayent.blackholedarksun.components.*;
 import headwayent.blackholedarksun.entitydata.DebrisData;
 import headwayent.blackholedarksun.entitydata.ShipData;
@@ -55,6 +56,7 @@ import headwayent.blackholedarksun.statistics.LevelStatistics;
 import headwayent.blackholedarksun.statistics.SessionStatistics;
 import headwayent.blackholedarksun.statistics.WeaponTypeStatistics;
 import headwayent.blackholedarksun.systems.helper.ai.WaypointSystem;
+import headwayent.blackholedarksun.systems.helper.ai.skynet.SquadManager;
 import headwayent.hotshotengine.*;
 import headwayent.hotshotengine.audio.ENG_Playable;
 import headwayent.hotshotengine.exception.ENG_InvalidFieldStateException;
@@ -73,6 +75,7 @@ import static headwayent.hotshotengine.ENG_Utility.currentTimeMillis;
  */
 public abstract class WorldManagerBase {
     public static final float RIGID_BODY_FRICTION = 0.9f;
+    public static final int GAME_EVENT_NOTIFICATION_DURATION = 3000;
     //    protected HashMap<Long, Entity> entityByIdMap = new HashMap<>();
 
     public enum LevelState {
@@ -115,6 +118,7 @@ public abstract class WorldManagerBase {
         public boolean startOnProximity;
         public boolean doNotDelete;
         public boolean started;
+        public boolean ambient;
 
         public Sound() {
 
@@ -426,8 +430,11 @@ public abstract class WorldManagerBase {
         playerStateComponentMapper = gameWorld.getMapper(PlayerState.class);
         waypointPropertiesComponentMapper = gameWorld.getMapper(WaypointProperties.class);
         staticEntityPropertiesComponentMapper = gameWorld.getMapper(StaticEntityProperties.class);
+        // TODO should this be in resetLevel()?
         WaypointSystem.getSingleton().removeAllWaypointSectors();
         WaypointSystem.getSingleton().setVisible(false);
+        // TODO should this be in resetLevel()? Already moved for now.
+//        SquadManager.getInstance().reset();
         removeAllWaypointIds();
         removeAllStaticObjectIds();
     }
@@ -733,6 +740,7 @@ public abstract class WorldManagerBase {
                     beaconEntityProperties.getNode().getPosition(beaconPos);
                     playerPos.sub(beaconPos, beaconToPlayerShip);
                     if (beaconEntityProperties.getRadius() > beaconToPlayerShip.length()) {
+                        HudManager.getSingleton().setBelowCrosshairText("Beacon reached!");
                         beaconProperties.setReached(true);
                         beaconEntityProperties.setDestroyed(true);
                         currentBeacon = null;
@@ -1264,6 +1272,30 @@ public abstract class WorldManagerBase {
         aiProp.setReachDestination(obj.reachDestination);
         aiProp.setDestination(obj.destination);
         aiProp.setAttackEntityName(obj.attackName);
+        if (obj.squadNum != -1) {
+            aiProp.setSquadNum(obj.squadNum);
+            aiProp.setSquadLeader(obj.squadLeader);
+            if (obj.squadMinDistance > obj.squadMaxDistance) {
+                throw new IllegalStateException(obj.squadMinDistance + " > " + obj.squadMaxDistance +
+                        " min distance greater than max distance!");
+            }
+            aiProp.setSquadMinDistance(obj.squadMinDistance);
+            aiProp.setSquadMaxDistance(obj.squadMaxDistance);
+            aiProp.setSquadState(AIProperties.AISquadState.IN_SQUAD);
+            entityProp.setOnRemove(entity -> {
+                AIProperties aiProperties = aiPropertiesComponentMapper.getSafe(entity);
+                if (aiProperties == null) {
+                    throw new NullPointerException(entityProp.getName() + " does not have AIProperties! How??");
+                }
+                // If the ship left the squad it has already been removed from the squad properties.
+                if (aiProperties.getSquadNum() != -1 &&
+                        aiProperties.getSquadState() != AIProperties.AISquadState.LEFT_SQUAD_PERMANENTLY) {
+                    SquadManager.getInstance().getSquadProperties(aiProperties.getSquadNum()).removeId(entityProp.getItemId());
+                }
+            });
+            SquadManager.getInstance().loadSquad(obj.squadNum, obj.squadLeader, entityProp.getItemId(),
+                    obj.squadMinDistance, obj.squadMaxDistance, obj.squadName);
+        }
         return aiProp;
 //        gameEntity.addComponent(aiProp);
 
@@ -2435,6 +2467,32 @@ public abstract class WorldManagerBase {
         return ENG_Workflows.MetallicWorkflow;
     }
 
+    public void notifyGameEventToUserSoundOnly(String sound) {
+        notifyGameEventToUser(null, 0, sound);
+    }
+
+    public void notifyGameEventToUser(String text) {
+        notifyGameEventToUser(text, GAME_EVENT_NOTIFICATION_DURATION, null);
+    }
+
+    public void notifyGameEventToUser(String text, long duration) {
+        notifyGameEventToUser(text, duration, null);
+    }
+
+    public void notifyGameEventToUser(String text, long duration, String sound) {
+        if (text != null && duration > 0) {
+            HudManager.getSingleton().setBelowCrosshairText(text, duration);
+        }
+        if (sound != null) {
+            Entity playerShip = getPlayerShip();
+            if (playerShip != null) {
+                EntityProperties entityProperties = entityPropertiesComponentMapper.get(playerShip);
+                WorldManager.getSingleton().playSoundBasedOnDistance(entityProperties, sound);
+//                MainApp.getGame().playSoundMaxVolume(sound);
+            }
+        }
+    }
+
     public long getCurrentReloaderShipId() {
         return currentReloaderShipId;
     }
@@ -2447,4 +2505,87 @@ public abstract class WorldManagerBase {
         return mgr;
     }
 
+    public static class AmbientPlayable extends LevelPlayable {
+
+        // Used when non MINIAUDIO_3D enabled. Otherwise ignore as mini audio will handle the sound cutoff.
+        private final ENG_Aabb box = new ENG_Aabb();
+
+        public AmbientPlayable() {
+
+        }
+
+        public AmbientPlayable(String name, ENG_Aabb box, ENG_Vector4D position) {
+            this.name = name;
+            this.box.merge(box);
+            this.position.set(position);
+        }
+
+        public ENG_Aabb getBox() {
+            return box;
+        }
+
+        public void setBox(ENG_Aabb box) {
+            this.box.merge(box);
+        }
+
+    }
+
+    public static class CameraNodePlayable implements ENG_Playable {
+
+        private final ENG_SceneNode cameraNode;
+
+        public CameraNodePlayable(ENG_SceneNode cameraNode) {
+            this.cameraNode = cameraNode;
+        }
+
+        @Override
+        public String getName() {
+            return cameraNode.getName();
+        }
+
+        @Override
+        public ENG_Vector4D getPosition() {
+            return cameraNode.getPosition();
+        }
+
+        @Override
+        public void getPosition(ENG_Vector4D position) {
+            position.set(cameraNode.getPositionForNative());
+        }
+
+        @Override
+        public ENG_Quaternion getOrientation() {
+            return cameraNode.getOrientation();
+        }
+
+        @Override
+        public void getOrientation(ENG_Quaternion orientation) {
+            orientation.set(cameraNode.getOrientationForNative());
+        }
+
+        @Override
+        public ENG_SceneNode getSceneNode() {
+            return cameraNode;
+        }
+
+        @Override
+        public ENG_Vector4D getEntityVelocity() {
+            return ENG_Math.VEC4_ZERO;
+        }
+
+        @Override
+        public ENG_Vector4D getFrontVec() {
+            return cameraNode.getLocalInverseZAxis();
+        }
+
+        @Override
+        public float getDopplerFactor() {
+            return 1.0f;
+        }
+
+        @Override
+        public float getMaxSoundSpeed() {
+            return 1.0f;
+        }
+    }
 }

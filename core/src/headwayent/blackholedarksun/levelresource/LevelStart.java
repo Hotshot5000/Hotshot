@@ -8,9 +8,11 @@
 
 package headwayent.blackholedarksun.levelresource;
 
+import headwayent.blackholedarksun.audio.LevelPlayable;
 import headwayent.blackholedarksun.entitydata.ShipData;
 import headwayent.blackholedarksun.levelresource.levelmesh.LevelMesh;
 import headwayent.blackholedarksun.parser.ast.Cutscene;
+import headwayent.blackholedarksun.world.WorldManagerBase;
 import headwayent.hotshotengine.ENG_Vector4D;
 import headwayent.hotshotengine.renderer.ENG_ColorValue;
 import headwayent.hotshotengine.renderer.ENG_Light;
@@ -41,6 +43,8 @@ public class LevelStart {
     public ArrayList<LevelWaypointSector> waypointSectors = new ArrayList<>();
 
     public LevelMesh levelMesh;
+    public ArrayList<WorldManagerBase.AmbientPlayable> ambientSounds = new ArrayList<>();
+    public ArrayList<LevelPlayable> sounds = new ArrayList<>(); // Used for level events.
     public boolean useSkyboxDataFromLevel;
 
     // For multiplayer as a client the server sends us the name of the level object and we must search for it in order to initialize it.

@@ -12,17 +12,12 @@ import com.artemis.ComponentMapper;
 import com.artemis.Entity;
 import com.artemis.managers.GroupManager;
 import com.artemis.utils.ImmutableBag;
-import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.bullet.collision.AllHitsRayResultCallback;
-import com.badlogic.gdx.physics.bullet.collision.btBoxShape;
-import com.badlogic.gdx.physics.bullet.collision.btCapsuleShapeZ;
 import com.badlogic.gdx.physics.bullet.collision.btCollisionObject;
 import com.badlogic.gdx.physics.bullet.collision.btCollisionObjectConstArray;
-import com.badlogic.gdx.physics.bullet.collision.btCollisionShape;
 
 import org.apache.commons.lang3.StringUtils;
 
-import java.lang.reflect.Array;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.util.ArrayList;
@@ -30,10 +25,8 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Iterator;
-import java.util.List;
 import java.util.ListIterator;
 import java.util.Map;
-import java.util.Vector;
 
 import headwayent.blackholedarksun.components.AIProperties;
 import headwayent.blackholedarksun.components.BeaconProperties;
@@ -125,7 +118,7 @@ public class HudManager {
     private static final int CARGO_SCAN_TIME = 3000;
     private static final float CARGO_SELECTION_ANGLE = 10.0f * ENG_Math.DEGREES_TO_RADIANS;
     private static final int MINIMUM_DELAY_BETWEEN_BEEPS = 500;
-    private static final String BEEP_SND = "beep";
+    public static final String BEEP_SND = "beep";
     private static final float MIN_BEEP_DISTANCE = 2000.0f;
     private static final int VIBRATION_HIT_TIME = 500;
     private static final int VIBRATION_AFTERBURNER_TIME = 600;
@@ -140,6 +133,7 @@ public class HudManager {
     public static final int AIM_ASSIST_ROTATION_STEPS = 30;
     public static final int MAX_FRIENDLY_SHIPS_TO_CHASE_ENEMY = 3;
     public static final float RAY_CAST_DISTANCE = 10000.0f;
+    public static final int HEALTH_LOW = 20;
     private final ComponentMapper<EntityProperties> entityPropertiesMapper;
     private final ComponentMapper<ShipProperties> shipPropertiesMapper;
     private final ComponentMapper<AIProperties> aIPropertiesMapper;
@@ -150,6 +144,7 @@ public class HudManager {
     private ENG_TextAreaOverlayElement enemySelectedNoEnemyOverlayElement;
     private ENG_TextAreaOverlayElement enemySelectedDistanceOverlayElement;
     private ENG_TextAreaOverlayElement aboveCrosshairOverlayElement;
+    private ENG_TextAreaOverlayElement belowCrosshairOverlayElement;
     private ENG_Overlay beaconDirOverlay;
     private ENG_OverlayContainer beaconDirLeftContainerElement;
     private ENG_OverlayContainer beaconDirUpContainerElement;
@@ -291,6 +286,7 @@ public class HudManager {
     private static final long SPAWN_INFO_TIME = 5000;
     private static final long PLAYER_SPAWN_INFO_TIME = 5000;
     private static final long TUTORIAL_INFO_TIME = 5000;
+    private static final long BELOW_CROSSHAIR_INFO_TIME = 5000;
 //    private static HudManager mgr;
     private ENG_Overlay hudOverlay;
     private boolean created;
@@ -1984,6 +1980,10 @@ public class HudManager {
     private long tutorialInfoTextBeginTime;
     private long tutorialInfoTextTimeShown;
     private boolean tutorialInfoTextShown;
+    private boolean belowCrosshairTextChanged;
+    private long belowCrosshairTextBeginTime;
+    private long belowCrosshairTextTimeShown;
+    private boolean belowCrosshairTextShown;
     private final ENG_Vector4D playerShipPosition = new ENG_Vector4D(true);
     private final ENG_Vector4D beaconPosition = new ENG_Vector4D(true);
     private final ENG_Vector4D cargoPosition = new ENG_Vector4D(true);
@@ -2029,6 +2029,8 @@ public class HudManager {
         updateEnemySelectedDistanceText();
 
         updateTutorialInfoText();
+
+        updateBelowCrosshairText();
 
         updateBeaconInfoText();
 
@@ -2320,7 +2322,8 @@ public class HudManager {
                             // Adjust the time between sounds
                             float delayRate = data.minDist / MIN_BEEP_DISTANCE;
                             if (ENG_Utility.hasTimePassed(FrameInterval.CHASING_MISSILE_SOUND_DELAY, chasingMissileBeginTime, chasingMissileCurrentDelay)) {
-                                MainApp.getGame().playSoundMaxVolume(BEEP_SND);
+//                                MainApp.getGame().playSoundMaxVolume(BEEP_SND);
+                                WorldManager.getSingleton().playSoundFromCameraNode(BEEP_SND);
                                 MainApp.getGame().vibrate(APP_Game.VibrationEvent.HOMING_BEEP);
                                 chasingMissileBeginTime = currentTimeMillis();
                                 chasingMissileCurrentDelay = MINIMUM_DELAY_BETWEEN_BEEPS + (long) (delayRate * BEEP_RATE);
@@ -2414,6 +2417,22 @@ public class HudManager {
         }
     }
 
+    private void updateBelowCrosshairText() {
+        if (belowCrosshairTextChanged) {
+            belowCrosshairTextBeginTime = currentTimeMillis();
+            belowCrosshairTextShown = true;
+            belowCrosshairTextChanged = false;
+        }
+
+        if (belowCrosshairTextShown
+                && ENG_Utility.hasTimePassed(
+                belowCrosshairTextBeginTime,
+                belowCrosshairTextTimeShown)) {
+            belowCrosshairOverlayElement.setCaption("");
+            belowCrosshairTextShown = false;
+        }
+    }
+
     private void updateHealth() {
 
         Entity playerShip = WorldManager.getSingleton().getPlayerShip();
@@ -2423,6 +2442,11 @@ public class HudManager {
                 healthShown = false;
                 currentHealth = health;
                 healthOverlayElement.setCaption("Shield: " + currentHealth);
+                if (currentHealth <= HEALTH_LOW) {
+                    healthOverlayElement.setColour(ENG_ColorValue.RED);
+                } else {
+                    healthOverlayElement.setColour(ENG_ColorValue.GREEN);
+                }
             }
         }
     }
@@ -2660,7 +2684,7 @@ public class HudManager {
                     currentPotentialSelectedEnemy = raySceneQueryResultEntry.movable;
                     currentEnemySelectionTime = currentTimeMillis();
 //                    System.out.println("Setting inner crosshair color");
-                    setCrosshairColor(crosshairInner, enemySelectedColor);
+                    setOverlayElementColor(crosshairInner, enemySelectedColor);
                 }
 
                 checkSelectedEnemyFollowable(worldManager, entityProperties);
@@ -2708,11 +2732,11 @@ public class HudManager {
 //                .getMaterial().getTechnique((short) 0).getPass((short) 0)
 //                .getFragmentProgramParameters();
 //        crosshairFragmentProgramParameters.setNamedConstant("color", col);
-        setCrosshairColor(crosshairOuter, col);
-        setCrosshairColor(crosshairInner, col);
+        setOverlayElementColor(crosshairOuter, col);
+        setOverlayElementColor(crosshairInner, col);
     }
 
-    private void setCrosshairColor(ENG_OverlayContainer crosshair, ENG_ColorValue col) {
+    private void setOverlayElementColor(ENG_OverlayElement crosshair, ENG_ColorValue col) {
         ENG_NativeCalls.unlitDatablock_setUseColour(crosshair.getDatablock(), true);
         ENG_NativeCalls.unlitDatablock_setColour(crosshair.getDatablock(), col);
     }
@@ -2853,6 +2877,15 @@ public class HudManager {
     private void updateWeaponString() {
         String wpnStr = WeaponType.getWeapon(currentWeaponType) + (currentWeaponAmmo == WeaponData.INFINITE_AMMO ? "" : (" " + currentWeaponAmmo));
         weaponOverlayElement.setCaption(wpnStr);
+        if (WeaponType.hasInfiniteAmmo(currentWeaponType)) {
+            weaponOverlayElement.setColour(ENG_ColorValue.GREEN);
+        } else {
+            if (currentWeaponAmmo <= WeaponType.getWeaponLowAmmo(currentWeaponType)) {
+                weaponOverlayElement.setColour(ENG_ColorValue.RED);
+            } else {
+                weaponOverlayElement.setColour(ENG_ColorValue.GREEN);
+            }
+        }
     }
 
 //    public void setFireButtonCooldownTime() {
@@ -3240,6 +3273,8 @@ public class HudManager {
         addVibrationElement(enemySelectedDistanceOverlayElement);
         aboveCrosshairOverlayElement = (ENG_TextAreaOverlayElement) overlay.getChild("AboveCrosshairMessage").getChild("AboveCrosshairMessageText");
         addVibrationElement(aboveCrosshairOverlayElement);
+        belowCrosshairOverlayElement = (ENG_TextAreaOverlayElement) overlay.getChild("BelowCrosshairMessage").getChild("BelowCrosshairMessageText");
+        addVibrationElement(belowCrosshairOverlayElement);
 
         weaponOverlayElement = (ENG_TextAreaOverlayElement) overlay.getChild("WeaponType").getChild("WeaponText");
         addVibrationElement(weaponOverlayElement);
@@ -3710,10 +3745,26 @@ public class HudManager {
         if (visible) {
             tutorialInfoOverlayElement.setCaption(text);
             tutorialInfoTextChanged = true;
-            if (timeShown != 0) {
+            if (timeShown > 0) {
                 tutorialInfoTextTimeShown = timeShown;
             } else {
                 tutorialInfoTextTimeShown = TUTORIAL_INFO_TIME;
+            }
+        }
+    }
+
+    public void setBelowCrosshairText(String text) {
+        setBelowCrosshairText(text, 0);
+    }
+
+    public void setBelowCrosshairText(String text, long timeShown) {
+        if (visible) {
+            belowCrosshairOverlayElement.setCaption(text);
+            belowCrosshairTextChanged = true;
+            if (timeShown > 0) {
+                belowCrosshairTextTimeShown = timeShown;
+            } else {
+                belowCrosshairTextTimeShown = BELOW_CROSSHAIR_INFO_TIME;
             }
         }
     }
